@@ -195,6 +195,7 @@ hr{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> feature/gallery
@@ -202,6 +203,8 @@ hr{
 >>>>>>> feature/testimonial
 =======
 >>>>>>> bugfix/phone-tablet-fix
+=======
+>>>>>>> feature/footer
 
 /* Gallery Styling */
 .gallery{
@@ -258,10 +261,13 @@ hr{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> feature/testimonial
 =======
 >>>>>>> bugfix/phone-tablet-fix
+=======
+>>>>>>> feature/footer
 
 
 .testimonial{
@@ -286,8 +292,11 @@ hr{
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> bugfix/phone-tablet-fix
+=======
+>>>>>>> feature/footer
 
 .contact-us{
   width: 30%;
@@ -335,11 +344,14 @@ input[type="submit"]:hover{
   border-color: rgb(224, 108, 65);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> feature/gallery
 =======
 >>>>>>> feature/testimonial
 =======
+=======
+>>>>>>> feature/footer
 
 
 /* footer styling */
@@ -373,6 +385,7 @@ input[type="submit"]:hover{
 .copy{
   clear: both;
 }
+<<<<<<< HEAD
 
 /* Responsive */
  @media screen and (max-width: 800px) and (min-width: 601px){
@@ -428,3 +441,5 @@ input[type="submit"]:hover{
   }
 }
 >>>>>>> bugfix/phone-tablet-fix
+=======
+>>>>>>> feature/footer
