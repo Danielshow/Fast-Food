@@ -1,0 +1,151 @@
+*{
+  box-sizing: border-box;
+  font-family: centaur;
+}
+
+body{
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Home container */
+.container{
+  background-image:linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url("../images/bg/bg.jpg");
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  overflow-x: hidden;
+  position: absolute;
+  background-attachment: fixed;
+}
+
+/* Logo Styling */
+.logo-row{
+  text-align: center;
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+  text-align: center;
+}
+
+
+.hero{
+  position: absolute;
+  top: 11%;
+  text-align: center;
+  width: 100%;
+  font-family: 'Viner Hand ITC';
+  font-size: 20px;
+  color: black;
+}
+
+/* Header Styling, Links */
+.header{
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  color: black;
+  margin-top: 30px;
+}
+
+.header ul{
+  width: 100%;
+  text-align: center;
+}
+.header li{
+  list-style-type: none;
+  display: inline-block;
+  padding:10px 20px 5px 10px;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: centaur;
+}
+
+ul a{
+  text-decoration: none;
+  color: black;
+  transition: 0.3s;
+  transition-property: all;
+  transition-timing-function: ease-in;
+}
+
+ul a:hover{
+  border-bottom: 2px solid rgb(224, 108, 65);
+  color: white;
+  padding: 8px 0;
+}
+
+/* Hero Starting point*/
+.hero2{
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  color: white;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Monotype Corsiva';
+  font-size: 120%;
+  text-shadow: 2px 2px rgb(224, 108, 65);
+  border-radius: 10px;
+}
+
+.hero2 .button1{
+  width: 200px;
+  padding: 10px;
+  font-size: 20px;
+  font-family: centaur;
+  color: white;
+  background: rgb(224, 108, 65);
+  border: 2px solid white;
+  border-radius: 10px;
+  transition-duration: 1s;
+  margin-bottom: 4px;
+}
+
+.hero2 .button2{
+  width: 200px;
+  padding: 10px;
+  font-size: 20px;
+  font-family: centaur;
+  color:  rgb(224, 108, 65);
+  border: 2px solid rgb(224, 108, 65);
+  background: white;
+  border-radius: 10px;
+  transition-duration: 1s;
+}
+
+.hero2 .button1:hover{
+  background: white;
+  color: rgb(224,108,65);
+  border-color: rgb(224, 108, 65);
+}
+
+.button2 a{
+  color: rgb(224,108,65);
+  text-decoration: none;
+}
+
+.button1 a:hover{
+  color: rgb(224,108,65);
+  text-decoration: none;
+}
+
+.button2 a:hover{
+  color: white;
+  text-decoration: none;
+}
+
+.button1 a{
+  color: white;
+  text-decoration: none;
+}
+.hero2 .button2:hover{
+  color: white;
+  background: rgb(224, 108, 65);
+  border-color: white;
+}
