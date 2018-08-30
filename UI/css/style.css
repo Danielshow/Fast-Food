@@ -194,11 +194,14 @@ hr{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> feature/gallery
 =======
 >>>>>>> feature/testimonial
+=======
+>>>>>>> bugfix/phone-tablet-fix
 
 /* Gallery Styling */
 .gallery{
@@ -254,8 +257,11 @@ hr{
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> feature/testimonial
+=======
+>>>>>>> bugfix/phone-tablet-fix
 
 
 .testimonial{
@@ -279,6 +285,9 @@ hr{
   float: left;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bugfix/phone-tablet-fix
 
 .contact-us{
   width: 30%;
@@ -325,7 +334,97 @@ input[type="submit"]:hover{
   color: rgb(224, 108, 65);
   border-color: rgb(224, 108, 65);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> feature/gallery
 =======
 >>>>>>> feature/testimonial
+=======
+
+
+/* footer styling */
+.footer{
+  width: 100%;
+  min-height: 25vh;
+  background: rgb(40, 43, 46);
+  color: white;
+  overflow: hidden;
+}
+
+.list{
+  margin: 0;
+  float: left;
+}
+.list a{
+  color: white;
+}
+
+.list li{
+  display: inline;
+  padding-left: 5px;
+}
+
+.socials{
+  margin: 0;
+  float: right;
+  padding-right: 20px;
+}
+
+.copy{
+  clear: both;
+}
+
+/* Responsive */
+ @media screen and (max-width: 800px) and (min-width: 601px){
+  .column {
+    width: 100%;
+    display: inline;
+  }
+  .disgrid{
+    display: block;
+  }
+  .column img{
+    width: 24%;
+  }
+
+  .contact-us{
+    width: 80%;
+    padding: 20px;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .column {
+    display: inline;
+    width: 100%;
+  }
+  .column img{
+    width: 100%;
+  }
+  .header li{
+    padding: 0 5px;
+    font-size: 16px;
+  }
+  .disgrid{
+    display: block;
+  }
+
+  .success-stories{
+    display: block;
+  }
+
+  .contact-us{
+    width: 100%;
+    padding: 20px;
+  }
+
+  .socials{
+    width: 100%;
+  }
+
+  .list{
+    width: 100%;
+  }
+}
+>>>>>>> bugfix/phone-tablet-fix
