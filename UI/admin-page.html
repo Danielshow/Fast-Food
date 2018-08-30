@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Admin Page</title>
-  <link rel="icon" href="./images/logo/logo1.png">
   <link rel="stylesheet" href="./css/style4.css">
+  <title>Admin Dashboard</title>
+  <link rel="icon" href="./images/logo/logo1.png">
 </head>
-
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="logo-row">
-        <a href="index.html"><img src="./images/logo/logo1.png" alt="Fast Food Fast Logo" class="logo"></a>
-      </div>
-      <h2>ADMIN PAGE</h2>
+  <div class="header">
+    <div class="logo-row">
+      <a href="index.html"><img src="./images/logo/logo1.png" alt="Fast Food Fast Logo" class="logo"></a>
     </div>
-
-    <div class="panel">
-      <div class="box">
-        <div class="user">
-
+    <h2>ADMIN PAGE</h2>
+  </div>
+  <div class="side-nav">
+    <nav>
+      <ul>
+        <li>
+          <a href="#" id = "users">
+            <span><img src="./images/icons/user.png"</span>
+            <span>Users</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id="message">
+            <span><img src="./images/icons/email.png"</span>
+            <span>Add Food</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id="payment-click">
+            <span><img src="./images/icons/money.png"</span>
+            <span>Payment</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id='order_click'>
+            <span><img src="./images/icons/checkout.png"</span>
+            <span>Ordered Items</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="main-content">
+    <div class="people" id="people">
+        <div class="head">
+          <h3>Users</h3>
+          <span><img src="./images/icons/user.png"</span>
         </div>
-        <div class="order">
-
+        <div class="body">
+            <h3><span>3</span> Users </h3>
         </div>
-        <div class="sale">
-
-        </div>
-        <div class="sale">
-
-        </div>
-      </div>
+    </div>
+    <div class="orders" id="order">
       <table id="myTable">
         <tr>
           <th>Order ID</th>
@@ -109,23 +131,18 @@
         </tr>
       </table>
     </div>
-    <div class="fast_food_items">
-      <div class="add_food">
-        <h2>FAST FOOD ITEMS</h2>
-        <label for="">Food to Add: </label>
-        <input type="text" name="" value="">
-
-        <label for="">Price: </label>
-        <input type="text" name="" value="">
-
-        <input type="submit" name="" value="Submit">
-
-        <h3>LIST OF FOODS AVAILABLE</h3>
+    <div class="payment_made" id="payment_made">
+      <div class="head">
+        <h3>Payment</h3>
+        <span><img src="./images/icons/money.png"</span>
+      </div>
+      <div class="body">
+          <h3><span>$56677.87</span></h3>
       </div>
     </div>
-
   </div>
+  <script src="./javascript/script5.js">
 
+  </script>
 </body>
-
 </html>

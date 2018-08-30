@@ -1,81 +1,128 @@
-*{
-  box-sizing: border-box;
+body{
   margin: 0;
   padding: 0;
   font-family: centaur;
 }
 
-.container{
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing: border-box;
 }
-.header {
+.header{
+  position: absolute;
+  min-height: 55px;
   width: 100%;
-  background-color:rgb(224, 108, 65);
-  height: 10vh;
-  opacity: 0.7;
+  background-color: #999;
+  z-index: 4;
 }
 
 .logo{
-  width: 120px;
-  height: 120px;
+  width: 60px;
+  height: 60px;
   opacity: 2;
-  float: left;
+  float: right;
+  padding-right: 3px;
 }
 
 .header h2{
   float: right;
   padding-right: 25px;
-  padding-top: 10px;
 }
-
-.box{
-  display: flex;
+.side-nav{
+  position: absolute;
   width: 100%;
-  padding-left: 10%;
-  padding-right: 10%;
-  text-align: center;
+  background-color: #666;
+  height: 100vh;
+  z-index: 3;
+  padding-top: 60px;
 }
 
-.user, .order, .sale{
-  height: 200px;
-  width: 25%;
-  padding: 5px;
-  margin: 5px;
-  border: 2px solid black;
+.side-nav ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
+.side-nav ul li{
+  padding: 20px 10px;
+  border-bottom: 1px solid #333;
 }
 
-th, td {
+.side-nav ul li a{
+  color: #fff;
+  text-decoration: none;
+}
+
+@media screen and (min-width: 600px) {
+  .side-nav{
+    width: 80px;
+    text-align: center;
+  }
+  .side-nav ul li span:nth-child(2){
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .side-nav{
+    width: 200px;
     text-align: left;
-    padding: 10px;
+  }
+
+  .side-nav ul li span:nth-child(2){
+    display: inline;
+  }
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+.main-content{
+  position: absolute;
+  width: 80%;
+  min-height: 80%;
+  top:70px;
+  left: 85px;
+  padding: 0;
 }
-
-.danger{
-  background: red;
-  border-color: red;
-}
-
-.fast_food_items {
-  width: 100%;
-  padding: 0 20px 0 20px;
-}
-
-.fast_food_items h2{
+.head {
+  background: rgb(101, 124, 106);
+  border: 1px solid black;
   text-align: center;
+  padding: 0;
+}
+.people{
+  width: 40%;
+  min-height: 300px;
+  background: white;
+  display: none;
 }
 
-.fast_food_items input[type="text"]{
-  margin-bottom: 10px;
-}
+.body{
+  text-align: center;
+  }
+
+  table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+  }
+
+  th, td {
+      text-align: left;
+      padding: 10px;
+  }
+
+  tr:nth-child(even) {
+      background-color: #f2f2f2;
+  }
+
+  .danger{
+    background: red;
+    border-color: red;
+    color: white;
+  }
+
+  .orders{
+    display: none;
+  }
+
+  .payment_made{
+    display: none;
+  }
