@@ -191,27 +191,7 @@ hr{
   width: 60px;
   height: 60px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> feature/gallery
-=======
->>>>>>> feature/testimonial
-=======
->>>>>>> bugfix/phone-tablet-fix
-=======
->>>>>>> feature/footer
 
-=======
->>>>>>> feature/login-signup
-=======
->>>>>>> feature/orderlist
 /* Gallery Styling */
 .gallery{
   position: absolute;
@@ -264,23 +244,6 @@ hr{
 #lunch, #dinner{
   display: none;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feature/testimonial
-=======
->>>>>>> bugfix/phone-tablet-fix
-=======
->>>>>>> feature/footer
-
-=======
->>>>>>> feature/login-signup
-=======
->>>>>>> feature/orderlist
 
 .testimonial{
   margin-top: 5px;
@@ -302,19 +265,6 @@ hr{
   font-size: 30px;
   float: left;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> bugfix/phone-tablet-fix
-=======
->>>>>>> feature/footer
-=======
->>>>>>> feature/login-signup
-=======
->>>>>>> feature/orderlist
 
 .contact-us{
   width: 30%;
@@ -361,22 +311,6 @@ input[type="submit"]:hover{
   color: rgb(224, 108, 65);
   border-color: rgb(224, 108, 65);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feature/gallery
-=======
->>>>>>> feature/testimonial
-=======
-=======
->>>>>>> feature/footer
-
-=======
->>>>>>> feature/login-signup
-=======
->>>>>>> feature/orderlist
 
 /* footer styling */
 .footer{
@@ -409,15 +343,6 @@ input[type="submit"]:hover{
 .copy{
   clear: both;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/login-signup
-=======
-
->>>>>>> feature/orderlist
 
 /* Responsive */
  @media screen and (max-width: 800px) and (min-width: 601px){
@@ -472,12 +397,3 @@ input[type="submit"]:hover{
     width: 100%;
   }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> bugfix/phone-tablet-fix
-=======
->>>>>>> feature/footer
-=======
->>>>>>> feature/login-signup
-=======
->>>>>>> feature/orderlist
