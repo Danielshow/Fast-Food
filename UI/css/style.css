@@ -192,7 +192,10 @@ hr{
   height: 60px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> feature/gallery
 
 /* Gallery Styling */
 .gallery{
@@ -246,6 +249,7 @@ hr{
 #lunch, #dinner{
   display: none;
 }
+<<<<<<< HEAD
 
 
 .testimonial{
@@ -314,3 +318,5 @@ input[type="submit"]:hover{
   color: rgb(224, 108, 65);
   border-color: rgb(224, 108, 65);
 }
+=======
+>>>>>>> feature/gallery
