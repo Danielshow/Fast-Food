@@ -197,6 +197,7 @@ hr{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> feature/gallery
@@ -209,6 +210,8 @@ hr{
 
 =======
 >>>>>>> feature/login-signup
+=======
+>>>>>>> feature/orderlist
 /* Gallery Styling */
 .gallery{
   position: absolute;
@@ -266,6 +269,7 @@ hr{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> feature/testimonial
 =======
@@ -275,6 +279,8 @@ hr{
 
 =======
 >>>>>>> feature/login-signup
+=======
+>>>>>>> feature/orderlist
 
 .testimonial{
   margin-top: 5px;
@@ -300,12 +306,15 @@ hr{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> bugfix/phone-tablet-fix
 =======
 >>>>>>> feature/footer
 =======
 >>>>>>> feature/login-signup
+=======
+>>>>>>> feature/orderlist
 
 .contact-us{
   width: 30%;
@@ -355,6 +364,7 @@ input[type="submit"]:hover{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> feature/gallery
 =======
@@ -365,6 +375,8 @@ input[type="submit"]:hover{
 
 =======
 >>>>>>> feature/login-signup
+=======
+>>>>>>> feature/orderlist
 
 /* footer styling */
 .footer{
@@ -399,9 +411,13 @@ input[type="submit"]:hover{
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> feature/login-signup
+=======
+
+>>>>>>> feature/orderlist
 
 /* Responsive */
  @media screen and (max-width: 800px) and (min-width: 601px){
@@ -457,8 +473,11 @@ input[type="submit"]:hover{
   }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> bugfix/phone-tablet-fix
 =======
 >>>>>>> feature/footer
 =======
 >>>>>>> feature/login-signup
+=======
+>>>>>>> feature/orderlist
