@@ -149,3 +149,120 @@ ul a:hover{
   background: rgb(224, 108, 65);
   border-color: white;
 }
+
+/* About us styling */
+.about_us{
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  background: white;
+  height: 50vh;
+  width: 100%;
+  top: 100%;
+  text-align: center;
+}
+
+.about_us h1{
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+hr{
+  border: 2px solid rgb(224, 108, 65);
+  width: 5%;
+  margin: 0 auto;
+  color: rgb(224, 108, 65);
+  margin-bottom: 1%;
+}
+
+.about_us p{
+  padding: 0 20% 0 20%;
+  font-size: 110%;
+  line-height: 1.5;
+  margin-bottom: 3%;
+}
+
+.disgrid{
+  display: inline-flex;
+}
+
+.logo1{
+  width: 60px;
+  height: 60px;
+}
+
+/* Gallery Styling */
+.gallery{
+  position: absolute;
+  width: 100%;
+}
+
+.row{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 10% 0 10%;
+}
+
+.column{
+  display: inline;
+  width: 100%;
+}
+
+.column img {
+  margin-top: 4px;
+  width: 24%;
+  height: 200px;
+  transition-duration: 1s;
+  border-radius: 8px;
+}
+
+.column img:hover{
+  opacity: 0.6;
+}
+
+
+.gallery button{
+  display: inline;
+  min-width: 10%;
+  height: auto;
+  font-size: 18px;
+  background: rgb(224, 108, 65);
+  color: #fff;
+  border: 2px solid rgb(224, 108, 65);
+  transition: 1s;
+  margin-bottom: 3px;
+  border-radius: 5px;
+}
+
+.gallery button:hover{
+  background: white;
+  border-color: rgb(224, 108, 65);
+  color: black;
+}
+
+#lunch, #dinner{
+  display: none;
+}
+
+
+.testimonial{
+  margin-top: 5px;
+  width: 100%;
+  text-align: center;
+  background-image: linear-gradient(rgba(232, 226, 219, 0.9), rgba(232, 226, 219, 0.9)), url("../images/bg/barbecue.jpg");
+  min-height: 30vh;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size:cover;
+  padding-bottom: 10px;
+}
+
+.success-stories{
+  display: flex;
+}
+
+.quote{
+  font-size: 30px;
+  float: left;
+}
