@@ -193,9 +193,12 @@ hr{
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> feature/gallery
+=======
+>>>>>>> feature/testimonial
 
 /* Gallery Styling */
 .gallery{
@@ -250,6 +253,9 @@ hr{
   display: none;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> feature/testimonial
 
 
 .testimonial{
@@ -272,6 +278,7 @@ hr{
   font-size: 30px;
   float: left;
 }
+<<<<<<< HEAD
 
 .contact-us{
   width: 30%;
@@ -320,3 +327,5 @@ input[type="submit"]:hover{
 }
 =======
 >>>>>>> feature/gallery
+=======
+>>>>>>> feature/testimonial
