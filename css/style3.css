@@ -29,11 +29,21 @@ input[type="text"]:focus{
   background-color: #ddd;
 }
 #myTable input[type="text"]{
-  width: 50%;
+  width: 80%;
   border: 1px solid rgb(224, 108, 65)
 }
 
 .orderform input[type="submit"]{
   width: 100%;
   margin-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .orderform{
+    width: 90%;
+  }
+
+  table{
+    width: 90%;
+  }
 }
