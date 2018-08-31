@@ -396,4 +396,24 @@ input[type="submit"]:hover{
   .list{
     width: 100%;
   }
+
+  .address p{
+    padding: 5px;
+    width: 100%;
+  }
+
+  .copy p{
+    padding: 5px;
+    width: 100%;
+  }
+
+  .list ul{
+    width: 100%;
+    padding: 5px;
+  }
+}
+
+.socials img{
+  height: 30px;
+  width: 30px;
 }
