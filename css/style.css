@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Mukta');
+
 *{
   box-sizing: border-box;
-  font-family: centaur;
+  font-family: 'Mukta', sans-serif;
 }
 
 body{
@@ -39,7 +41,7 @@ body{
   top: 11%;
   text-align: center;
   width: 100%;
-  font-family: 'Viner Hand ITC';
+  font-family: 'Lobster', cursive;
   font-size: 20px;
   color: black;
 }
@@ -408,6 +410,11 @@ input[type="submit"]:hover{
   }
 
   .list ul{
+    width: 100%;
+    padding: 5px;
+  }
+
+  .header ul{
     width: 100%;
     padding: 5px;
   }
