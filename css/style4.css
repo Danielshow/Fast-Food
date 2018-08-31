@@ -31,11 +31,16 @@ body {
 
 .side-nav {
   position: absolute;
-  width: 100%;
+  width: 60px;
   background-color: #666;
+  text-align: center;
   height: 100vh;
   z-index: 3;
   padding-top: 60px;
+}
+
+.side-nav ul li span:nth-child(2) {
+  display: none;
 }
 
 .side-nav ul {
@@ -77,6 +82,8 @@ tr:nth-child(even) {
 
 .orders {
   display: none;
+  overflow-x: auto;
+  width: 100%;
 }
 
 .payment_made {
@@ -87,11 +94,16 @@ tr:nth-child(even) {
 
 .main-content {
   position: absolute;
-  width: 50%;
+  width: 70%;
   min-height: 80%;
   top: 70px;
   left: 85px;
   padding: 0;
+}
+
+#message img{
+  height: 30px;
+  width: 30px;
 }
 
 .head {
@@ -106,12 +118,57 @@ tr:nth-child(even) {
   margin: 0 auto;
   min-height: 300px;
   background: white;
-  display: none;
 }
 
 .body {
   text-align: center;
 }
+
+.add-food input[type="text"]{
+  width: 50%;
+  border-radius: 5px;
+  border: 1px solid grey;
+  box-shadow: 2px 2px 4px black;
+  height: 30px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  outline: none;
+}
+
+.add-food{
+  display: none;
+  width: 100%;
+}
+.add-food label{
+  font-size: 18px;
+  font-family: centaur;
+}
+
+.add-food input[type="submit"]{
+  height: 30px;
+  border-radius: 4px;
+  background: #fff;
+  outline: none;
+}
+
+.add-food #list_of_food{
+  margin-top: 30px;
+}
+
+#list_of_food ul{
+  list-style-type: none;
+}
+
+#list_of_food li{
+  display: inline;
+  width: 30%;
+  margin-right: 20%;;
+}
+
+#list_of_food ul:nth-child(even){
+  background: grey;
+}
+
 
 @media screen and (min-width: 600px) {
   .side-nav {
@@ -131,7 +188,8 @@ tr:nth-child(even) {
   .side-nav ul li span:nth-child(2) {
     display: inline;
   }
-  .main-content {
+
+  .main-content{
     left: 15%;
   }
 }
