@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Danielshow/Fast-Food.svg?branch=master)](https://travis-ci.org/Danielshow/Fast-Food)
+
 # Fast_food_fast
 Web Application for ordering varieties of Food
 
