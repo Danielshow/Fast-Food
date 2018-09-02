@@ -1,0 +1,11 @@
+{
+  "name": "fast_food",
+  "version": "1.0.0",
+  "description": "Web application for ordering food",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Danielshow",
+  "license": "ISC"
+}
