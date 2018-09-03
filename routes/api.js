@@ -1,14 +1,17 @@
 const express = require('express');
-
+const fs = require('fs');
 // initialize router
 const router = express.Router();
 
 router.get('/orders', (req, res) => {
-  res.send('Orders Route');
+  const data = fs.readFileSync('data.json');
+  const food = JSON.parse(data);
+  res.send(food);
 });
 
 router.get('/orders/:id', (req, res) => {
-  res.send('Orders Route');
+  
+  res.send();
 });
 
 router.post('/orders', (req, res) => {
