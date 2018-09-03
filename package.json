@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./routes/api.js --fix",
+    "lin": "eslint index.js --fix",
     "test": "mocha || true",
     "build": "babel --presets es2015 src -d dist",
     "start": "nodemon index.js",
