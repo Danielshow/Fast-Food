@@ -4,9 +4,10 @@
   "description": "Web application for ordering food",
   "main": "index.js",
   "scripts": {
-    "test":"mocha || true",
+    "test": "mocha || true",
     "build": "babel --presets es2015 src -d dist",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "coverage": "./node_modules/istanbul/lib/cli cover _mocha test/index.js"
   },
   "author": "Danielshow",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "eslint": "^5.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "istanbul": "^0.4.5",
     "mocha": "^5.2.0"
   }
 }
