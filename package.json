@@ -4,6 +4,7 @@
   "description": "Web application for ordering food",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint ./routes/api.js --fix",
     "test": "mocha || true",
     "build": "babel --presets es2015 src -d dist",
     "start": "nodemon index.js",
