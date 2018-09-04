@@ -6,18 +6,61 @@ const router = express.Router();
 router.get('/orders', (req, res) => {
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
-  res.send(food);
+  res.send(food.foodList);
 });
 
 router.get('/orders/:id', (req, res) => {
-  res.send('Get an order');
+  const { id } = req.params;
+  const data = fs.readFileSync('data.json');
+  const food = JSON.parse(data).foodList;
+  for (let i = 0; i < food.length; i += 1) {
+    if (food[i].id === Number(id)) {
+      res.send(food[i]);
+    }
+  }
 });
 
 router.post('/orders', (req, res) => {
-  res.send('Get a new order');
+  const newFood = req.body;
+  const data = fs.readFileSync('data.json');
+  const food = JSON.parse(data);
+  food.foodList.push(newFood);
+  fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
+    if (err) {
+      res.send({
+        error: 'Error adding food',
+      });
+    } else {
+      res.send({
+        request: req.body,
+        Sucess: 'Food Added',
+      });
+    }
+  });
 });
 
 router.put('/orders/:id', (req, res) => {
-  res.send('Update the status of an order');
+  // declined, pending, or completed
+  const params = req.body;
+  const { id } = req.params;
+  const data = fs.readFileSync('data.json');
+  const food = JSON.parse(data);
+  for (let i = 0; i < food.foodList.length; i += 1) {
+    if (food.foodList[i].id === Number(id)) {
+      food.foodList[i].status = params.status;
+      fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
+        if (err) {
+          res.send({
+            error: 'Error updating food',
+          });
+        } else {
+          res.send({
+            request: food.foodList[i],
+            Sucess: 'Status Updated',
+          });
+        }
+      });
+    }
+  }
 });
 module.exports = router;
