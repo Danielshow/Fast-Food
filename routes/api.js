@@ -10,8 +10,7 @@ router.get('/orders', (req, res) => {
 });
 
 router.get('/orders/:id', (req, res) => {
-  
-  res.send();
+  res.send('Get an order');
 });
 
 router.post('/orders', (req, res) => {
