@@ -44,14 +44,37 @@ router.get('/me', (req, res) => {
     const realData = JSON.parse(data);
     for (let i=0; i<realData.registered.length; i++){
       if (realData.registered[i].email === decoded.id){
-        res.send(realData.registered[i]);
+        res.status(200).send({
+          email: realData.registered[i].email,
+          profile: 'This is your page',
+        });
       }
     }
+    res.status(400).send('No user found');
   });
 });
 
 router.post('/login', (req, res) => {
   // const loginDetails = req.body;
+  const data = fs.readFileSync('login-data.json');
+  const realData = JSON.parse(data);
+
+  for (let i=0; i<realData.registered.length; i++){
+    if (realData.registered[i].email === req.body.email) {
+      const passwordIsValid = bcrypt.compareSync(req.body.password, realData.registered[i].password);
+      if (!passwordIsValid) {
+        return res.status(401).send({
+        login: false,
+        reason: 'incorrect password',
+        });
+      }
+      const token = jwt.sign({id: realData.registered[i].email}, config.secret, {expiresIn: 86400});
+      res.status(200).send({
+        login: true,
+        token: token,
+      })
+    }
+  }
 });
 
 router.post('/profile/id', (req, res) => {
