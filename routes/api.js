@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 // initialize router
 const router = express.Router();
-
+// get orders to post on webpage
 router.get('/orders', (req, res) => {
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);

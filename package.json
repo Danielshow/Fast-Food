@@ -4,7 +4,7 @@
   "description": "Web application for ordering food",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./routes/api.js --fix",
+    "lint": "eslint ./routes/auth.js --fix",
     "lin": "eslint index.js --fix",
     "test": "mocha || true",
     "build": "babel --presets es2015 src -d dist",
@@ -14,8 +14,10 @@
   "author": "Danielshow",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

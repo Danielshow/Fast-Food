@@ -8,6 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 // use routes folder
 app.use('/api/v1', require('./routes/api'));
+app.use('/api/v1', require('./routes/auth'));
 
 
 app.listen(port, () => {
