@@ -94,10 +94,8 @@ router.post('/login', (req, res) => {
   });
 });
 // Logout, set token to null
-router.get('/logout', (req, res) => {
-  res.status(200).send({
-    status: true,
-    token: null,
-  });
-});
+router.get('/logout', (req, res) => res.status(200).send({
+  status: true,
+  token: null,
+}));
 module.exports = router;
