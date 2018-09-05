@@ -15,10 +15,19 @@ router.post('/register', (req, res) => {
   };
   const data = fs.readFileSync('login-data.json');
   const newMembers = JSON.parse(data);
+  for (let i = 0; i < newMembers.registered.length; i += 1) {
+    const member = newMembers.registered[i];
+    if (member.email === email) {
+      return res.status(401).send({
+        register: false,
+        status: 'Email has already been registered',
+      });
+    }
+  }
   newMembers.registered.push(info);
   fs.writeFileSync('login-data.json', JSON.stringify(newMembers, null, 2));
   const token = jwt.sign({ id: req.body.email }, config.secret, { expiresIn: 86400 });
-  res.status(200).send({
+  return res.status(200).send({
     success: 'Registered Successfully',
     token,
   });
@@ -30,27 +39,31 @@ router.get('/me', (req, res) => {
     return res.status(401).send({
       auth: false,
       message: 'No Token Provided.',
-    })
+    });
   }
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status({
-        auth: false,
+        success: false,
         message: 'Failed to authenticate',
       });
     }
     // res.status(200).send(decoded)
     const data = fs.readFileSync('login-data.json');
     const realData = JSON.parse(data);
-    for (let i=0; i<realData.registered.length; i++){
-      if (realData.registered[i].email === decoded.id){
-        res.status(200).send({
-          email: realData.registered[i].email,
+    for (let i = 0; i < realData.registered.length; i += 1) {
+      const user = realData.registered[i];
+      if (user.email === decoded.id) {
+        return res.status(200).send({
+          email: user.email,
           profile: 'This is your page',
         });
       }
     }
-    res.status(400).send('No user found');
+    return res.status(400).send('No user found');
+  });
+  return res.status(401).send({
+    status: 'No registered User',
   });
 });
 
@@ -59,25 +72,33 @@ router.post('/login', (req, res) => {
   const data = fs.readFileSync('login-data.json');
   const realData = JSON.parse(data);
 
-  for (let i=0; i<realData.registered.length; i++){
-    if (realData.registered[i].email === req.body.email) {
-      const passwordIsValid = bcrypt.compareSync(req.body.password, realData.registered[i].password);
+  for (let i = 0; i < realData.registered.length; i += 1) {
+    const user = realData.registered[i];
+    if (user.email === req.body.email) {
+      const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
       if (!passwordIsValid) {
         return res.status(401).send({
-        login: false,
-        reason: 'incorrect password',
+          login: false,
+          reason: 'Incorrect password',
         });
       }
-      const token = jwt.sign({id: realData.registered[i].email}, config.secret, {expiresIn: 86400});
-      res.status(200).send({
+      const token = jwt.sign({ id: user.email }, config.secret, { expiresIn: 86400 });
+      return res.status(200).send({
         login: true,
-        token: token,
-      })
+        token,
+      });
     }
   }
+  return res.send({
+    status: 'No registered User',
+  });
 });
 
-router.post('/profile/id', (req, res) => {
+router.get('/logout', (req, res) => {
   // const loginDetails = req.body;
+  res.status(200).send({
+    status: true,
+    token: null
+  })
 });
 module.exports = router;
