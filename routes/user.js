@@ -26,9 +26,8 @@ router.post('/user-order', (req, res) => {
     });
   });
 });
-// Edit order Status
+// Edit order Status declined, completed, pending
 router.put('/user-order/:id', (req, res) => {
-  // declined, pending, or completed
   const params = req.body;
   const { id } = req.params;
   const data = fs.readFileSync('data.json');

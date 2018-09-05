@@ -22,7 +22,7 @@ router.get('/orders/:id', (req, res) => {
     status: 'Food Not found',
   });
 });
-// post new orders
+// post new orders to the homepage
 router.post('/orders', (req, res) => {
   const newFood = req.body;
   const data = fs.readFileSync('data.json');
@@ -42,7 +42,6 @@ router.post('/orders', (req, res) => {
 });
 // Edit one food in FoodList
 router.put('/orders/:id', (req, res) => {
-  // declined, pending, or completed
   const params = req.body;
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
@@ -54,7 +53,7 @@ router.put('/orders/:id', (req, res) => {
       newfood.food = params.food;
       newfood.price = params.price;
       newfood.status = params.status;
-      fs.writeFile('data.json', JSON.stringify(newfood, null, 2), (err) => {
+      fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
         if (err) {
           res.send({
             error: 'Error updating food',
