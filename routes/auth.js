@@ -93,7 +93,7 @@ router.post('/login', (req, res) => {
     status: 'No registered User',
   });
 });
-//Logout, set token to null
+// Logout, set token to null
 router.get('/logout', (req, res) => {
   res.status(200).send({
     status: true,
