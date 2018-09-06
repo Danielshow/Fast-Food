@@ -1,18 +1,20 @@
-const express = require('express');
-const fs = require('fs');
+import { Router } from 'express';
+import fs from 'fs';
+
 // initialize router
-const router = express.Router();
-// get orders to post on webpage
+const router = Router();
+
+// get user orders for admin page
 router.get('/orders', (req, res) => {
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
-  return res.status(200).send(food.foodList);
+  return res.status(200).send(food.userOrder);
 });
-// get orders by ID
+// get one order by ID
 router.get('/orders/:id', (req, res) => {
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data).foodList;
+  const food = JSON.parse(data).userOrder;
   for (let i = 0; i < food.length; i += 1) {
     if (food[i].id === Number(id)) {
       return res.status(200).send(food[i]);
@@ -22,12 +24,12 @@ router.get('/orders/:id', (req, res) => {
     status: 'Food Not found',
   });
 });
-// post new orders to the homepage
+// post new orders to the admin page by users
 router.post('/orders', (req, res) => {
   const newFood = req.body;
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
-  food.foodList.push(newFood);
+  food.userOrder.push(newFood);
   fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
     if (err) {
       return res.send({
@@ -40,28 +42,24 @@ router.post('/orders', (req, res) => {
     });
   });
 });
-// Edit one food in FoodList
+// Edit order Status declined, completed, pending by admin
 router.put('/orders/:id', (req, res) => {
-  const params = req.body;
+  const parameter = req.body;
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
-  for (let i = 0; i < food.foodList.length; i += 1) {
-    if (food.foodList[i].id === Number(id)) {
-      // food, price, status
-      const newfood = food.foodList[i];
-      newfood.food = params.food;
-      newfood.price = params.price;
-      newfood.status = params.status;
+  for (let i = 0; i < food.userOrder.length; i += 1) {
+    if (food.userOrder[i].id === Number(id)) {
+      food.userOrder[i].status = parameter.status;
       fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
         if (err) {
           res.send({
             error: 'Error updating food',
           });
         } else {
-          res.status(200).send({
-            request: food.foodList[i],
-            Sucess: 'Food Updated',
+          res.send({
+            request: food.userOrder[i],
+            Sucess: 'Status Updated',
           });
         }
       });
@@ -69,4 +67,4 @@ router.put('/orders/:id', (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

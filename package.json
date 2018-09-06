@@ -4,20 +4,17 @@
   "description": "Web application for ordering food",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./routes/user.js --fix",
-    "lin": "eslint index.js --fix",
+    "lint": "eslint ./routes --fix",
     "test": "mocha || true",
-    "build": "babel --presets es2015 src -d dist",
-    "start": "nodemon index.js",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
+    "start": "npm run build && nodemon dist/index.js",
     "coverage": "./node_modules/istanbul/lib/cli cover _mocha test/index.js"
   },
   "author": "Danielshow",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3",
-    "jsonwebtoken": "^8.3.0"
+    "express": "^4.16.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

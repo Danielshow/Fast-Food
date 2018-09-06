@@ -1,8 +1,7 @@
-const assert = require('chai').assert;
-const app = require('../src/main');
+import { assert } from 'chai';
 
 describe('App', () => {
-  it('app shoud return hello', ()=>{
-    assert.equal(app(), 'Hello')
-  })
+  it('app shoud return hello', () => {
+    assert.equal(app(), 'Hello');
+  });
 });

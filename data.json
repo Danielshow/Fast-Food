@@ -1,23 +1,24 @@
 {
-  "foodList": [
+  "userOrder": [
     {
       "id": 7,
       "food": "Beans Rice",
       "price": 9700,
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 9,
       "food": "Fish and rice",
       "price": 7044,
       "status": "pending"
+    },
+    {
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
     }
   ],
-  "userOrder": [
-    {
-      "food": "danielshotonwa@gmail.com",
-      "price": "danielshow"
-    },
+  "foodList": [
     {
       "food": "rice",
       "price": 340
@@ -25,6 +26,14 @@
     {
       "food": "rice",
       "price": 3
+    },
+    {
+      "food": "Beans",
+      "price": 340
+    },
+    {
+      "food": "Beans",
+      "price": 340
     }
   ]
 }
