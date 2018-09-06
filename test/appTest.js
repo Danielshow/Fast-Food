@@ -24,7 +24,7 @@ describe('Get orders', () => {
     });
   });
 });
-
+// post orders
 describe('POST Orders', () => {
   it('Success in posting orders', () => {
     const orders = {
@@ -35,12 +35,13 @@ describe('POST Orders', () => {
     };
     fetch(`${url}/orders`, {
       method: 'POST',
-      type: {
-        
-      }
+      headers: {
+        Accept: 'application/json, text/plain',
+        'Content-Type': 'application/json',
+      },
       body: orders,
     }).then(data => data.json()).then((json) => {
-      assert.typeOf(json, 'Object');
+      assert.equal(json, 'Object');
     });
   });
 });
