@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _express = require('express');
 
-var _express2 = _interopRequireDefault(_express);
-
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -15,7 +13,7 @@ var _fs2 = _interopRequireDefault(_fs);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // initialize router
-var router = _express2.default.Router();
+var router = (0, _express.Router)();
 
 // get user orders for admin page
 router.get('/orders', function (req, res) {

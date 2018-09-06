@@ -1,15 +1,25 @@
 'use strict';
 
-var _chai = require('chai');
+// import { assert } from 'chai';
+// import fetch from 'node-fetch';
+var assert = require('chai').assert;
+var fetch = require('node-fetch');
+var url = 'http://localhost:3000/api/v1';
 
-var _chai2 = _interopRequireDefault(_chai);
+describe('Get orders', function () {
+  it('Expected Array', function () {
+    fetch(url + '/orders').then(function (data) {
+      return data.json();
+    }).then(function (json) {
+      assert.typeOf(json, 'Array');
+    });
+  });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var assert = _chai2.default.assert;
-
-describe('App', function () {
-  it('app shoud return hello', function () {
-    assert.equal(app(), 'Hello');
+  it('Expected One array (Length 1)', function () {
+    fetch(url + '/orders/7').then(function (data) {
+      return data.json();
+    }).then(function (json) {
+      assert.typeOf(json, 'Object');
+    });
   });
 });

@@ -23,6 +23,7 @@ var app = (0, _express2.default)();
 
 // bodyparser middleware
 app.use(_bodyParser2.default.json());
+app.use(_bodyParser2.default.urlencoded({ extended: false }));
 // use routes folder
 app.use('/api/v1', _api2.default);
 app.use('/api/v1', _user2.default);
