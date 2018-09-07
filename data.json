@@ -1,40 +1,165 @@
 {
-  "foodList": [
-    {
-      "id": 1,
-      "food": "rice",
-      "price": 8.47,
-      "status": "pending"
-    },
-    {
-      "id": 2,
-      "food": "beans",
-      "price": 78.99,
-      "status": "completed"
-    },
-    {
-      "id": 3,
-      "food": "plantain",
-      "price": 500,
-      "status": "completed"
-    },
-    {
-      "id": 4,
-      "food": "plantain",
-      "price": 500,
-      "status": "pending"
-    },
-    {
-      "id": 5,
-      "food": "Fried Rice",
-      "price": 7700,
-      "status": "pending"
-    },
+  "userOrder": [
     {
       "id": 7,
       "food": "Beans Rice",
       "price": 9700,
+      "status": "declined"
+    },
+    {
+      "id": 20,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "comp"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
       "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
+    }
+  ],
+  "foodList": [
+    {
+      "id": 28,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 27,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 30,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
+      "food": "beans meat pomo",
+      "price": 340
     }
   ]
 }

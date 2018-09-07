@@ -4,12 +4,10 @@
   "description": "Web application for ordering food",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./routes/api.js --fix",
-    "lin": "eslint index.js --fix",
-    "test": "mocha || true",
-    "build": "babel --presets es2015 src -d dist",
-    "start": "nodemon index.js",
-    "coverage": "./node_modules/istanbul/lib/cli cover _mocha test/index.js"
+    "lint": "eslint ./routes --fix",
+    "test": "mocha ./dist/test/appTest.js --timeout 3000 --exit",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
+    "start": "npm run build && node dist/index.js"
   },
   "author": "Danielshow",
   "license": "ISC",
@@ -21,6 +19,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "chai": "^4.1.2",
+    "chai-http": "^4.2.0",
     "eslint": "^5.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",

@@ -1,66 +1,86 @@
-const express = require('express');
-const fs = require('fs');
-// initialize router
-const router = express.Router();
+import { Router } from 'express';
+import fs from 'fs';
 
+// initialize router
+const router = Router();
+
+router.get('/', (req, res) => {
+  res.status(200).send({
+    product: 'Food Fast API',
+    routes: '/ before every route',
+  });
+});
+// get user orders for admin page
 router.get('/orders', (req, res) => {
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
-  res.send(food.foodList);
+  return res.status(200).send(food.userOrder);
 });
-
+// get one order by ID
 router.get('/orders/:id', (req, res) => {
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data).foodList;
+  const food = JSON.parse(data).userOrder;
   for (let i = 0; i < food.length; i += 1) {
     if (food[i].id === Number(id)) {
-      res.send(food[i]);
+      return res.status(200).send(food[i]);
     }
   }
-});
-
-router.post('/orders', (req, res) => {
-  const newFood = req.body;
-  const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data);
-  food.foodList.push(newFood);
-  fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
-    if (err) {
-      res.send({
-        error: 'Error adding food',
-      });
-    } else {
-      res.send({
-        request: req.body,
-        Sucess: 'Food Added',
-      });
-    }
+  return res.status(404).send({
+    status: 'Food Not found',
   });
 });
-
+// post new orders to the admin page by users
+router.post('/orders', (req, res) => {
+  const newFood = req.body;
+  if (Object.keys(newFood).length === 0) {
+    return res.status(204).send({
+      status: 'No content',
+    });
+  }
+  const data = fs.readFileSync('data.json');
+  const food = JSON.parse(data);
+  food.userOrder.push(newFood);
+  fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
+    if (err) {
+      return res.send({
+        error: 'Error adding food',
+      });
+    }
+    return res.status(200).send({
+      request: req.body,
+      success: 'Food Added',
+    });
+  });
+});
+// Edit order Status declined, completed, pending by admin
 router.put('/orders/:id', (req, res) => {
-  // declined, pending, or completed
-  const params = req.body;
+  const parameter = req.body;
+  if (Object.keys(parameter).length === 0) {
+    return res.status(204).send({
+      status: 'No content',
+    });
+  }
+
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
-  for (let i = 0; i < food.foodList.length; i += 1) {
-    if (food.foodList[i].id === Number(id)) {
-      food.foodList[i].status = params.status;
+  for (let i = 0; i < food.userOrder.length; i += 1) {
+    if (food.userOrder[i].id === Number(id)) {
+      food.userOrder[i].status = parameter.status;
       fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
         if (err) {
-          res.send({
+          return res.send({
             error: 'Error updating food',
           });
-        } else {
-          res.send({
-            request: food.foodList[i],
-            Sucess: 'Status Updated',
-          });
         }
+        return res.status(200).send({
+          request: food.userOrder[i],
+          success: 'Status Updated',
+        });
       });
     }
   }
 });
-module.exports = router;
+
+export default router;
