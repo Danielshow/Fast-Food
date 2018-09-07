@@ -7,7 +7,9 @@ var _require = require('chai'),
 
 chai.use(require('chai-http'));
 
-var url = 'http://localhost:3000/api/v1';
+var url = require('../dist/index');
+
+console.log(url);
 
 // for post orders
 var order = {
@@ -163,6 +165,17 @@ describe('API endpoint PUT /foodlist/id', function () {
     return chai.request(url).put('/orders/2').send({}).then(function (res) {
       expect(res).to.have.status(204);
       expect(res).to.have.property('status');
+    });
+  });
+});
+
+// delete frood from foodList
+describe('API endpoint DELETE /foodlist/id', function () {
+  it('Should delete one food from foodlist', function () {
+    return chai.request(url).delete('/foodlist/29').then(function (res) {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('success');
     });
   });
 });

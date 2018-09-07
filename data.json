@@ -41,14 +41,15 @@
       "food": "Fish and rice",
       "price": 7044,
       "status": "pending"
+    },
+    {
+      "id": 10,
+      "food": "Fish and rice",
+      "price": 7044,
+      "status": "pending"
     }
   ],
   "foodList": [
-    {
-      "id": 29,
-      "food": "met and dpodod",
-      "price": 340
-    },
     {
       "id": 28,
       "food": "beans meat pomo",
@@ -61,6 +62,11 @@
     },
     {
       "id": 30,
+      "food": "beans meat pomo",
+      "price": 340
+    },
+    {
+      "id": 40,
       "food": "beans meat pomo",
       "price": 340
     },

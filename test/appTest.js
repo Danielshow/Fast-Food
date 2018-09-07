@@ -3,7 +3,9 @@ const { expect } = require('chai');
 
 chai.use(require('chai-http'));
 
-const url = 'http://localhost:3000/api/v1';
+const url = require('../dist/index');
+
+console.log(url);
 
 // for post orders
 const order = {

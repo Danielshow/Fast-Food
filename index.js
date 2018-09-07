@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/v1', apiRoutes);
 app.use('/api/v1', userRoutes);
 
-
 app.listen(port, () => {
   console.log(`Server Listen on port ${port}`);
 });
