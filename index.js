@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import apiRoutes from './routes/api';
 import userRoutes from './routes/user';
 
-const port = process.env.port || 3000;
 const app = express();
 
 // bodyparser middleware
@@ -13,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/v1', apiRoutes);
 app.use('/api/v1', userRoutes);
 
-app.listen(port, () => {
-  console.log(`Server Listen on port ${port}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Server Listen on port');
 });
 
 export default app;

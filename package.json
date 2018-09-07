@@ -7,8 +7,7 @@
     "lint": "eslint ./routes --fix",
     "test": "mocha ./dist/test/appTest.js --timeout 3000 --exit",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
-    "start": "npm run build && node dist/index.js",
-    "cover": "istanbul cover ./dist/test/appTest.js"
+    "start": "npm run build && node dist/index.js"
   },
   "author": "Danielshow",
   "license": "ISC",

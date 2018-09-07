@@ -22,7 +22,6 @@ var _user2 = _interopRequireDefault(_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var port = process.env.port || 3000;
 var app = (0, _express2.default)();
 
 // bodyparser middleware
@@ -32,8 +31,8 @@ app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use('/api/v1', _api2.default);
 app.use('/api/v1', _user2.default);
 
-app.listen(port, function () {
-  console.log('Server Listen on port ' + port);
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Server Listen on port');
 });
 
 exports.default = app;
