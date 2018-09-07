@@ -57,9 +57,9 @@ router.put('/orders/:id', (req, res) => {
             error: 'Error updating food',
           });
         } else {
-          res.send({
+          res.status(200).send({
             request: food.userOrder[i],
-            Sucess: 'Status Updated',
+            success: 'Status Updated',
           });
         }
       });

@@ -24,7 +24,7 @@ describe('Get orders', () => {
     });
   });
 });
-// post orders
+// post orders & put
 describe('POST Orders', () => {
   it('Success in posting orders', () => {
     const orders = {
@@ -36,12 +36,32 @@ describe('POST Orders', () => {
     fetch(`${url}/orders`, {
       method: 'POST',
       headers: {
-        Accept: 'application/json, text/plain',
+        Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
       },
-      body: orders,
+      body: JSON.stringify(orders),
     }).then(data => data.json()).then((json) => {
-      assert.equal(json, 'Object');
+      assert.equal(json.Success, 'Food Added');
     });
   });
-});
+
+  it('Update order status', () => {
+    const statusOrders = {
+      id: 35,
+      food: 'Beans Rice',
+      price: 9700,
+      status: 'pending',
+    };
+
+    fetch(`${url}/orders`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(statusOrders),
+    }).then(data => data.json()).then((json) => {
+      assert.equal(json.Success, 'Food Added');
+    });
+  });
+})

@@ -13,18 +13,15 @@
       "status": "pending"
     },
     {
-      "food": "Fish and rice",
-      "price": 7044,
+      "id": 35,
+      "food": "Beans Rice",
+      "price": 9700,
       "status": "pending"
     }
   ],
   "foodList": [
     {
       "food": "rice",
-      "price": 340
-    },
-    {
-      "food": "Beans",
       "price": 340
     },
     {
