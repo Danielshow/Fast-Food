@@ -1,9 +1,10 @@
-const chai = require('chai');
-const { expect } = require('chai');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import url from '../index';
 
-chai.use(require('chai-http'));
+const { expect } = chai;
+chai.use(chaiHttp);
 
-const url = require('../dist/index');
 // for post orders
 const order = {
   id: 10,

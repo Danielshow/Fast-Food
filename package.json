@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./routes --fix",
-    "test": "mocha --timeout 3000 --recursive --exit",
+    "test": "mocha ./dist/test/appTest.js --timeout 3000 --exit",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
-    "start": "npm run build && nodemon dist/index.js",
-    "coverage": "./node_modules/istanbul/lib/cli cover _mocha test/index.js"
+    "start": "npm run build && node dist/index.js",
+    "cover": "istanbul cover ./dist/test/appTest.js"
   },
   "author": "Danielshow",
   "license": "ISC",
