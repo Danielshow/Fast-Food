@@ -9,9 +9,28 @@ router.get('/foodlist', (req, res) => {
   const food = JSON.parse(data);
   return res.status(200).send(food.foodList);
 });
+// get foodlist by ID
+router.get('/foodlist/:id', (req, res) => {
+  const { id } = req.params;
+  const data = fs.readFileSync('data.json');
+  const food = JSON.parse(data).foodList;
+  for (let i = 0; i < food.length; i += 1) {
+    if (food[i].id === Number(id)) {
+      return res.status(200).send(food[i]);
+    }
+  }
+  return res.status(404).send({
+    status: 'Food Not found',
+  });
+});
 // post new food to foodlist by admin
 router.post('/foodlist', (req, res) => {
   const orderFood = req.body;
+  if (Object.keys(orderFood).length === 0) {
+    return res.status(204).send({
+      status: 'No content',
+    });
+  }
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
   food.foodList.push(orderFood);
@@ -23,13 +42,18 @@ router.post('/foodlist', (req, res) => {
     }
     return res.status(200).send({
       request: req.body,
-      Success: 'Food Added Successfully',
+      success: 'Food Added Successfully',
     });
   });
 });
 // Admin can update food from foodList
 router.put('/foodlist/:id', (req, res) => {
-  const params = req.body;
+  const reqData = req.body;
+  if (Object.keys(reqData).length === 0) {
+    return res.status(204).send({
+      status: 'No content',
+    });
+  }
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
@@ -37,20 +61,18 @@ router.put('/foodlist/:id', (req, res) => {
     if (food.foodList[i].id === Number(id)) {
       // food, price, status
       const newfood = food.foodList[i];
-      newfood.food = params.food;
-      newfood.price = params.price;
-      newfood.status = params.status;
+      newfood.food = reqData.food;
+      newfood.price = reqData.price;
       fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
         if (err) {
-          res.send({
+          return res.send({
             error: 'Error updating food',
           });
-        } else {
-          res.status(200).send({
-            request: food.foodList[i],
-            Sucess: 'Food Updated',
-          });
         }
+        return res.status(200).send({
+          request: food.foodList[i],
+          success: 'Food Updated',
+        });
       });
     }
   }
@@ -63,7 +85,7 @@ router.get('/totalprice', (req, res) => {
   for (let i = 0; i < newData.userOrder.length; i += 1) {
     total += newData.userOrder[i].price;
   }
-  res.status(200).send({
+  return res.status(200).send({
     total,
     status: 'Success',
   });

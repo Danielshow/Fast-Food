@@ -39,6 +39,11 @@ router.get('/orders/:id', function (req, res) {
 // post new orders to the admin page by users
 router.post('/orders', function (req, res) {
   var newFood = req.body;
+  if (Object.keys(newFood).length === 0) {
+    return res.status(204).send({
+      status: 'No content'
+    });
+  }
   var data = _fs2.default.readFileSync('data.json');
   var food = JSON.parse(data);
   food.userOrder.push(newFood);
@@ -50,13 +55,18 @@ router.post('/orders', function (req, res) {
     }
     return res.status(200).send({
       request: req.body,
-      Success: 'Food Added'
+      success: 'Food Added'
     });
   });
 });
 // Edit order Status declined, completed, pending by admin
 router.put('/orders/:id', function (req, res) {
   var parameter = req.body;
+  if (Object.keys(parameter).length === 0) {
+    return res.status(204).send({
+      status: 'No content'
+    });
+  }
   var id = req.params.id;
 
   var data = _fs2.default.readFileSync('data.json');
@@ -67,15 +77,14 @@ router.put('/orders/:id', function (req, res) {
       food.userOrder[i].status = parameter.status;
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
-          res.send({
+          return res.send({
             error: 'Error updating food'
           });
-        } else {
-          res.send({
-            request: food.userOrder[i],
-            Sucess: 'Status Updated'
-          });
         }
+        return res.status(200).send({
+          request: food.userOrder[i],
+          success: 'Status Updated'
+        });
       });
     }
   };

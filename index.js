@@ -17,3 +17,5 @@ app.use('/api/v1', userRoutes);
 app.listen(port, () => {
   console.log(`Server Listen on port ${port}`);
 });
+
+export default app;

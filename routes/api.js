@@ -27,6 +27,11 @@ router.get('/orders/:id', (req, res) => {
 // post new orders to the admin page by users
 router.post('/orders', (req, res) => {
   const newFood = req.body;
+  if (Object.keys(newFood).length === 0) {
+    return res.status(204).send({
+      status: 'No content',
+    });
+  }
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
   food.userOrder.push(newFood);
@@ -38,13 +43,18 @@ router.post('/orders', (req, res) => {
     }
     return res.status(200).send({
       request: req.body,
-      Success: 'Food Added',
+      success: 'Food Added',
     });
   });
 });
 // Edit order Status declined, completed, pending by admin
 router.put('/orders/:id', (req, res) => {
   const parameter = req.body;
+  if (Object.keys(parameter).length === 0) {
+    return res.status(204).send({
+      status: 'No content',
+    });
+  }
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
@@ -53,15 +63,14 @@ router.put('/orders/:id', (req, res) => {
       food.userOrder[i].status = parameter.status;
       fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
         if (err) {
-          res.send({
+          return res.send({
             error: 'Error updating food',
           });
-        } else {
-          res.status(200).send({
-            request: food.userOrder[i],
-            success: 'Status Updated',
-          });
         }
+        return res.status(200).send({
+          request: food.userOrder[i],
+          success: 'Status Updated',
+        });
       });
     }
   }
