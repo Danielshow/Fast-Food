@@ -77,6 +77,24 @@ router.put('/foodlist/:id', (req, res) => {
     }
   }
 });
+// Delete food from foodList
+router.delete('/foodlist/:id', (req, res) => {
+  const { id } = req.params;
+  const data = fs.readFileSync('data.json');
+  const food = JSON.parse(data);
+  food.foodList = food.foodList.filter(x => x.id !== Number(id));
+
+  fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
+    if (err) {
+      return res.send({
+        error: 'error deleting food',
+      });
+    }
+    return res.status(200).send({
+      success: 'Food deleted',
+    });
+  });
+});
 // get the price of all food ordered by admin
 router.get('/totalprice', (req, res) => {
   const data = fs.readFileSync('data.json');

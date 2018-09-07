@@ -96,6 +96,27 @@ router.put('/foodlist/:id', function (req, res) {
     _loop(i);
   }
 });
+// Delete food from foodList
+router.delete('/foodlist/:id', function (req, res) {
+  var id = req.params.id;
+
+  var data = _fs2.default.readFileSync('data.json');
+  var food = JSON.parse(data);
+  food.foodList = food.foodList.filter(function (x) {
+    return x.id !== Number(id);
+  });
+
+  _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
+    if (err) {
+      return res.send({
+        error: 'error deleting food'
+      });
+    }
+    return res.status(200).send({
+      success: 'Food deleted'
+    });
+  });
+});
 // get the price of all food ordered by admin
 router.get('/totalprice', function (req, res) {
   var data = _fs2.default.readFileSync('data.json');

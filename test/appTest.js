@@ -171,3 +171,14 @@ describe('API endpoint PUT /foodlist/id', () => {
       expect(res).to.have.property('status');
     }));
 });
+
+// delete frood from foodList
+describe('API endpoint DELETE /foodlist/id', () => {
+  it('Should delete one food from foodlist', () => chai.request(url)
+    .delete('/foodlist/29')
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('success');
+    }));
+});
