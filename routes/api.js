@@ -4,6 +4,12 @@ import fs from 'fs';
 // initialize router
 const router = Router();
 
+router.get('/', (req, res) => {
+  res.status(200).send({
+    product: 'Food Fast API',
+    routes: '/ before every route',
+  });
+});
 // get user orders for admin page
 router.get('/orders', (req, res) => {
   const data = fs.readFileSync('data.json');
@@ -55,7 +61,7 @@ router.put('/orders/:id', (req, res) => {
       status: 'No content',
     });
   }
-  
+
   const { id } = req.params;
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);

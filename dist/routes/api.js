@@ -15,6 +15,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // initialize router
 var router = (0, _express.Router)();
 
+router.get('/', function (req, res) {
+  res.status(200).send({
+    product: 'Food Fast API',
+    routes: '/ before every route'
+  });
+});
 // get user orders for admin page
 router.get('/orders', function (req, res) {
   var data = _fs2.default.readFileSync('data.json');
