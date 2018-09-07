@@ -4,9 +4,6 @@ const { expect } = require('chai');
 chai.use(require('chai-http'));
 
 const url = require('../dist/index');
-
-console.log(url);
-
 // for post orders
 const order = {
   id: 10,
@@ -32,7 +29,7 @@ const updateFood = {
 
 describe('API endpoint GET /orders', () => {
   it('Should return all orders', () => chai.request(url)
-    .get('/orders')
+    .get('/api/v1/orders')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Array');
@@ -40,14 +37,14 @@ describe('API endpoint GET /orders', () => {
     }));
 
   it('Should return one order', () => chai.request(url)
-    .get('/orders/7')
+    .get('/api/v1/orders/7')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
     }));
 
   it('Should return not found', () => chai.request(url)
-    .get('/orders/100')
+    .get('/api/v1/orders/100')
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
@@ -55,7 +52,7 @@ describe('API endpoint GET /orders', () => {
     }));
 
   it('Invalid Route should give 404', () => chai.request(url)
-    .get('/anyroute')
+    .get('/api/v1/anyroute')
     .then((res) => {
       expect(res).to.have.status(404);
     }));
@@ -64,7 +61,7 @@ describe('API endpoint GET /orders', () => {
 
 describe('API endpoint POST /orders', () => {
   it('Should post orders', () => chai.request(url)
-    .post('/orders')
+    .post('/api/v1/orders')
     .send(order)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -73,7 +70,7 @@ describe('API endpoint POST /orders', () => {
     }));
 
   it('Orders should not be empty', () => chai.request(url)
-    .post('/orders')
+    .post('/api/v1/orders')
     .send({})
     .then((res) => {
       expect(res).to.have.status(204);
@@ -83,7 +80,7 @@ describe('API endpoint POST /orders', () => {
 // put orders
 describe('API endpoint PUT /orders/id', () => {
   it('Should update order status', () => chai.request(url)
-    .put('/orders/7')
+    .put('/api/v1/orders/7')
     .send(orderStatus)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -92,7 +89,7 @@ describe('API endpoint PUT /orders/id', () => {
     }));
 
   it('Orders status should not be empty', () => chai.request(url)
-    .put('/orders/100')
+    .put('/api/v1/orders/100')
     .send({})
     .then((res) => {
       expect(res).to.have.status(204);
@@ -103,7 +100,7 @@ describe('API endpoint PUT /orders/id', () => {
 // get foodlist
 describe('API endpoint GET /foodlist', () => {
   it('Should get all foodList', () => chai.request(url)
-    .get('/foodlist')
+    .get('/api/v1/foodlist')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Array');
@@ -113,7 +110,7 @@ describe('API endpoint GET /foodlist', () => {
 // get totalprice
 describe('API endpoint GET /totalprice', () => {
   it('Should total price of food ordered', () => chai.request(url)
-    .get('/totalprice')
+    .get('/api/v1/totalprice')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -121,14 +118,14 @@ describe('API endpoint GET /totalprice', () => {
     }));
 
   it('Should return one food in foodlist', () => chai.request(url)
-    .get('/foodlist/40')
+    .get('/api/v1/foodlist/40')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
     }));
 
   it('Should return not found', () => chai.request(url)
-    .get('/foodlist/100')
+    .get('/api/v1/foodlist/100')
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
@@ -138,7 +135,7 @@ describe('API endpoint GET /totalprice', () => {
 
 describe('API endpoint POST /foodlist', () => {
   it('Should post foodList', () => chai.request(url)
-    .post('/foodlist')
+    .post('/api/v1/foodlist')
     .send(food)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -147,7 +144,7 @@ describe('API endpoint POST /foodlist', () => {
     }));
 
   it('foodList should not be empty', () => chai.request(url)
-    .post('/foodlist')
+    .post('/api/v1/foodlist')
     .send({})
     .then((res) => {
       expect(res).to.have.status(204);
@@ -157,7 +154,7 @@ describe('API endpoint POST /foodlist', () => {
 
 describe('API endpoint PUT /foodlist/id', () => {
   it('Should update foodlist', () => chai.request(url)
-    .put('/foodlist/28')
+    .put('/api/v1/foodlist/28')
     .send(updateFood)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -166,7 +163,7 @@ describe('API endpoint PUT /foodlist/id', () => {
     }));
 
   it('FoodList to be updated must not be empty', () => chai.request(url)
-    .put('/orders/2')
+    .put('/api/v1/orders/2')
     .send({})
     .then((res) => {
       expect(res).to.have.status(204);
@@ -177,7 +174,7 @@ describe('API endpoint PUT /foodlist/id', () => {
 // delete frood from foodList
 describe('API endpoint DELETE /foodlist/id', () => {
   it('Should delete one food from foodlist', () => chai.request(url)
-    .delete('/foodlist/29')
+    .delete('/api/v1/foodlist/29')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');

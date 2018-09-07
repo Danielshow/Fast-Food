@@ -8,9 +8,6 @@ var _require = require('chai'),
 chai.use(require('chai-http'));
 
 var url = require('../dist/index');
-
-console.log(url);
-
 // for post orders
 var order = {
   id: 10,
@@ -36,7 +33,7 @@ var updateFood = {
 
 describe('API endpoint GET /orders', function () {
   it('Should return all orders', function () {
-    return chai.request(url).get('/orders').then(function (res) {
+    return chai.request(url).get('/api/v1/orders').then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Array');
       expect(res.body[0]).to.be.an('object');
@@ -44,14 +41,14 @@ describe('API endpoint GET /orders', function () {
   });
 
   it('Should return one order', function () {
-    return chai.request(url).get('/orders/7').then(function (res) {
+    return chai.request(url).get('/api/v1/orders/7').then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
     });
   });
 
   it('Should return not found', function () {
-    return chai.request(url).get('/orders/100').then(function (res) {
+    return chai.request(url).get('/api/v1/orders/100').then(function (res) {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('status');
@@ -59,7 +56,7 @@ describe('API endpoint GET /orders', function () {
   });
 
   it('Invalid Route should give 404', function () {
-    return chai.request(url).get('/anyroute').then(function (res) {
+    return chai.request(url).get('/api/v1/anyroute').then(function (res) {
       expect(res).to.have.status(404);
     });
   });
@@ -67,7 +64,7 @@ describe('API endpoint GET /orders', function () {
 
 describe('API endpoint POST /orders', function () {
   it('Should post orders', function () {
-    return chai.request(url).post('/orders').send(order).then(function (res) {
+    return chai.request(url).post('/api/v1/orders').send(order).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('success');
@@ -75,7 +72,7 @@ describe('API endpoint POST /orders', function () {
   });
 
   it('Orders should not be empty', function () {
-    return chai.request(url).post('/orders').send({}).then(function (res) {
+    return chai.request(url).post('/api/v1/orders').send({}).then(function (res) {
       expect(res).to.have.status(204);
       expect(res).to.have.property('status');
     });
@@ -84,7 +81,7 @@ describe('API endpoint POST /orders', function () {
 // put orders
 describe('API endpoint PUT /orders/id', function () {
   it('Should update order status', function () {
-    return chai.request(url).put('/orders/7').send(orderStatus).then(function (res) {
+    return chai.request(url).put('/api/v1/orders/7').send(orderStatus).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('success');
@@ -92,7 +89,7 @@ describe('API endpoint PUT /orders/id', function () {
   });
 
   it('Orders status should not be empty', function () {
-    return chai.request(url).put('/orders/100').send({}).then(function (res) {
+    return chai.request(url).put('/api/v1/orders/100').send({}).then(function (res) {
       expect(res).to.have.status(204);
       expect(res).to.have.property('status');
     });
@@ -102,7 +99,7 @@ describe('API endpoint PUT /orders/id', function () {
 // get foodlist
 describe('API endpoint GET /foodlist', function () {
   it('Should get all foodList', function () {
-    return chai.request(url).get('/foodlist').then(function (res) {
+    return chai.request(url).get('/api/v1/foodlist').then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Array');
       expect(res.body[0]).to.be.an('object');
@@ -112,7 +109,7 @@ describe('API endpoint GET /foodlist', function () {
 // get totalprice
 describe('API endpoint GET /totalprice', function () {
   it('Should total price of food ordered', function () {
-    return chai.request(url).get('/totalprice').then(function (res) {
+    return chai.request(url).get('/api/v1/totalprice').then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('total');
@@ -120,14 +117,14 @@ describe('API endpoint GET /totalprice', function () {
   });
 
   it('Should return one food in foodlist', function () {
-    return chai.request(url).get('/foodlist/40').then(function (res) {
+    return chai.request(url).get('/api/v1/foodlist/40').then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
     });
   });
 
   it('Should return not found', function () {
-    return chai.request(url).get('/foodlist/100').then(function (res) {
+    return chai.request(url).get('/api/v1/foodlist/100').then(function (res) {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('status');
@@ -137,7 +134,7 @@ describe('API endpoint GET /totalprice', function () {
 
 describe('API endpoint POST /foodlist', function () {
   it('Should post foodList', function () {
-    return chai.request(url).post('/foodlist').send(food).then(function (res) {
+    return chai.request(url).post('/api/v1/foodlist').send(food).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('success');
@@ -145,7 +142,7 @@ describe('API endpoint POST /foodlist', function () {
   });
 
   it('foodList should not be empty', function () {
-    return chai.request(url).post('/foodlist').send({}).then(function (res) {
+    return chai.request(url).post('/api/v1/foodlist').send({}).then(function (res) {
       expect(res).to.have.status(204);
       expect(res).to.have.property('status');
     });
@@ -154,7 +151,7 @@ describe('API endpoint POST /foodlist', function () {
 
 describe('API endpoint PUT /foodlist/id', function () {
   it('Should update foodlist', function () {
-    return chai.request(url).put('/foodlist/28').send(updateFood).then(function (res) {
+    return chai.request(url).put('/api/v1/foodlist/28').send(updateFood).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('success');
@@ -162,7 +159,7 @@ describe('API endpoint PUT /foodlist/id', function () {
   });
 
   it('FoodList to be updated must not be empty', function () {
-    return chai.request(url).put('/orders/2').send({}).then(function (res) {
+    return chai.request(url).put('/api/v1/orders/2').send({}).then(function (res) {
       expect(res).to.have.status(204);
       expect(res).to.have.property('status');
     });
@@ -172,7 +169,7 @@ describe('API endpoint PUT /foodlist/id', function () {
 // delete frood from foodList
 describe('API endpoint DELETE /foodlist/id', function () {
   it('Should delete one food from foodlist', function () {
-    return chai.request(url).delete('/foodlist/29').then(function (res) {
+    return chai.request(url).delete('/api/v1/foodlist/29').then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('success');
