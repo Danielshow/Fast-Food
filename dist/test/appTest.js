@@ -20,10 +20,9 @@ _chai2.default.use(_chaiHttp2.default);
 
 // for post orders
 var order = {
-  id: 10,
-  food: 'Fish and rice',
-  price: 7044,
-  status: 'pending'
+  food: 'Fish',
+  quantity: '1',
+  price: '70'
 };
 // for put status
 var orderStatus = {
@@ -31,13 +30,12 @@ var orderStatus = {
 };
 // for post food
 var food = {
-  id: 40,
-  food: 'beans meat pomo',
+  food: 'beans',
   price: 340
 };
 
 var updateFood = {
-  food: 'beans meat pomo',
+  food: 'Plantain',
   price: 340
 };
 

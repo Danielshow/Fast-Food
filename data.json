@@ -1,12 +1,6 @@
 {
   "userOrder": [
     {
-      "id": 7,
-      "food": "Beans Rice",
-      "price": 9700,
-      "status": "declined"
-    },
-    {
       "id": 8,
       "food": [
         "dodo",
@@ -20,18 +14,24 @@
       ],
       "price": 20,
       "status": "Pending"
+    },
+    {
+      "id": 9,
+      "food": [
+        "Beans"
+      ],
+      "quantity": [
+        "1"
+      ],
+      "price": 20,
+      "status": "Pending"
     }
   ],
   "foodList": [
     {
       "id": 28,
-      "food": "Beans",
-      "price": "20"
-    },
-    {
-      "id": 29,
-      "food": "Rice",
-      "price": "200000"
+      "food": "Plantain",
+      "price": 340
     },
     {
       "id": 30,

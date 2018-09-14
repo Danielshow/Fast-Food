@@ -7,10 +7,9 @@ chai.use(chaiHttp);
 
 // for post orders
 const order = {
-  id: 10,
-  food: 'Fish and rice',
-  price: 7044,
-  status: 'pending',
+  food: 'Fish',
+  quantity: '1',
+  price: '70',
 };
 // for put status
 const orderStatus = {
@@ -18,13 +17,12 @@ const orderStatus = {
 };
 // for post food
 const food = {
-  id: 40,
-  food: 'beans meat pomo',
+  food: 'beans',
   price: 340,
 };
 
 const updateFood = {
-  food: 'beans meat pomo',
+  food: 'Plantain',
   price: 340,
 };
 
