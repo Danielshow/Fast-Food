@@ -117,21 +117,6 @@ describe('API endpoint GET /totalprice', () => {
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('total');
     }));
-
-  it('Should return one food in foodlist', () => chai.request(url)
-    .get('/api/v1/foodlist/40')
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('object');
-    }));
-
-  it('Should return not found', () => chai.request(url)
-    .get('/api/v1/foodlist/100')
-    .then((res) => {
-      expect(res).to.have.status(404);
-      expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('status');
-    }));
 });
 
 describe('API endpoint POST /foodlist', () => {

@@ -7,170 +7,36 @@
       "status": "declined"
     },
     {
-      "id": 20,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "comp"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
-    },
-    {
-      "id": 10,
-      "food": "Fish and rice",
-      "price": 7044,
-      "status": "pending"
+      "id": 8,
+      "food": [
+        "dodo",
+        "rice",
+        "meat"
+      ],
+      "quantity": [
+        "1",
+        "2",
+        "3"
+      ],
+      "price": 20,
+      "status": "Pending"
     }
   ],
   "foodList": [
     {
       "id": 28,
-      "food": "beans meat pomo",
-      "price": 340
+      "food": "Beans",
+      "price": "20"
     },
     {
-      "id": 27,
-      "food": "beans meat pomo",
-      "price": 340
+      "id": 29,
+      "food": "Rice",
+      "price": "200000"
     },
     {
       "id": 30,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
-    },
-    {
-      "id": 40,
-      "food": "beans meat pomo",
-      "price": 340
+      "food": "Rice",
+      "price": "200000"
     }
   ]
 }

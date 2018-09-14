@@ -125,21 +125,6 @@ describe('API endpoint GET /totalprice', function () {
       expect(res.body).to.have.property('total');
     });
   });
-
-  it('Should return one food in foodlist', function () {
-    return _chai2.default.request(_index2.default).get('/api/v1/foodlist/40').then(function (res) {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('object');
-    });
-  });
-
-  it('Should return not found', function () {
-    return _chai2.default.request(_index2.default).get('/api/v1/foodlist/100').then(function (res) {
-      expect(res).to.have.status(404);
-      expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('status');
-    });
-  });
 });
 
 describe('API endpoint POST /foodlist', function () {

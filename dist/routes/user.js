@@ -38,15 +38,36 @@ router.get('/foodlist/:id', function (req, res) {
 });
 // post new food to foodlist by admin
 router.post('/foodlist', function (req, res) {
+  // food list must contain name of food, price, id
   var orderFood = req.body;
+  // post object must not be empty
   if (Object.keys(orderFood).length === 0) {
     return res.status(204).send({
-      status: 'No content'
+      status: 'No content',
+      message: 'Request can not be empty'
+    });
+  }if (!(orderFood.food && orderFood.price)) {
+    return res.status(400).send({
+      status: 'Bad Request',
+      message: 'Request must contain food, price and ID'
     });
   }
   var data = _fs2.default.readFileSync('data.json');
   var food = JSON.parse(data);
-  food.foodList.push(orderFood);
+  // Generate Unique ID
+  var id = void 0;
+  if (food.foodList[food.foodList.length - 1] === undefined) {
+    id = 1;
+  } else {
+    id = food.foodList[food.foodList.length - 1].id + 1;
+  }
+
+  var updatedFood = {
+    id: id,
+    food: orderFood.food,
+    price: orderFood.price
+  };
+  food.foodList.push(updatedFood);
   _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
     if (err) {
       return res.status(500).send({
@@ -54,7 +75,7 @@ router.post('/foodlist', function (req, res) {
       });
     }
     return res.status(200).send({
-      request: req.body,
+      request: updatedFood,
       success: 'Food Added Successfully'
     });
   });
@@ -65,6 +86,11 @@ router.put('/foodlist/:id', function (req, res) {
   if (Object.keys(reqData).length === 0) {
     return res.status(204).send({
       status: 'No content'
+    });
+  }if (!(reqData.food && reqData.price)) {
+    return res.status(400).send({
+      status: 'Bad Request',
+      message: 'Request must contain food and price'
     });
   }
   var id = req.params.id;
@@ -105,10 +131,9 @@ router.delete('/foodlist/:id', function (req, res) {
   food.foodList = food.foodList.filter(function (x) {
     return x.id !== Number(id);
   });
-
   _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
     if (err) {
-      return res.send({
+      return res.status(500).send({
         error: 'error deleting food'
       });
     }
@@ -117,7 +142,7 @@ router.delete('/foodlist/:id', function (req, res) {
     });
   });
 });
-// get the price of all food ordered by admin
+// get the price of all food ordered by users
 router.get('/totalprice', function (req, res) {
   var data = _fs2.default.readFileSync('data.json');
   var newData = JSON.parse(data);

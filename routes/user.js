@@ -25,15 +25,36 @@ router.get('/foodlist/:id', (req, res) => {
 });
 // post new food to foodlist by admin
 router.post('/foodlist', (req, res) => {
+  // food list must contain name of food, price, id
   const orderFood = req.body;
+  // post object must not be empty
   if (Object.keys(orderFood).length === 0) {
     return res.status(204).send({
       status: 'No content',
+      message: 'Request can not be empty',
+    });
+  } if (!(orderFood.food && orderFood.price)) {
+    return res.status(400).send({
+      status: 'Bad Request',
+      message: 'Request must contain food, price and ID',
     });
   }
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
-  food.foodList.push(orderFood);
+  // Generate Unique ID
+  let id;
+  if (food.foodList[food.foodList.length - 1] === undefined) {
+    id = 1;
+  } else {
+    id = food.foodList[food.foodList.length - 1].id + 1;
+  }
+
+  const updatedFood = {
+    id,
+    food: orderFood.food,
+    price: orderFood.price,
+  }
+  food.foodList.push(updatedFood);
   fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
     if (err) {
       return res.status(500).send({
@@ -41,7 +62,7 @@ router.post('/foodlist', (req, res) => {
       });
     }
     return res.status(200).send({
-      request: req.body,
+      request: updatedFood,
       success: 'Food Added Successfully',
     });
   });
@@ -52,6 +73,11 @@ router.put('/foodlist/:id', (req, res) => {
   if (Object.keys(reqData).length === 0) {
     return res.status(204).send({
       status: 'No content',
+    });
+  } if (!(reqData.food && reqData.price)) {
+    return res.status(400).send({
+      status: 'Bad Request',
+      message: 'Request must contain food and price',
     });
   }
   const { id } = req.params;
@@ -83,10 +109,9 @@ router.delete('/foodlist/:id', (req, res) => {
   const data = fs.readFileSync('data.json');
   const food = JSON.parse(data);
   food.foodList = food.foodList.filter(x => x.id !== Number(id));
-
   fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
     if (err) {
-      return res.send({
+      return res.status(500).send({
         error: 'error deleting food',
       });
     }
@@ -95,7 +120,7 @@ router.delete('/foodlist/:id', (req, res) => {
     });
   });
 });
-// get the price of all food ordered by admin
+// get the price of all food ordered by users
 router.get('/totalprice', (req, res) => {
   const data = fs.readFileSync('data.json');
   const newData = JSON.parse(data);
