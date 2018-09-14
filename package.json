@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./routes --fix",
-    "test": "nyc mocha ./dist/test/appTest.js --exit",
+    "test": "nyc  --require babel-core/register mocha ./dist/test/appTest.js --exit",
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls",
     "build": "rm -rf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
     "start": "npm run build && nodemon dist/index.js"
