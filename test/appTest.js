@@ -36,7 +36,7 @@ describe('API endpoint GET /orders', () => {
     }));
 
   it('Should return one order', () => chai.request(url)
-    .get('/api/v1/orders/7')
+    .get('/api/v1/orders/8')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -79,7 +79,7 @@ describe('API endpoint POST /orders', () => {
 // put orders
 describe('API endpoint PUT /orders/id', () => {
   it('Should update order status', () => chai.request(url)
-    .put('/api/v1/orders/7')
+    .put('/api/v1/orders/8')
     .send(orderStatus)
     .then((res) => {
       expect(res).to.have.status(200);

@@ -49,7 +49,7 @@ describe('API endpoint GET /orders', function () {
   });
 
   it('Should return one order', function () {
-    return _chai2.default.request(_index2.default).get('/api/v1/orders/7').then(function (res) {
+    return _chai2.default.request(_index2.default).get('/api/v1/orders/8').then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
     });
@@ -89,7 +89,7 @@ describe('API endpoint POST /orders', function () {
 // put orders
 describe('API endpoint PUT /orders/id', function () {
   it('Should update order status', function () {
-    return _chai2.default.request(_index2.default).put('/api/v1/orders/7').send(orderStatus).then(function (res) {
+    return _chai2.default.request(_index2.default).put('/api/v1/orders/8').send(orderStatus).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('success');

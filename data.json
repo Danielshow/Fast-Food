@@ -13,7 +13,7 @@
         "3"
       ],
       "price": 20,
-      "status": "Pending"
+      "status": "declined"
     },
     {
       "id": 9,
@@ -24,6 +24,28 @@
         "1"
       ],
       "price": 20,
+      "status": "Pending"
+    },
+    {
+      "id": 10,
+      "food": [
+        "Fish"
+      ],
+      "quantity": [
+        "1"
+      ],
+      "price": 70,
+      "status": "Pending"
+    },
+    {
+      "id": 11,
+      "food": [
+        "Fish"
+      ],
+      "quantity": [
+        "1"
+      ],
+      "price": 70,
       "status": "Pending"
     }
   ],
@@ -37,6 +59,16 @@
       "id": 30,
       "food": "Rice",
       "price": "200000"
+    },
+    {
+      "id": 31,
+      "food": "beans",
+      "price": 340
+    },
+    {
+      "id": 32,
+      "food": "beans",
+      "price": 340
     }
   ]
 }
