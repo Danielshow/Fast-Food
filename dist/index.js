@@ -23,16 +23,17 @@ var _user2 = _interopRequireDefault(_user);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
-
 // bodyparser middleware
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
+
+app.use('/uploads', _express2.default.static('uploads'));
 // use routes folder
 app.use('/api/v1', _api2.default);
 app.use('/api/v1', _user2.default);
 
 app.listen(process.env.PORT || 3000, function () {
-  console.log('Server Listen on port');
+  console.log('Server Listen on port ' + (process.env.PORT || 3000));
 });
 
 exports.default = app;

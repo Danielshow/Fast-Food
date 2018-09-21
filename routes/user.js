@@ -1,19 +1,21 @@
 import { Router } from 'express';
 import fs from 'fs';
+import read from './read_file';
+import body from '../js/shared';
+import upload from '../js/multer_config';
 // initialize router
 const router = Router();
 
+
 // get food list available on the webpage
 router.get('/foodlist', (req, res) => {
-  const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data);
-  return res.status(200).send(food.foodList);
+  const food = read.readFromFile().foodList;
+  return res.status(200).send(food);
 });
 // get foodlist by ID
 router.get('/foodlist/:id', (req, res) => {
   const { id } = req.params;
-  const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data).foodList;
+  const food = read.readFromFile().foodList;
   for (let i = 0; i < food.length; i += 1) {
     if (food[i].id === Number(id)) {
       return res.status(200).send(food[i]);
@@ -24,37 +26,22 @@ router.get('/foodlist/:id', (req, res) => {
   });
 });
 // post new food to foodlist by admin
-router.post('/foodlist', (req, res) => {
-  // food list must contain name of food, price, id
-  const orderFood = req.body;
-  // post object must not be empty
-  if (Object.keys(orderFood).length === 0) {
-    return res.status(204).send({
-      status: 'No content',
-      message: 'Request can not be empty',
-    });
-  } if (!(orderFood.food && orderFood.price)) {
-    return res.status(400).send({
-      status: 'Bad Request',
-      message: 'Request must contain food, price and ID',
-    });
+router.post('/foodlist', upload.single('foodImage'), (req, res) => {
+  const imagePath = `${req.protocol}://${req.headers.host}/${req.file.path}`;
+  const verify = body.verifyBody(req, res);
+  if (!(verify === true)) {
+    return;
   }
-  const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data);
+  const food = read.readFromFile();
   // Generate Unique ID
-  let id;
-  if (food.foodList[food.foodList.length - 1] === undefined) {
-    id = 1;
-  } else {
-    id = food.foodList[food.foodList.length - 1].id + 1;
-  }
-
-  const updatedFood = {
+  const id = body.generateID(food.foodList);
+  const newFoodlist = {
     id,
-    food: orderFood.food,
-    price: orderFood.price,
-  }
-  food.foodList.push(updatedFood);
+    food: req.body.food,
+    price: req.body.price,
+    imagePath,
+  };
+  food.foodList.push(newFoodlist);
   fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
     if (err) {
       return res.status(500).send({
@@ -62,30 +49,22 @@ router.post('/foodlist', (req, res) => {
       });
     }
     return res.status(200).send({
-      request: updatedFood,
-      success: 'Food Added Successfully',
+      request: newFoodlist,
+      message: 'Food Added Successfully',
     });
   });
 });
 // Admin can update food from foodList
 router.put('/foodlist/:id', (req, res) => {
   const reqData = req.body;
-  if (Object.keys(reqData).length === 0) {
-    return res.status(204).send({
-      status: 'No content',
-    });
-  } if (!(reqData.food && reqData.price)) {
-    return res.status(400).send({
-      status: 'Bad Request',
-      message: 'Request must contain food and price',
-    });
+  const verify = body.verifyBody();
+  if (!(verify === true)) {
+    return;
   }
   const { id } = req.params;
-  const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data);
+  const food = read.readFromFile();
   for (let i = 0; i < food.foodList.length; i += 1) {
     if (food.foodList[i].id === Number(id)) {
-      // food, price, status
       const newfood = food.foodList[i];
       newfood.food = reqData.food;
       newfood.price = reqData.price;
@@ -106,8 +85,7 @@ router.put('/foodlist/:id', (req, res) => {
 // Delete food from foodList
 router.delete('/foodlist/:id', (req, res) => {
   const { id } = req.params;
-  const data = fs.readFileSync('data.json');
-  const food = JSON.parse(data);
+  const food = read.readFromFile();
   food.foodList = food.foodList.filter(x => x.id !== Number(id));
   fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
     if (err) {
@@ -122,8 +100,7 @@ router.delete('/foodlist/:id', (req, res) => {
 });
 // get the price of all food ordered by users
 router.get('/totalprice', (req, res) => {
-  const data = fs.readFileSync('data.json');
-  const newData = JSON.parse(data);
+  const newData = read.readFromFile();
   let total = 0;
   for (let i = 0; i < newData.userOrder.length; i += 1) {
     total += newData.userOrder[i].price;

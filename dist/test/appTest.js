@@ -109,8 +109,7 @@ describe('API endpoint GET /foodlist', function () {
   it('Should get all foodList', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/foodlist').then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Array');
-      expect(res.body[0]).to.be.an('object');
+      expect(res.body).to.be.an('object');
     });
   });
 });

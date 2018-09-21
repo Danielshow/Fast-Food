@@ -13,94 +13,16 @@
         "3"
       ],
       "price": 20,
-      "status": "declined"
-    },
-    {
-      "id": 9,
-      "food": [
-        "Beans"
-      ],
-      "quantity": [
-        "1"
-      ],
-      "price": 20,
-      "status": "Pending"
-    },
-    {
-      "id": 10,
-      "food": [
-        "Fish"
-      ],
-      "quantity": [
-        "1"
-      ],
-      "price": 70,
-      "status": "Pending"
-    },
-    {
-      "id": 11,
-      "food": [
-        "Fish"
-      ],
-      "quantity": [
-        "1"
-      ],
-      "price": 70,
-      "status": "Pending"
-    },
-    {
-      "id": 12,
-      "food": [
-        "Fish"
-      ],
-      "quantity": [
-        "1"
-      ],
-      "price": 70,
-      "status": "Pending"
-    },
-    {
-      "id": 13,
-      "food": [
-        "Fish"
-      ],
-      "quantity": [
-        "1"
-      ],
-      "price": 70,
-      "status": "Pending"
+      "status": "declined",
+      "user_id": 1
     }
   ],
   "foodList": [
     {
-      "id": 28,
-      "food": "Plantain",
-      "price": 340
-    },
-    {
-      "id": 30,
-      "food": "Rice",
-      "price": "200000"
-    },
-    {
       "id": 31,
       "food": "beans",
-      "price": 340
-    },
-    {
-      "id": 32,
-      "food": "beans",
-      "price": 340
-    },
-    {
-      "id": 33,
-      "food": "beans",
-      "price": 340
-    },
-    {
-      "id": 34,
-      "food": "beans",
-      "price": 340
+      "price": "9000",
+      "imagePath": "http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG"
     }
   ]
 }

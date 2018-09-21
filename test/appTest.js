@@ -102,8 +102,7 @@ describe('API endpoint GET /foodlist', () => {
     .get('/api/v1/foodlist')
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Array');
-      expect(res.body[0]).to.be.an('object');
+      expect(res.body).to.be.an('object');
     }));
 });
 // get totalprice
