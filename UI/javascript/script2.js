@@ -1,29 +1,28 @@
 const input = document.getElementById('myInput');
 const table = document.querySelector('table');
 const btn = document.getElementsByClassName('btn');
+input.addEventListener('keyup', searchFunction);
 
 const order={};
 
-if (document.addEventListener){
+if (document.addEventListener) {
   document.addEventListener('click', getFoodsFromClick)
 }
 
-function getFoodsFromClick(e){
-  if (e.target.parentNode && e.target.parentNode.nodeName == 'H4'){
+getFoodsFromClick = ((e) => {
+  if (e.target.parentNode && e.target.parentNode.nodeName == 'H4') {
     choice = confirm(`Are you sure you want to Order ${e.target.parentNode.innerText}`);
-    if (choice){
+    if (choice) {
       const [food, price] = e.target.parentNode.innerText.split('\n');
       order[food] = price;
       console.log(order);
-    }else{
+    } else {
       console.log('no deal');
     }
   }
-}
+})
 
-input.addEventListener('keyup', searchFunction);
-
-function searchFunction() {
+searchFunction = (() => {
   const dishes = document.getElementsByClassName('col');
   for (let i = 0; i < dishes.length; i += 1) {
     const td = dishes[i];
@@ -35,4 +34,4 @@ function searchFunction() {
       }
     }
   }
-}
+})

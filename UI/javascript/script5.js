@@ -13,30 +13,30 @@ orderbtn.addEventListener('click', orderEvent);
 paymentbtn.addEventListener('click', paymentEvent);
 addbtn.addEventListener('click', addEvent);
 
-function clickEvent() {
+clickEvent = (() => {
   people.style.display = 'block';
   order.style.display = 'none';
   paymentMade.style.display = 'none';
   addFood.style.display = 'none';
-}
+})
 
-function orderEvent() {
+orderEvent = (() => {
   order.style.display = 'block';
   people.style.display = 'none';
   paymentMade.style.display = 'none';
   addFood.style.display = 'none';
-}
+})
 
-function paymentEvent() {
+paymentEvent = (() => {
   paymentMade.style.display = 'block';
   order.style.display = 'none';
   people.style.display = 'none';
   addFood.style.display = 'none';
-}
+})
 
-function addEvent() {
+addEvent = (() => {
   addFood.style.display = 'block';
   order.style.display = 'none';
   people.style.display = 'none';
   paymentMade.style.display = 'none';
-}
+})
