@@ -21,7 +21,7 @@
 /* login */
 
 .loginpage{
-  padding-left: 20px;
+  padding-left: 10px;
   text-align: center;
   width: 50%;
   position: absolute;
@@ -102,10 +102,14 @@ margin-top: 4px;
     }
 }
 
+#error, #error2{
+  color: red;
+  margin-top: 0;
+}
 
-.container3 input[type=text], input[type=password] {
+.container3 input[type=text], input[type=email], input[type=password] {
   width: 100%;
-  padding: 15px;
+  padding: 5px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
@@ -114,7 +118,7 @@ margin-top: 4px;
   border-radius: 5px;
 }
 
-.container3 input[type=text]:focus, input[type=password]:focus {
+.container3 input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
   background-color: #ddd;
   outline: none;
 }

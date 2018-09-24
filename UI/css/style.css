@@ -243,6 +243,11 @@ hr{
   color: black;
 }
 
+.gallery a{
+  text-decoration: none;
+  color: rgb(224, 108, 65);
+}
+
 #lunch, #dinner{
   display: none;
 }
