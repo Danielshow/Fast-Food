@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Cabin');
-
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Mukta');
 *{
   box-sizing: border-box;
-  font-family: 'Cabin', sans-serif;
 }
 
 body{
@@ -13,12 +11,13 @@ body{
   position: absolute;
   margin: 0;
   padding: 0;
-  min-height: 109%;
   width: 100%;
-  background-image: linear-gradient(rgba(193, 155, 72, 0.57), rgba(193, 155, 72, 0.57)), url('../images/local_dishes/food 2.jpg');
+  min-height: 105vh;
+  background-image: linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url('../images/local_dishes/food 4.jpg');
   background-position: center center;
   background-size: cover;
   font-family: 'Mukta', sans-serif;
+  background-attachment: fixed;
 }
 
 /* Logo Styling */
@@ -44,7 +43,7 @@ body{
 .hero h3{
   font-size: 18px;
   margin-top: 25px;
-  font-family: "Monotype Corsiva"
+  font-family: 'Lobster', cursive;
 }
 
 /* Header Styling, Links */
@@ -95,7 +94,9 @@ table {
 
 th, td {
     text-align: left;
-    padding: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Mukta', sans-serif;
 }
 
 tr:nth-child(even) {
@@ -163,6 +164,10 @@ tr:nth-child(even) {
 @media screen and (max-width: 600px) {
   .socials{
     width: 100%;
+  }
+
+  .container{
+    min-height: 139vh;
   }
   .header li{
     width: 100%;

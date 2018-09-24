@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Cabin');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Mukta');
 
 *{
   box-sizing: border-box;
-  font-family: 'Cabin', sans-serif;
+  font-family: 'Mukta', sans-serif;
 }
 
 body{
@@ -41,7 +41,7 @@ body{
   top: 11%;
   text-align: center;
   width: 100%;
-  font-family: "Monotype Corsiva"
+  font-family: 'Lobster', cursive;
   font-size: 20px;
   color: black;
 }
@@ -241,6 +241,11 @@ hr{
   background: white;
   border-color: rgb(224, 108, 65);
   color: black;
+}
+
+.gallery a{
+  text-decoration: none;
+  color: rgb(224, 108, 65);
 }
 
 #lunch, #dinner{
