@@ -32,6 +32,20 @@ app.use('/uploads', _express2.default.static('uploads'));
 app.use('/api/v1', _orders2.default);
 app.use('/api/v1', _foodlist2.default);
 
+// custom 404 handler
+app.use(function (req, res, next) {
+  var error = new Error('Not Found');
+  error.status = 404;
+  next(error);
+});
+
+// error handling
+app.use(function (error, req, res) {
+  res.status(error.status || 500);
+  res.send({
+    error: error.message
+  });
+});
 app.listen(process.env.PORT || 3000, function () {
   console.log('Server Listen on port ' + (process.env.PORT || 3000));
 });

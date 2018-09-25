@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // initialize router
 var router = (0, _express.Router)();
 
-router.get('/', function (req, res) {
+router.get('/', function (req, res, next) {
   res.status(200).send({
     product: 'Food Fast API',
     routes: '/ before every route'

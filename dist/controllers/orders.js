@@ -10,7 +10,7 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
-var _read_file = require('../routes/read_file');
+var _read_file = require('../js/read_file');
 
 var _read_file2 = _interopRequireDefault(_read_file);
 

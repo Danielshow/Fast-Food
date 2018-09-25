@@ -3,7 +3,7 @@ import OrderController from '../controllers/orders';
 // initialize router
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   res.status(200).send({
     product: 'Food Fast API',
     routes: '/ before every route',

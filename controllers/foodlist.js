@@ -1,5 +1,5 @@
 import fs from 'fs';
-import read from '../routes/read_file';
+import read from '../js/read_file';
 import body from '../js/shared';
 /* eslint-disable class-methods-use-this */
 class FoodListController {
