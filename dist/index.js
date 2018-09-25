@@ -12,13 +12,13 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _api = require('./routes/api');
+var _orders = require('./routes/orders');
 
-var _api2 = _interopRequireDefault(_api);
+var _orders2 = _interopRequireDefault(_orders);
 
-var _user = require('./routes/user');
+var _foodlist = require('./routes/foodlist');
 
-var _user2 = _interopRequireDefault(_user);
+var _foodlist2 = _interopRequireDefault(_foodlist);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29,8 +29,8 @@ app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 app.use('/uploads', _express2.default.static('uploads'));
 // use routes folder
-app.use('/api/v1', _api2.default);
-app.use('/api/v1', _user2.default);
+app.use('/api/v1', _orders2.default);
+app.use('/api/v1', _foodlist2.default);
 
 app.listen(process.env.PORT || 3000, function () {
   console.log('Server Listen on port ' + (process.env.PORT || 3000));

@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import apiRoutes from './routes/api';
-import userRoutes from './routes/user';
+import apiRoutes from './routes/orders';
+import userRoutes from './routes/foodlist';
 
 const app = express();
 // bodyparser middleware
