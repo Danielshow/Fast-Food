@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "eslint ./routes --fix",
     "test": "nyc mocha ./dist/test/appTest.js --exit",
-  
-    "start": "npm run build && nodemon dist/index.js"
+
+    "start": "nodemon dist/index.js"
   },
   "author": "Danielshow",
   "license": "ISC",
