@@ -1,26 +1,27 @@
-
-*{
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Mukta');
+* {
   box-sizing: border-box;
 }
 
-body{
+body {
   margin: 0;
   padding: 0;
 }
-.container{
+.container {
   position: absolute;
   margin: 0;
   padding: 0;
-  min-height: 100%;
   width: 100%;
-  background-image: linear-gradient(rgba(193, 155, 72, 0.57), rgba(193, 155, 72, 0.57)), url('../images/local_dishes/food 2.jpg');
+  min-height: 105vh;
+  background-image: linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url('../images/local_dishes/food 4.jpg');
   background-position: center center;
   background-size: cover;
   font-family: 'Mukta', sans-serif;
+  background-attachment: fixed;
 }
 
 /* Logo Styling */
-.logo-row{
+.logo-row {
   text-align: center;
 }
 
@@ -31,7 +32,7 @@ body{
 }
 
 
-.hero{
+.hero {
   position: absolute;
   top: 11%;
   text-align: center;
@@ -39,25 +40,25 @@ body{
   color: black;
 }
 
-.hero h3{
+.hero h3 {
   font-size: 18px;
   margin-top: 25px;
   font-family: 'Lobster', cursive;
 }
 
 /* Header Styling, Links */
-.header{
+.header {
   width: 100%;
   margin: 0 auto;
   padding: 0;
   color: black;
 }
 
-.header ul{
+.header ul {
   width: 100%;
   text-align: center;
 }
-.header li{
+.header li {
   list-style-type: none;
   display: inline-block;
   padding:10px 20px 5px 10px;
@@ -66,7 +67,7 @@ body{
   font-family: centaur;
 }
 
-ul a{
+ul a {
   text-decoration: none;
   color: black;
   transition: 0.3s;
@@ -74,13 +75,13 @@ ul a{
   transition-timing-function: ease-in;
 }
 
-ul a:hover{
+ul a:hover {
   border-bottom: 2px solid rgb(224, 108, 65);
   color: white;
   padding: 8px 0;
 }
 
-.profile{
+.profile {
   width: 80%;
   margin: 0 auto;
 }
@@ -93,14 +94,16 @@ table {
 
 th, td {
     text-align: left;
-    padding: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Mukta', sans-serif;
 }
 
 tr:nth-child(even) {
     background-color: #f2f2f2
 }
 
-.profile h2{
+.profile h2 {
   text-align: center;
 }
 
@@ -116,11 +119,11 @@ tr:nth-child(even) {
   transition-duration: 1s;
 }
 
-.btn:hover{
+.btn:hover {
   background: white;
 }
 
-.footer{
+.footer {
   width: 100%;
   min-height: 25vh;
   background: rgb(40, 43, 46);
@@ -130,39 +133,43 @@ tr:nth-child(even) {
   text-align: center;
 }
 
-.list{
+.list {
   margin: 0;
   float: left;
 }
-.list a{
+.list a {
   color: white;
 }
 
-.list li{
+.list li {
   display: inline;
   padding-left: 5px;
 }
 
-.socials{
+.socials {
   margin: 0;
   float: right;
   padding-right: 20px;
 }
 
-.copy{
+.copy {
   clear: both;
 }
 
-.socials img{
+.socials img {
   height: 30px;
   width: 30px;
 }
 
 @media screen and (max-width: 600px) {
-  .socials{
+  .socials {
     width: 100%;
   }
-  .header li{
+
+  .container {
+    min-height: 139vh;
+  }
+  .header li {
     width: 100%;
     text-align: left;
     padding:0;
@@ -170,31 +177,31 @@ tr:nth-child(even) {
     display: inline;
   }
 
-  .list{
+  .list {
     width: 100%;
   }
 
-  .address p{
+  .address p {
     padding: 5px;
     width: 100%;
   }
 
-  .copy p{
+  .copy p {
     padding: 5px;
     width: 100%;
   }
 
-  .list ul{
+  .list ul {
     width: 100%;
     padding: 5px;
   }
 
-  .header ul{
+  .header ul {
     width: 100%;
     padding: 5px;
   }
 
-  .profile{
+  .profile {
     text-align: center;
   }
 }

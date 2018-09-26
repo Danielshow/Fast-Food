@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="./css/style2.css">
+  <link rel="stylesheet" href="./css/login.css">
   <link rel="stylesheet" href="./css/style.css">
   <title>Login</title>
   <link rel="icon" href="./images/logo/logo1.png">
@@ -19,34 +19,34 @@
     <div class="loginpage">
       <form action="">
         <label for="">Email:</label>
-        <input type="email" placeholder="Enter your email" required>
+        <input type="email" placeholder="Enter your email" id="loginEmail" required>
         <label for="">Password:</label>
-        <input type="password" placeholder="Input your password" required>
-        <input type="submit" value="Log in">
-      </form>
+        <input type="password" placeholder="Input your password" id="loginPassword" required>
+        <p id="error2"></p>
+        <input type="submit" value="Log in" id="loginSubmit">
+    </form>
     </div>
     <div class="form-wrapper">
-      <form>
+      <form action="profile.html">
         <div class="container3">
           <h1>Sign Up</h1>
           <p>Please fill in this form to create an account.</p>
 
-
           <label for="email"><b>Email</b></label>
-          <input type="text" placeholder="Enter Email" name="email" required>
+          <input type="email" placeholder="Enter Email" name="email" id= "email" required>
 
           <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required>
+          <input type="password" placeholder="Enter Password" name="psw" id="password" required>
 
           <label for="psw-repeat"><b>Repeat Password</b></label>
-          <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-
+          <input type="password" placeholder="Repeat Password" name="psw-repeat" id= "psw-repeat" required>
+          <p id="error"></p>
           <label>
             <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px" required> Remember me
           </label>
 
           <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-          <button type="submit" class="signupbtn">Sign Up</button>
+          <button type="submit" class="signupbtn" id="submit">Sign Up</button>
 
         </div>
       </form>
@@ -64,17 +64,19 @@
         </ul>
       </div>
       <div class="socials">
-        <img src="./images/icons/facebook.png" alt="Facebook">
-        <img src="./images/icons/google-plus.png" alt="Google">
-        <img src="./images/icons/linkedin.png" alt="LinkedIn">
-        <img src="./images/icons/twitter.png" alt="Twitter">
+        <a href="#"><img src="./images/icons/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="./images/icons/google-plus.png" alt="Google"></a>
+        <a href="#"><img src="./images/icons/linkedin.png" alt="LinkedIn"></a>
+        <a href="#"><img src="./images/icons/twitter.png" alt="Twitter"></a>
       </div>
       <div class="copy">
         <p>&copy; 2018 Fast Food Fast Inc.</p>
       </div>
     </div>
   </div>
+<script src = './javascript/script3.js'>
 
+</script>
 </body>
 
 </html>
