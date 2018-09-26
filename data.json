@@ -1,0 +1,44 @@
+{
+  "userOrder": [
+    {
+      "id": 8,
+      "food": [
+        "dodo",
+        "rice",
+        "meat"
+      ],
+      "quantity": [
+        "1",
+        "2",
+        "3"
+      ],
+      "price": 20,
+      "status": "declined",
+      "user_id": 1
+    },
+    {
+      "id": 9,
+      "food": [
+        "meat",
+        "fish",
+        "plantain"
+      ],
+      "quantity": [
+        "1",
+        "3",
+        "4"
+      ],
+      "price": 429,
+      "status": "declined",
+      "user_id": 2
+    }
+  ],
+  "foodList": [
+    {
+      "id": 31,
+      "food": "beans",
+      "price": "9000",
+      "imagePath": "http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG"
+    }
+  ]
+}
