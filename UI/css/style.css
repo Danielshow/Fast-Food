@@ -1,0 +1,432 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Mukta');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Mukta', sans-serif;
+}
+
+body{
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Home container */
+.container {
+  background-image:linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url("../images/bg/bg.jpg");
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  overflow-x: hidden;
+  position: absolute;
+  background-attachment: fixed;
+}
+
+/* Logo Styling */
+.logo-row {
+  text-align: center;
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+  text-align: center;
+}
+
+
+.hero {
+  position: absolute;
+  top: 11%;
+  text-align: center;
+  width: 100%;
+  font-family: 'Lobster', cursive;
+  font-size: 20px;
+  color: black;
+}
+
+/* Header Styling, Links */
+.header {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  color: black;
+  margin-top: 30px;
+}
+
+.header ul {
+  width: 100%;
+  text-align: center;
+}
+
+.header li {
+  list-style-type: none;
+  display: inline-block;
+  padding:10px 20px 5px 10px;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: centaur;
+}
+
+ul a {
+  text-decoration: none;
+  color: black;
+  transition: 0.3s;
+  transition-property: all;
+  transition-timing-function: ease-in;
+}
+
+ul a:hover {
+  border-bottom: 2px solid rgb(224, 108, 65);
+  color: white;
+  padding: 8px 0;
+}
+
+/* Hero Starting point*/
+.hero2 {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  color: white;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Monotype Corsiva';
+  font-size: 120%;
+  text-shadow: 2px 2px rgb(224, 108, 65);
+  border-radius: 10px;
+}
+
+.hero2 .button1 {
+  width: 200px;
+  padding: 10px;
+  font-size: 20px;
+  font-family: centaur;
+  color: white;
+  background: rgb(224, 108, 65);
+  border: 2px solid white;
+  border-radius: 10px;
+  transition-duration: 1s;
+  margin-bottom: 4px;
+}
+
+.hero2 .button2 {
+  width: 200px;
+  padding: 10px;
+  font-size: 20px;
+  font-family: centaur;
+  color:  rgb(224, 108, 65);
+  border: 2px solid rgb(224, 108, 65);
+  background: white;
+  border-radius: 10px;
+  transition-duration: 1s;
+}
+
+.hero2 .button1:hover {
+  background: white;
+  color: rgb(224,108,65);
+  border-color: rgb(224, 108, 65);
+}
+
+.button2 a {
+  color: rgb(224,108,65);
+  text-decoration: none;
+}
+
+.button1 a:hover {
+  color: rgb(224,108,65);
+  text-decoration: none;
+}
+
+.button2 a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.button1 a {
+  color: white;
+  text-decoration: none;
+}
+.hero2 .button2:hover {
+  color: white;
+  background: rgb(224, 108, 65);
+  border-color: white;
+}
+
+/* About us styling */
+.about_us {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  background: white;
+  height: 50vh;
+  width: 100%;
+  top: 100%;
+  text-align: center;
+}
+
+.about_us h1 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  border: 2px solid rgb(224, 108, 65);
+  width: 5%;
+  margin: 0 auto;
+  color: rgb(224, 108, 65);
+  margin-bottom: 1%;
+}
+
+.about_us p {
+  padding: 0 20% 0 20%;
+  font-size: 110%;
+  line-height: 1.5;
+  margin-bottom: 3%;
+}
+
+.disgrid {
+  display: inline-flex;
+}
+
+.logo1 {
+  width: 60px;
+  height: 60px;
+}
+
+/* Gallery Styling */
+.gallery {
+  position: absolute;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 10% 0 10%;
+}
+
+.column {
+  display: inline;
+  width: 100%;
+}
+
+.column img {
+  margin-top: 4px;
+  width: 24%;
+  height: 200px;
+  transition-duration: 1s;
+  border-radius: 8px;
+}
+
+.column img:hover {
+  opacity: 0.6;
+}
+
+
+.gallery button {
+  display: inline;
+  min-width: 10%;
+  height: auto;
+  font-size: 18px;
+  background: rgb(224, 108, 65);
+  color: #fff;
+  border: 2px solid rgb(224, 108, 65);
+  transition: 1s;
+  margin-bottom: 3px;
+  border-radius: 5px;
+}
+
+.gallery button:hover {
+  background: white;
+  border-color: rgb(224, 108, 65);
+  color: black;
+}
+
+.gallery a {
+  text-decoration: none;
+  color: rgb(224, 108, 65);
+}
+
+#lunch, #dinner {
+  display: none;
+}
+
+.testimonial {
+  margin-top: 5px;
+  width: 100%;
+  text-align: center;
+  background-image: linear-gradient(rgba(232, 226, 219, 0.9), rgba(232, 226, 219, 0.9)), url("../images/bg/barbecue.jpg");
+  min-height: 30vh;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size:cover;
+  padding-bottom: 10px;
+}
+
+.success-stories {
+  display: flex;
+}
+
+.quote {
+  font-size: 30px;
+  float: left;
+}
+
+.contact-us {
+  width: 30%;
+  margin: auto;
+}
+
+.contact-us label {
+  font-size: 18px;
+}
+
+input[type="email"], textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 18px;
+  padding-left: 5px;
+}
+
+.contact-us input[type="email"] {
+  height: 25px;
+  border: none;
+  border-bottom: 2px solid rgb(224, 108, 65);
+  outline: none;
+}
+
+.contact-us textarea {
+  border: 2px solid rgb(224, 108, 65);
+  outline: none;
+}
+
+input[type="submit"] {
+  width: 70px;
+  height: 40px;
+  font-size: 18px;
+  background: rgb(224, 108, 65);
+  border: 2px solid rgb(224, 108, 65);
+  color: white;
+  transition-duration: 1s;
+  margin-bottom: 3px;
+  border-radius: 5px;
+}
+
+input[type="submit"]:hover {
+  background: white;
+  color: rgb(224, 108, 65);
+  border-color: rgb(224, 108, 65);
+}
+
+/* footer styling */
+.footer {
+  width: 100%;
+  min-height: 25vh;
+  background: rgb(40, 43, 46);
+  color: white;
+  overflow: hidden;
+}
+
+.list {
+  margin: 0;
+  float: left;
+}
+.list a {
+  color: white;
+}
+
+.list li {
+  display: inline;
+  padding-left: 5px;
+}
+
+.socials {
+  margin: 0;
+  float: right;
+  padding-right: 20px;
+}
+
+.copy {
+  clear: both;
+}
+
+/* Responsive */
+ @media screen and (max-width: 800px) and (min-width: 601px) {
+  .column {
+    width: 100%;
+    display: inline;
+  }
+  .disgrid{
+    display: block;
+  }
+  .column img{
+    width: 24%;
+  }
+
+  .contact-us{
+    width: 80%;
+    padding: 20px;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .column {
+    display: inline;
+    width: 100%;
+  }
+  .column img {
+    width: 100%;
+  }
+  .header li {
+    padding: 0 5px;
+    font-size: 16px;
+  }
+  .disgrid {
+    display: block;
+  }
+
+  .success-stories {
+    display: block;
+  }
+
+  .contact-us {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .socials {
+    width: 100%;
+  }
+
+  .list {
+    width: 100%;
+  }
+
+  .address p {
+    padding: 5px;
+    width: 100%;
+  }
+
+  .copy p {
+    padding: 5px;
+    width: 100%;
+  }
+
+  .list ul {
+    width: 100%;
+    padding: 5px;
+  }
+
+  .header ul {
+    width: 100%;
+    padding: 5px;
+  }
+}
+
+.socials img {
+  height: 30px;
+  width: 30px;
+}
