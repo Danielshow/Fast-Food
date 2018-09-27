@@ -32,7 +32,7 @@ var FoodListController = function () {
     key: 'getAllFoods',
     value: function getAllFoods(req, res) {
       var food = _read_file2.default.readFromFile().foodList;
-      return res.status(200).send(food);
+      return res.status(200).json(food);
     }
   }, {
     key: 'getFood',
@@ -42,10 +42,10 @@ var FoodListController = function () {
       var food = _read_file2.default.readFromFile().foodList;
       for (var i = 0; i < food.length; i += 1) {
         if (food[i].id === Number(id)) {
-          return res.status(200).send(food[i]);
+          return res.status(200).json(food[i]);
         }
       }
-      return res.status(404).send({
+      return res.status(404).json({
         status: 'Food Not found'
       });
     }
@@ -69,11 +69,11 @@ var FoodListController = function () {
       food.foodList.push(newFoodlist);
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
-          return res.status(500).send({
+          return res.status(500).json({
             error: 'Error making request'
           });
         }
-        return res.send({
+        return res.json({
           request: newFoodlist,
           message: 'Food Added Successfully'
         });
@@ -98,11 +98,11 @@ var FoodListController = function () {
           newfood.price = reqData.price;
           _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
             if (err) {
-              return res.send({
+              return res.json({
                 error: 'Error updating food'
               });
             }
-            return res.status(200).send({
+            return res.status(200).json({
               request: food.foodList[i],
               success: 'Food Updated'
             });
@@ -125,11 +125,11 @@ var FoodListController = function () {
       });
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
-          return res.status(500).send({
+          return res.status(500).json({
             error: 'error deleting food'
           });
         }
-        return res.status(200).send({
+        return res.status(200).json({
           success: 'Food deleted'
         });
       });
@@ -142,7 +142,7 @@ var FoodListController = function () {
       for (var i = 0; i < newData.userOrder.length; i += 1) {
         total += newData.userOrder[i].price;
       }
-      return res.status(200).send({
+      return res.status(200).json({
         total: total,
         status: 'Success'
       });

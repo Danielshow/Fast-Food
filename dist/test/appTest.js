@@ -81,7 +81,7 @@ describe('API endpoint PUT /orders/id', function () {
     return _chai2.default.request(_index2.default).put('/api/v1/orders/8').send(orderStatus).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('message');
+      res.body.should.have.property('success').eql('Status Updated');
     });
   });
 });

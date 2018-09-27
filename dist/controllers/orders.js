@@ -32,7 +32,7 @@ var OrderController = function () {
     key: 'getAllOrders',
     value: function getAllOrders(req, res) {
       var food = _read_file2.default.readFromFile();
-      return res.status(200).send(food.userOrder);
+      return res.status(200).json(food.userOrder);
     }
   }, {
     key: 'getOrder',
@@ -42,10 +42,10 @@ var OrderController = function () {
       var food = _read_file2.default.readFromFile().userOrder;
       for (var i = 0; i < food.length; i += 1) {
         if (food[i].id === Number(id)) {
-          return res.status(200).send(food[i]);
+          return res.status(200).json(food[i]);
         }
       }
-      return res.status(404).send({
+      return res.status(404).json({
         status: 'Food Not found'
       });
     }
@@ -59,9 +59,9 @@ var OrderController = function () {
         return x.user_id === Number(id);
       });
       if (food.length > 0) {
-        res.status(200).send(food);
+        res.status(200).json(food);
       } else {
-        res.status(404).send({
+        res.status(404).json({
           status: 'error',
           message: 'Not Found'
         });
@@ -102,11 +102,11 @@ var OrderController = function () {
       food.userOrder.push(updatedFood);
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
-          return res.status(500).send({
+          return res.status(500).json({
             error: 'Error adding food'
           });
         }
-        return res.status(200).send({
+        return res.status(200).json({
           request: updatedFood,
           success: 'Food Added to order list Successfully'
         });
@@ -117,7 +117,7 @@ var OrderController = function () {
     value: function updateOrderStatus(req, res) {
       // status must be passed with the body
       if (!req.body.status) {
-        res.send({
+        res.json({
           error: 'Status Not sent'
         });
       }
@@ -127,15 +127,16 @@ var OrderController = function () {
       var food = _read_file2.default.readFromFile();
 
       var _loop = function _loop(i) {
+        console.log(food.userOrder[i].id);
         if (food.userOrder[i].id === Number(id)) {
           food.userOrder[i].status = status;
           _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
             if (err) {
-              return res.status(500).send({
+              return res.json({
                 error: 'Error updating food'
               });
             }
-            return res.status(200).send({
+            return res.json({
               request: food.userOrder[i],
               success: 'Status Updated'
             });
@@ -146,9 +147,6 @@ var OrderController = function () {
       for (var i = 0; i < food.userOrder.length; i += 1) {
         _loop(i);
       }
-      return res.send({
-        message: 'Food not found'
-      });
     }
   }]);
 

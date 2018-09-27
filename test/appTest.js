@@ -70,6 +70,6 @@ describe('API endpoint PUT /orders/id', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('message');
+      res.body.should.have.property('success').eql('Status Updated')
     }));
 });

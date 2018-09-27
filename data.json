@@ -15,50 +15,6 @@
       "price": 20,
       "user_id": 1,
       "status": "declined"
-    },
-    {
-      "id": 9,
-      "food": [
-        "meat",
-        "fish",
-        "plantain"
-      ],
-      "quantity": [
-        "1",
-        "3",
-        "4"
-      ],
-      "price": 429,
-      "status": "declined",
-      "user_id": 2
-    },
-    {
-      "id": 10,
-      "food": [
-        "Fish"
-      ],
-      "quantity": [
-        "1"
-      ],
-      "price": 70,
-      "status": "Pending",
-      "user_id": 6
-    },
-    {
-      "id": 11,
-      "food": [
-        "meat",
-        "fish",
-        "plantain"
-      ],
-      "quantity": [
-        "1",
-        "3",
-        "4"
-      ],
-      "price": 429,
-      "status": "Pending",
-      "user_id": 2
     }
   ],
   "foodList": [
