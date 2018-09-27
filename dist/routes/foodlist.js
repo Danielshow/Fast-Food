@@ -30,5 +30,5 @@ router.put('/foodlist/:id', _foodlist2.default.updateFood);
 // Delete food from foodList
 router.delete('/foodlist/:id', _foodlist2.default.deleteFood);
 // get the price of all food ordered by users
-router.get('/totalprice', _foodlist2.default.getTotal);
+router.get('/total', _foodlist2.default.getTotal);
 exports.default = router;
