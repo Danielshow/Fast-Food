@@ -133,3 +133,13 @@ describe('API endpoint to Delete food from foodlist', function () {
     });
   });
 });
+
+describe('API endpoint to GET total price of food ordered', function () {
+  it('Should return price of food ordered', function () {
+    return _chai2.default.request(_index2.default).delete('/api/v1/totalprice').then(function (res) {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('status').eql('Success');
+    });
+  });
+});

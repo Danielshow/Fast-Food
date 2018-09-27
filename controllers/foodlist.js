@@ -88,6 +88,7 @@ class FoodListController {
         error: 'Food Not Found',
       });
     }
+    food.foodList = foodList;
     fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
       if (err) {
         return res.status(500).json({

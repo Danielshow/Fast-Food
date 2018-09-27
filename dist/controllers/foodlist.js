@@ -129,6 +129,7 @@ var FoodListController = function () {
           error: 'Food Not Found'
         });
       }
+      food.foodList = foodList;
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
           return res.status(500).json({

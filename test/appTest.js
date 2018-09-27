@@ -121,3 +121,13 @@ describe('API endpoint to Delete food from foodlist', () => {
       res.body.should.have.property('error').eql('Food Not Found');
     }));
 });
+
+describe('API endpoint to GET total price of food ordered', () => {
+  it('Should return price of food ordered', () => chai.request(url)
+    .delete('/api/v1/totalprice')
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('status').eql('Success');
+    }));
+});
