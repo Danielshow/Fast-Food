@@ -81,7 +81,13 @@ class FoodListController {
   deleteFood(req, res) {
     const { id } = req.params;
     const food = read.readFromFile();
-    food.foodList = food.foodList.filter(x => x.id !== Number(id));
+
+    const foodList = food.foodList.filter(x => x.id !== Number(id));
+    if (foodList.length === food.foodList.length) {
+      return res.json({
+        error: 'Food Not Found',
+      });
+    }
     fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
       if (err) {
         return res.status(500).json({

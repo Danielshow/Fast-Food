@@ -120,9 +120,15 @@ var FoodListController = function () {
       var id = req.params.id;
 
       var food = _read_file2.default.readFromFile();
-      food.foodList = food.foodList.filter(function (x) {
+
+      var foodList = food.foodList.filter(function (x) {
         return x.id !== Number(id);
       });
+      if (foodList.length === food.foodList.length) {
+        return res.json({
+          error: 'Food Not Found'
+        });
+      }
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
           return res.status(500).json({

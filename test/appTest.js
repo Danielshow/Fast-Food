@@ -59,7 +59,7 @@ describe('API endpoint GET /orders', () => {
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.have.property('error');
-      res.body.should.have.property('error').eql('Not Found')
+      res.body.should.have.property('error').eql('Not Found');
     }));
 });
 // put orders
@@ -70,7 +70,7 @@ describe('API endpoint PUT /orders/id', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      res.body.should.have.property('success').eql('Status Updated')
+      res.body.should.have.property('success').eql('Status Updated');
     }));
 });
 
@@ -91,7 +91,7 @@ describe('API endpoint GET /foodlist', () => {
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('id');
       expect(res.body).to.have.property('food');
-      res.body.should.have.property('imagePath').eql('http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG')
+      res.body.should.have.property('imagePath').eql('http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG');
     }));
 
   it('Should return not found', () => chai.request(url)
@@ -101,5 +101,23 @@ describe('API endpoint GET /foodlist', () => {
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('status');
       res.body.should.have.property('status').eql('Food Not found');
+    }));
+});
+
+describe('API endpoint to Delete food from foodlist', () => {
+  it('Should delete food from foodlist with a specified ID', () => chai.request(url)
+    .delete('/api/v1/foodlist/32')
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('success').eql('Food deleted');
+    }));
+
+  it('Should return error if food not found', () => chai.request(url)
+    .delete('/api/v1/foodlist/3')
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('error').eql('Food Not Found');
     }));
 });
