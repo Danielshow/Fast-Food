@@ -5,7 +5,7 @@ import body from '../js/shared';
 class FoodListController {
   getAllFoods(req, res) {
     const food = read.readFromFile().foodList;
-    return res.status(200).send(food);
+    return res.status(200).json(food);
   }
 
   getFood(req, res) {
@@ -13,10 +13,10 @@ class FoodListController {
     const food = read.readFromFile().foodList;
     for (let i = 0; i < food.length; i += 1) {
       if (food[i].id === Number(id)) {
-        return res.status(200).send(food[i]);
+        return res.status(200).json(food[i]);
       }
     }
-    return res.status(404).send({
+    return res.status(404).json({
       status: 'Food Not found',
     });
   }
@@ -24,7 +24,7 @@ class FoodListController {
   postFood(req, res) {
     const imagePath = `${req.protocol}://${req.headers.host}/${req.file.path}`;
     const verify = body.verifyBody(req, res);
-    if (!(verify === true)) {
+    if (!(verify)) {
       return;
     }
     const food = read.readFromFile();
@@ -39,11 +39,11 @@ class FoodListController {
     food.foodList.push(newFoodlist);
     fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
       if (err) {
-        return res.status(500).send({
+        return res.status(500).json({
           error: 'Error making request',
         });
       }
-      return res.status(200).send({
+      return res.json({
         request: newFoodlist,
         message: 'Food Added Successfully',
       });
@@ -65,11 +65,11 @@ class FoodListController {
         newfood.price = reqData.price;
         fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
           if (err) {
-            return res.send({
+            return res.json({
               error: 'Error updating food',
             });
           }
-          return res.status(200).send({
+          return res.status(200).json({
             request: food.foodList[i],
             success: 'Food Updated',
           });
@@ -81,14 +81,21 @@ class FoodListController {
   deleteFood(req, res) {
     const { id } = req.params;
     const food = read.readFromFile();
-    food.foodList = food.foodList.filter(x => x.id !== Number(id));
+
+    const foodList = food.foodList.filter(x => x.id !== Number(id));
+    if (foodList.length === food.foodList.length) {
+      return res.json({
+        error: 'Food Not Found',
+      });
+    }
+    food.foodList = foodList;
     fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
       if (err) {
-        return res.status(500).send({
+        return res.status(500).json({
           error: 'error deleting food',
         });
       }
-      return res.status(200).send({
+      return res.status(200).json({
         success: 'Food deleted',
       });
     });
@@ -100,7 +107,7 @@ class FoodListController {
     for (let i = 0; i < newData.userOrder.length; i += 1) {
       total += newData.userOrder[i].price;
     }
-    return res.status(200).send({
+    return res.status(200).json({
       total,
       status: 'Success',
     });

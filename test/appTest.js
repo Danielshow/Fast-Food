@@ -3,6 +3,7 @@ import chaiHttp from 'chai-http';
 import url from '../index';
 
 const { expect } = chai;
+const should = chai.should();
 chai.use(chaiHttp);
 
 // for post orders
@@ -33,6 +34,7 @@ describe('API endpoint GET /orders', () => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Array');
       expect(res.body[0]).to.be.an('object');
+      expect(res.body[0]).to.have.property('id');
     }));
 
   it('Should return one order', () => chai.request(url)
@@ -40,6 +42,8 @@ describe('API endpoint GET /orders', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('id');
+      expect(res.body).to.have.property('food');
     }));
 
   it('Should return not found', () => chai.request(url)
@@ -54,26 +58,8 @@ describe('API endpoint GET /orders', () => {
     .get('/api/v1/anyroute')
     .then((res) => {
       expect(res).to.have.status(404);
-    }));
-});
-
-
-describe('API endpoint POST /orders', () => {
-  it('Should post orders', () => chai.request(url)
-    .post('/api/v1/orders')
-    .send(order)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('success');
-    }));
-
-  it('Orders should not be empty', () => chai.request(url)
-    .post('/api/v1/orders')
-    .send({})
-    .then((res) => {
-      expect(res).to.have.status(204);
-      expect(res).to.have.property('status');
+      expect(res.body).to.have.property('error');
+      res.body.should.have.property('error').eql('Not Found');
     }));
 });
 // put orders
@@ -84,83 +70,64 @@ describe('API endpoint PUT /orders/id', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('success');
-    }));
-
-  it('Orders status should not be empty', () => chai.request(url)
-    .put('/api/v1/orders/100')
-    .send({})
-    .then((res) => {
-      expect(res).to.have.status(204);
-      expect(res).to.have.property('status');
+      res.body.should.have.property('success').eql('Status Updated');
     }));
 });
 
-// get foodlist
 describe('API endpoint GET /foodlist', () => {
-  it('Should get all foodList', () => chai.request(url)
+  it('Should return all foods in foodlist', () => chai.request(url)
     .get('/api/v1/foodlist')
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body).to.be.an('object');
+      expect(res.body).to.be.an('Array');
+      expect(res.body[0]).to.be.an('object');
+      expect(res.body[0]).to.have.property('id');
     }));
-});
-// get totalprice
-describe('API endpoint GET /totalprice', () => {
-  it('Should total price of food ordered', () => chai.request(url)
-    .get('/api/v1/totalprice')
+
+  it('Should return one order', () => chai.request(url)
+    .get('/api/v1/foodlist/31')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('total');
+      expect(res.body).to.have.property('id');
+      expect(res.body).to.have.property('food');
+      res.body.should.have.property('imagePath').eql('http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG');
+    }));
+
+  it('Should return not found', () => chai.request(url)
+    .get('/api/v1/foodlist/100')
+    .then((res) => {
+      expect(res).to.have.status(404);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('status');
+      res.body.should.have.property('status').eql('Food Not found');
     }));
 });
 
-describe('API endpoint POST /foodlist', () => {
-  it('Should post foodList', () => chai.request(url)
-    .post('/api/v1/foodlist')
-    .send(food)
+describe('API endpoint to Delete food from foodlist', () => {
+  it('Should delete food from foodlist with a specified ID', () => chai.request(url)
+    .delete('/api/v1/foodlist/32')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('success');
+      res.body.should.have.property('success').eql('Food deleted');
     }));
 
-  it('foodList should not be empty', () => chai.request(url)
-    .post('/api/v1/foodlist')
-    .send({})
+  it('Should return error if food not found', () => chai.request(url)
+    .delete('/api/v1/foodlist/3')
     .then((res) => {
-      expect(res).to.have.status(204);
-      expect(res).to.have.property('status');
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('error').eql('Food Not Found');
     }));
 });
 
-describe('API endpoint PUT /foodlist/id', () => {
-  it('Should update foodlist', () => chai.request(url)
-    .put('/api/v1/foodlist/28')
-    .send(updateFood)
+describe('API endpoint to GET total price of food ordered', () => {
+  it('Should return price of food ordered', () => chai.request(url)
+    .delete('/api/v1/totalprice')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('success');
-    }));
-
-  it('FoodList to be updated must not be empty', () => chai.request(url)
-    .put('/api/v1/orders/2')
-    .send({})
-    .then((res) => {
-      expect(res).to.have.status(204);
-      expect(res).to.have.property('status');
-    }));
-});
-
-// delete frood from foodList
-describe('API endpoint DELETE /foodlist/id', () => {
-  it('Should delete one food from foodlist', () => chai.request(url)
-    .delete('/api/v1/foodlist/29')
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('success');
+      res.body.should.have.property('status').eql('Success');
     }));
 });
