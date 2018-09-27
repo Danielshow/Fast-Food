@@ -37,14 +37,14 @@ class OrderController {
 
   postOrder(req, res) {
     const newFood = req.body;
-    body.verifyBody(req, res);
+    body.verifyBodyandQuantity(req, res);
     // split the food and price if they are more than one
     const foodAdded = newFood.food.split(',');
     const quantity = newFood.quantity.split(',');
     let price = newFood.price.split(',');
     // check if food and quantity are of same length
     const verify = body.verifyLenghtOfVariables(foodAdded, quantity, price, res);
-    if (!(verify === true)) {
+    if (!(verify)) {
       return;
     }
     // multiply quantity by their price to get total price
@@ -81,13 +81,12 @@ class OrderController {
 
   updateOrderStatus(req, res) {
     // status must be passed with the body
-    const { status } = req.body;
-    if (Object.keys(req.body).length === 0) {
-      return res.status(204).send({
-        status: 'No content',
+    if (!req.body.status) {
+      res.send({
+        error: 'Status Not sent',
       });
     }
-
+    const { status } = req.body;
     const { id } = req.params;
     const food = read.readFromFile();
     for (let i = 0; i < food.userOrder.length; i += 1) {

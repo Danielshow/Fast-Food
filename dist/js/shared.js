@@ -5,15 +5,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   verifyBody: function verifyBody(req, res) {
-    if (Object.keys(req.body).length === 0) {
-      return res.status(204).send({
-        status: 'No content',
-        message: 'Request can not be empty'
-      });
-    }if (!(req.body.food && req.body.price)) {
+    if (!(req.body.food && req.body.price)) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain food and Price'
+      });
+    }
+    return true;
+  },
+  verifyBodyandQuantity: function verifyBodyandQuantity(req, res) {
+    if (!(req.body.food && req.body.price && req.body.quantity)) {
+      return res.send({
+        status: 'Bad Request',
+        message: 'Request must contain food, Price and quantity'
       });
     }
     return true;

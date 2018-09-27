@@ -71,14 +71,14 @@ var OrderController = function () {
     key: 'postOrder',
     value: function postOrder(req, res) {
       var newFood = req.body;
-      _shared2.default.verifyBody(req, res);
+      _shared2.default.verifyBodyandQuantity(req, res);
       // split the food and price if they are more than one
       var foodAdded = newFood.food.split(',');
       var quantity = newFood.quantity.split(',');
       var price = newFood.price.split(',');
       // check if food and quantity are of same length
       var verify = _shared2.default.verifyLenghtOfVariables(foodAdded, quantity, price, res);
-      if (!(verify === true)) {
+      if (!verify) {
         return;
       }
       // multiply quantity by their price to get total price
@@ -116,14 +116,12 @@ var OrderController = function () {
     key: 'updateOrderStatus',
     value: function updateOrderStatus(req, res) {
       // status must be passed with the body
-      var status = req.body.status;
-
-      if (Object.keys(req.body).length === 0) {
-        return res.status(204).send({
-          status: 'No content'
+      if (!req.body.status) {
+        res.send({
+          error: 'Status Not sent'
         });
       }
-
+      var status = req.body.status;
       var id = req.params.id;
 
       var food = _read_file2.default.readFromFile();

@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 });
 
 // error handling
-app.use(function (error, req, res) {
+app.use(function (error, req, res, next) {
   res.status(error.status || 500);
   res.send({
     error: error.message

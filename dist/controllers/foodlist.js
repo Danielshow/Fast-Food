@@ -54,7 +54,7 @@ var FoodListController = function () {
     value: function postFood(req, res) {
       var imagePath = req.protocol + '://' + req.headers.host + '/' + req.file.path;
       var verify = _shared2.default.verifyBody(req, res);
-      if (!(verify === true)) {
+      if (!verify) {
         return;
       }
       var food = _read_file2.default.readFromFile();
@@ -73,7 +73,7 @@ var FoodListController = function () {
             error: 'Error making request'
           });
         }
-        return res.status(200).send({
+        return res.send({
           request: newFoodlist,
           message: 'Food Added Successfully'
         });

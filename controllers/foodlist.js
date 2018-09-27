@@ -24,7 +24,7 @@ class FoodListController {
   postFood(req, res) {
     const imagePath = `${req.protocol}://${req.headers.host}/${req.file.path}`;
     const verify = body.verifyBody(req, res);
-    if (!(verify === true)) {
+    if (!(verify)) {
       return;
     }
     const food = read.readFromFile();
@@ -43,7 +43,7 @@ class FoodListController {
           error: 'Error making request',
         });
       }
-      return res.status(200).send({
+      return res.send({
         request: newFoodlist,
         message: 'Food Added Successfully',
       });
