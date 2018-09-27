@@ -8,11 +8,11 @@ Web Application for ordering varieties of Food
 fast food fast is a food delivery service app for a restaurant
 This file consist of the UI template hosted on GH-pages and API hosted on heroku
 
-## Requirements
-1. [node js](https://nodejs.org/en/)
+## Prerequisites
+1. [Node js](https://nodejs.org/en/)
 2. [Postman](https://www.getpostman.com/) To test the endpoints
 3. Any text Editor
-4. [git](https://git-scm.com/downloads)
+4. [Git](https://git-scm.com/downloads)
 
 ## Installing
 
@@ -24,10 +24,16 @@ cd fast-food
 git clone https://github.com/Danielshow/Fast-Food/
 cd "fast food"
 npm Install
+npm start
 ```
 Hurray!!! You now have the files on your local computer
 `npm install` will install all app dependencies
+`npm start` will start the project
 
+## Test
+```shell
+npm run test
+```
 
 ## Features
 1) user can create an account and log in
@@ -60,5 +66,14 @@ If you'd like to Contribute, please fork the repository and create a new branch,
 
 ## Links
 
-[Front End Homepage](https://danielshow.github.io/Fast-Food/)
-[API on Heroku](https://evening-island-29552.herokuapp.com/api/v1)
+1. [Front End Homepage](https://danielshow.github.io/Fast-Food/)
+2. [API on Heroku](https://evening-island-29552.herokuapp.com/api/v1)
+
+## Author
+
+1. Danielshow
+
+## Acknowledgement
+
+1. [Traversy Media](https://www.youtube.com/user/TechGuyWeb)
+2. [Net Ninja](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg)
