@@ -73,3 +73,33 @@ describe('API endpoint PUT /orders/id', () => {
       res.body.should.have.property('success').eql('Status Updated')
     }));
 });
+
+describe('API endpoint GET /foodlist', () => {
+  it('Should return all foods in foodlist', () => chai.request(url)
+    .get('/api/v1/foodlist')
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('Array');
+      expect(res.body[0]).to.be.an('object');
+      expect(res.body[0]).to.have.property('id');
+    }));
+
+  it('Should return one order', () => chai.request(url)
+    .get('/api/v1/foodlist/31')
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('id');
+      expect(res.body).to.have.property('food');
+      res.body.should.have.property('imagePath').eql('http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG')
+    }));
+
+  it('Should return not found', () => chai.request(url)
+    .get('/api/v1/foodlist/100')
+    .then((res) => {
+      expect(res).to.have.status(404);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('status');
+      res.body.should.have.property('status').eql('Food Not found');
+    }));
+});
