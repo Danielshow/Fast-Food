@@ -1,14 +1,30 @@
-.orderform {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  padding: 0;
-  box-sizing: border-box;
+.body{
+  display: flex;
+  flex-direction: row;
 }
 
+.orders {
+  width: 25%;
+  border: 1px solid black;
+  height: auto;
+  border-radius: 5px;
+  text-align: center;
+  background-color: white;
+  margin: 0 10px 10px 10px;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.orderform {
+  width: 75%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  margin-left: 3%;
+}
+
+
 input[type="text"] {
-  width: 80%;
-  margin: 0 auto;
+  width: 100%;
   height: 30px;
   font-size: 18px;
 }
@@ -17,9 +33,10 @@ input[type="text"]:focus {
   background-color: #ddd;
 }
 
-.row {
+.orderform .row {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   line-height: 1;
 }
@@ -32,7 +49,7 @@ input[type="text"]:focus {
 
 .col img {
   width: 100%;
-  height: 190px;
+  height: 150px;
   border-radius: 20px;
 }
 
@@ -43,7 +60,6 @@ input[type="text"]:focus {
 }
 
 button {
-  border-radius: 10px;
   outline: none;
   background: rgba(187, 129, 15, 0.49);
   color: white;
@@ -64,6 +80,17 @@ button {
   float: left;
 }
 
+#foodItems li a {
+  color: black;
+  text-decoration: underline;
+}
+
+#foodItems li a:hover {
+  color: orange;
+}
+
+
+
 @media screen and (max-width: 320px) {
   .row {
     display: flex;
@@ -72,6 +99,21 @@ button {
   .col{
     text-align: center;
     width: 100%;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .orders{
+    width: 90%;
+    margin: 0px auto;
+  }
+
+  .orderform{
+    width: 100%;
+    margin-left: 0;
   }
 }
 
@@ -91,6 +133,21 @@ button {
     height: 190px;
     border-radius: 20px;
   }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .orders{
+    width: 80%;
+    margin: 0px auto;
+  }
+
+  .orderform{
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 @media screen and (max-width: 900px) and (min-width: 599px) {
@@ -108,5 +165,20 @@ button {
     width: 100%;
     height: 190px;
     border-radius: 20px;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .orders{
+    width: 80%;
+    margin: 0px auto;
+  }
+
+  .orderform{
+    width: 100%;
+    margin-left: 0;
   }
 }
