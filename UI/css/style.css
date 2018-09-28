@@ -69,7 +69,7 @@ body{
   font-family: centaur;
 }
 
-ul a {
+.header ul a {
   text-decoration: none;
   color: black;
   transition: 0.3s;
@@ -77,7 +77,7 @@ ul a {
   transition-timing-function: ease-in;
 }
 
-ul a:hover {
+.header ul a:hover {
   border-bottom: 2px solid rgb(224, 108, 65);
   color: white;
   padding: 8px 0;
@@ -201,7 +201,7 @@ hr {
   width: 100%;
 }
 
-.row {
+.gallery .row {
   display: flex;
   flex-wrap: wrap;
   padding: 0 10% 0 10%;
