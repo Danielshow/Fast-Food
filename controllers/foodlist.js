@@ -84,7 +84,7 @@ class FoodListController {
 
     const foodList = food.foodList.filter(x => x.id !== Number(id));
     if (foodList.length === food.foodList.length) {
-      return res.json({
+      return res.status(404).json({
         error: 'Food Not Found',
       });
     }

@@ -23,6 +23,18 @@
       "food": "beans",
       "price": "9000",
       "imagePath": "http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG"
+    },
+    {
+      "id": 32,
+      "food": "beans",
+      "price": "9000",
+      "imagePath": "http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG"
+    },
+    {
+      "id": 33,
+      "food": "rice",
+      "price": "600",
+      "imagePath": "http://localhost:3000/uploads\\2018-09-28T14-09-47.149Z1.PNG"
     }
   ]
 }
