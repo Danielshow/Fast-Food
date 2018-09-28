@@ -116,7 +116,7 @@ describe('API endpoint to Delete food from foodlist', () => {
   it('Should return error if food not found', () => chai.request(url)
     .delete('/api/v1/foodlist/3')
     .then((res) => {
-      expect(res).to.have.status(200);
+      expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('error').eql('Food Not Found');
     }));

@@ -127,7 +127,7 @@ describe('API endpoint to Delete food from foodlist', function () {
 
   it('Should return error if food not found', function () {
     return _chai2.default.request(_index2.default).delete('/api/v1/foodlist/3').then(function (res) {
-      expect(res).to.have.status(200);
+      expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('error').eql('Food Not Found');
     });

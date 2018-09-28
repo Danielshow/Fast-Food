@@ -8,30 +8,30 @@ var button2 = document.getElementById('button2');
 var button3 = document.getElementById('button3');
 
 // Helper functions
-addStyle = function addStyle(button) {
+var addStyle = function addStyle(button) {
   button.style.backgroundColor = 'white';
   button.style.color = 'black';
 };
 
-removeStyle = function removeStyle(button1, button2) {
+var removeStyle = function removeStyle(button1, button2) {
   button1.style.backgroundColor = 'rgb(224, 108, 65)';
   button1.style.color = 'white';
   button2.style.backgroundColor = 'rgb(224, 108, 65)';
   button2.style.color = 'white';
 };
 
-disableButton = function disableButton(button1, button2) {
-  button1.disabled = false;
-  button2.disabled = false;
+var disableButton = function disableButton(btn1, btn2) {
+  btn1.disabled = false;
+  btn2.disabled = false;
 };
 
-buttonOneDefault = function buttonOneDefault() {
+var buttonOneDefault = function buttonOneDefault() {
   button1.disabled = true;
   button1.style.backgroundColor = 'white';
   button1.style.color = 'black';
 };
 
-breakfastEvent = function breakfastEvent() {
+var breakfastEvent = function breakfastEvent() {
   breakfast.style.display = 'block';
   lunch.style.display = 'none';
   dinner.style.display = 'none';
@@ -41,7 +41,7 @@ breakfastEvent = function breakfastEvent() {
   removeStyle(button2, button3);
 };
 
-lunchEvent = function lunchEvent() {
+var lunchEvent = function lunchEvent() {
   breakfast.style.display = 'none';
   lunch.style.display = 'block';
   dinner.style.display = 'none';
@@ -51,7 +51,7 @@ lunchEvent = function lunchEvent() {
   button2.disabled = true;
 };
 
-dinnerEvent = function dinnerEvent() {
+var dinnerEvent = function dinnerEvent() {
   breakfast.style.display = 'none';
   lunch.style.display = 'none';
   dinner.style.display = 'block';
