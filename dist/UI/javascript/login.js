@@ -10,10 +10,12 @@ var loginPassword = document.getElementById('loginPassword');
 var loginEmail = document.getElementById('loginEmail');
 var loginSubmit = document.getElementById('loginSubmit');
 
-submit.addEventListener('click', register);
-loginSubmit.addEventListener('click', login);
+var validateEmail = function validateEmail(emailInput) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(emailInput);
+};
 
-register = function register(e) {
+var register = function register(e) {
   e.preventDefault();
   if (!validateEmail(email.value)) {
     error.innerText = 'Enter a valid email';
@@ -28,15 +30,12 @@ register = function register(e) {
   window.location.replace('../profile.html');
 };
 
-login = function login(e) {
+var login = function login(e) {
   e.preventDefault();
   if (!validateEmail(loginEmail.value)) {
     error2.innerText = 'Enter a valid email';
-    return;
   }
 };
 
-validateEmail = function validateEmail(email) {
-  var re = /\S+@\S+\.\S+/;
-  return re.test(emial);
-};
+submit.addEventListener('click', register);
+loginSubmit.addEventListener('click', login);
