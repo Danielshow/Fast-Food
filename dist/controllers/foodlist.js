@@ -29,10 +29,13 @@ var FoodListController = function () {
   }
 
   _createClass(FoodListController, [{
-    key: 'getAllFoods',
-    value: function getAllFoods(req, res) {
+    key: 'getAllFood',
+    value: function getAllFood(req, res) {
       var food = _read_file2.default.readFromFile().foodList;
-      return res.status(200).json(food);
+      return res.status(200).json({
+        food: food,
+        message: 'Food Returrned Successfully'
+      });
     }
   }, {
     key: 'getFood',
@@ -42,20 +45,36 @@ var FoodListController = function () {
       var food = _read_file2.default.readFromFile().foodList;
       for (var i = 0; i < food.length; i += 1) {
         if (food[i].id === Number(id)) {
-          return res.status(200).json(food[i]);
+          return res.status(200).json({
+            food: food[i],
+            message: 'One food returned Successfully'
+          });
         }
       }
       return res.status(404).json({
-        status: 'Food Not found'
+        message: 'Food Not found'
       });
     }
   }, {
     key: 'postFood',
     value: function postFood(req, res) {
-      var imagePath = req.protocol + '://' + req.headers.host + '/' + req.file.path;
+      var imagePath = void 0;
+      if (!req.file) {
+        // set default image
+        imagePath = req.protocol + '://' + req.headers.host + '/uploads\\default.jpg';
+      } else {
+        imagePath = req.protocol + '://' + req.headers.host + '/' + req.file.path;
+      }
       var verify = _shared2.default.verifyBody(req, res);
       if (!verify) {
         return;
+      }
+      var isFood = _read_file2.default.isFoodAvailable(req.body.food);
+      if (isFood) {
+        // conflict
+        return res.status(409).send({
+          message: 'Food Already in FoodList'
+        });
       }
       var food = _read_file2.default.readFromFile();
       // Generate Unique ID
@@ -70,7 +89,7 @@ var FoodListController = function () {
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
           return res.status(500).json({
-            error: 'Error making request'
+            message: 'Error making request'
           });
         }
         return res.json({
@@ -99,12 +118,12 @@ var FoodListController = function () {
           _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
             if (err) {
               return res.json({
-                error: 'Error updating food'
+                message: 'Error updating food'
               });
             }
             return res.status(200).json({
               request: food.foodList[i],
-              success: 'Food Updated'
+              message: 'Food Updated'
             });
           });
         }
@@ -126,18 +145,18 @@ var FoodListController = function () {
       });
       if (foodList.length === food.foodList.length) {
         return res.status(404).json({
-          error: 'Food Not Found'
+          message: 'Food Not Found'
         });
       }
       food.foodList = foodList;
       _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
         if (err) {
           return res.status(500).json({
-            error: 'error deleting food'
+            message: 'error deleting food'
           });
         }
         return res.status(200).json({
-          success: 'Food deleted'
+          message: 'Food deleted'
         });
       });
     }
@@ -151,7 +170,7 @@ var FoodListController = function () {
       }
       return res.status(200).json({
         total: total,
-        status: 'Success'
+        message: 'Success, Total Returned'
       });
     }
   }]);

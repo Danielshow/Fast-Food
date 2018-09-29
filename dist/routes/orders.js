@@ -15,14 +15,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // initialize router
 var router = (0, _express.Router)();
 
-router.get('/', function (req, res, next) {
-  res.status(200).send({
-    product: 'Food Fast API',
-    routes: '/ before every route'
-  });
-});
 // get user orders for admin page
-router.get('/orders', _orders2.default.getAllOrders);
+router.get('/orders', _orders2.default.getAllOrder);
 // get one order by ID
 router.get('/orders/:id', _orders2.default.getOrder);
 // get orders by a specific logged in user by their user_id

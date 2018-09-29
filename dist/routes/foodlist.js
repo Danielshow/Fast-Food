@@ -20,7 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = (0, _express.Router)();
 
 // get food list available on the webpage
-router.get('/foodlist', _foodlist2.default.getAllFoods);
+router.get('/foodlist', _foodlist2.default.getAllFood);
 // get foodlist by ID
 router.get('/foodlist/:id', _foodlist2.default.getFood);
 // post new food to foodlist by admin

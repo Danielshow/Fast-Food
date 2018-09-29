@@ -3,14 +3,8 @@ import OrderController from '../controllers/orders';
 // initialize router
 const router = Router();
 
-router.get('/', (req, res, next) => {
-  res.status(200).send({
-    product: 'Food Fast API',
-    routes: '/ before every route',
-  });
-});
 // get user orders for admin page
-router.get('/orders', OrderController.getAllOrders);
+router.get('/orders', OrderController.getAllOrder);
 // get one order by ID
 router.get('/orders/:id', OrderController.getOrder);
 // get orders by a specific logged in user by their user_id

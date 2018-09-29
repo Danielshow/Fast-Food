@@ -35,6 +35,12 @@
       "food": "rice",
       "price": "600",
       "imagePath": "http://localhost:3000/uploads\\2018-09-28T14-09-47.149Z1.PNG"
+    },
+    {
+      "id": 34,
+      "food": "palm fruit",
+      "price": "6600",
+      "imagePath": "http://localhost:3000/uploads\\default.jpg"
     }
   ]
 }

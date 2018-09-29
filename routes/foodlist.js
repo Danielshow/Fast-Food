@@ -6,7 +6,7 @@ const router = Router();
 
 
 // get food list available on the webpage
-router.get('/foodlist', FoodlistController.getAllFoods);
+router.get('/foodlist', FoodlistController.getAllFood);
 // get foodlist by ID
 router.get('/foodlist/:id', FoodlistController.getFood);
 // post new food to foodlist by admin
