@@ -36,7 +36,7 @@ class FoodListController {
       imagePath = `${req.protocol}://${req.headers.host}/${req.file.path}`;
     }
     const verify = body.verifyBody(req, res);
-    if (!(verify)) {
+    if (verify !== true) {
       return;
     }
     const isFood = read.isFoodAvailable(req.body.food);

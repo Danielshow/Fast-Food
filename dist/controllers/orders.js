@@ -80,14 +80,17 @@ var OrderController = function () {
     key: 'postOrder',
     value: function postOrder(req, res) {
       var newFood = req.body;
-      _shared2.default.verifyBodyandQuantity(req, res);
+      var checkbody = _shared2.default.verifyBodyandQuantity(req, res);
+      if (checkbody !== true) {
+        return;
+      }
       // split the food and price if they are more than one
       var foodAdded = newFood.food.split(',');
       var quantity = newFood.quantity.split(',');
       var price = newFood.price.split(',');
       // check if food and quantity are of same length
       var verify = _shared2.default.verifyLenghtOfVariables(foodAdded, quantity, price, res);
-      if (!verify) {
+      if (verify !== true) {
         return;
       }
       // multiply quantity by their price to get total price

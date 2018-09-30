@@ -34,7 +34,7 @@ var FoodListController = function () {
       var food = _read_file2.default.readFromFile().foodList;
       return res.status(200).json({
         food: food,
-        message: 'Food Returrned Successfully'
+        message: 'Food Returned Successfully'
       });
     }
   }, {
@@ -66,7 +66,7 @@ var FoodListController = function () {
         imagePath = req.protocol + '://' + req.headers.host + '/' + req.file.path;
       }
       var verify = _shared2.default.verifyBody(req, res);
-      if (!verify) {
+      if (verify !== true) {
         return;
       }
       var isFood = _read_file2.default.isFoodAvailable(req.body.food);
