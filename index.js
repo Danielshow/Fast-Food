@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/orders';
 import userRoutes from './routes/foodlist';
+import db from './db/index';
 
 dotenv.config();
 const app = express();
