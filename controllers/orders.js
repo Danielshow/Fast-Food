@@ -3,9 +3,12 @@ import read from '../js/read_file';
 import body from '../js/shared';
 /* eslint-disable class-methods-use-this */
 class OrderController {
-  getAllOrders(req, res) {
+  getAllOrder(req, res) {
     const food = read.readFromFile();
-    return res.status(200).json(food.userOrder);
+    return res.status(200).json({
+      orders: food.userOrder,
+      message: 'Orders returned Successfully',
+    });
   }
 
   getOrder(req, res) {
@@ -13,11 +16,14 @@ class OrderController {
     const food = read.readFromFile().userOrder;
     for (let i = 0; i < food.length; i += 1) {
       if (food[i].id === Number(id)) {
-        return res.status(200).json(food[i]);
+        return res.status(200).json({
+          order: food[i],
+          message: 'Order returned successfully',
+        });
       }
     }
     return res.status(404).json({
-      status: 'Food Not found',
+      message: 'Food Not found',
     });
   }
 
@@ -26,27 +32,21 @@ class OrderController {
     let food = read.readFromFile().userOrder;
     food = food.filter(x => x.user_id === Number(id));
     if (food.length > 0) {
-      res.status(200).json(food);
+      res.status(200).json({
+        food,
+        userId: id,
+        message: 'specific user order returned successfully',
+      });
     } else {
       res.status(404).json({
-        status: 'error',
         message: 'Not Found',
       });
     }
   }
 
   postOrder(req, res) {
-    const newFood = req.body;
-    body.verifyBodyandQuantity(req, res);
-    // split the food and price if they are more than one
-    const foodAdded = newFood.food.split(',');
-    const quantity = newFood.quantity.split(',');
-    let price = newFood.price.split(',');
-    // check if food and quantity are of same length
-    const verify = body.verifyLenghtOfVariables(foodAdded, quantity, price, res);
-    if (!(verify)) {
-      return;
-    }
+    const quantity = req.body.quantity.split(',');
+    let price = req.body.price.split(',');
     // multiply quantity by their price to get total price
     let addedPrice = 0;
     for (let i = 0; i < quantity.length; i += 1) {
@@ -59,7 +59,7 @@ class OrderController {
     const id = body.generateID(food.userOrder);
     const updatedFood = {
       id,
-      food: foodAdded,
+      food: req.body.food.split(','),
       quantity,
       price,
       status: 'Pending',
@@ -69,39 +69,37 @@ class OrderController {
     fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
       if (err) {
         return res.status(500).json({
-          error: 'Error adding food',
+          message: 'Error adding food',
         });
       }
       return res.status(200).json({
         request: updatedFood,
-        success: 'Food Added to order list Successfully',
+        message: 'Food Added to order list Successfully',
       });
     });
   }
 
   updateOrderStatus(req, res) {
-    // status must be passed with the body
     if (!req.body.status) {
       res.json({
-        error: 'Status Not sent',
+        message: 'Status Not sent',
       });
     }
     const { status } = req.body;
     const { id } = req.params;
     const food = read.readFromFile();
     for (let i = 0; i < food.userOrder.length; i += 1) {
-      console.log(food.userOrder[i].id);
       if (food.userOrder[i].id === Number(id)) {
         food.userOrder[i].status = status;
         fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
           if (err) {
             return res.json({
-              error: 'Error updating food',
+              message: 'Error updating food',
             });
           }
           return res.json({
             request: food.userOrder[i],
-            success: 'Status Updated',
+            message: 'Status Updated',
           });
         });
       }

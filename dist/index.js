@@ -32,6 +32,12 @@ app.use('/uploads', _express2.default.static('uploads'));
 app.use('/api/v1', _orders2.default);
 app.use('/api/v1', _foodlist2.default);
 
+app.get('/', function (req, res) {
+  res.status(200).send({
+    product: 'Welcome to Food Fast API',
+    message: '/api/v1 before every route'
+  });
+});
 // custom 404 handler
 app.use(function (req, res, next) {
   var error = new Error('Not Found');

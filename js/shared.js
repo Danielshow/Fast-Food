@@ -1,43 +1,62 @@
 export default {
-  verifyBody(req, res) {
-    if (!(req.body.food && req.body.price)) {
+  verifyBody(req, res, next) {
+    if (!req.body.food) {
       return res.status(400).send({
         status: 'Bad Request',
-        message: 'Request must contain food and Price',
+        message: 'Request must contain food',
       });
-    }
-    return true;
-  },
-  verifyBodyandQuantity(req, res) {
-    if (!(req.body.food && req.body.price && req.body.quantity)) {
-      return res.send({
+    } if (!req.body.price) {
+      return res.status(400).send({
         status: 'Bad Request',
-        message: 'Request must contain food, Price and quantity',
+        message: 'Request must contain Price',
       });
     }
-    return true;
+    next();
   },
-  verifyLenghtOfVariables(foodAdded, quantity, price, res) {
+  verifyBodyandQuantity(req, res, next) {
+    if (!req.body.food) {
+      return res.status(400).send({
+        status: 'Bad Request',
+        message: 'Request must contain food',
+      });
+    } if (!req.body.price) {
+      return res.status(400).send({
+        status: 'Bad Request',
+        message: 'Request must contain Price',
+      });
+    } if (!req.body.quantity) {
+      return res.status(400).send({
+        status: 'Bad Request',
+        message: 'Request must contain Quantity of foods',
+      });
+    }
+    next();
+  },
+  verifyLenghtOfVariables(req, res, next) {
+    const foodAdded = req.body.food.split(',');
+    const quantity = req.body.quantity.split(',');
+    const price = req.body.price.split(',');
     if (foodAdded.length > quantity.length) {
-      return res.send({
+      // partial content
+      return res.status(206).send({
         status: 'Incomplete content',
         message: '1 or more quantity(s) is missing',
       });
     } if (quantity.length > foodAdded.length) {
-      return res.send({
+      return res.status(206).send({
         status: 'Incomplete content',
-        message: '1 or more food is missing',
+        message: '1 or more food(s) is missing',
       });
     } if (quantity.length !== price.length) {
-      return res.send({
+      return res.status(206).send({
         status: 'Incomplete content',
-        message: 'price for each food must be added',
+        message: 'Price for each food is incomplete',
       });
     }
-    return true;
+    next();
   },
   generateRandomNumber() {
-    return Math.floor(Math.random() * 10);
+    return Math.floor(Math.random() * 10 + 1);
   },
   generateID(food) {
     let id = 0;
@@ -47,5 +66,12 @@ export default {
       id = food[food.length - 1].id + 1;
     }
     return id;
+  },
+  imagePicker(req) {
+    if (!req.file) {
+      // set default image
+      return `${req.protocol}://${req.headers.host}/uploads\\default.jpg`;
+    }
+    return `${req.protocol}://${req.headers.host}/${req.file.path}`;
   },
 };

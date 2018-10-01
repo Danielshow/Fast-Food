@@ -16,7 +16,7 @@ This file consist of the UI template hosted on GH-pages and API hosted on heroku
 
 ## Installing
 
-Clone this project using git clone https://github.com/Danielshow/Fast-Food/ on your bash or cmd
+Clone this project using `git clone https://github.com/Danielshow/Fast-Food/` on your bash or cmd
 
 ```shell
 mkdir fast-food

@@ -3,9 +3,12 @@ import read from '../js/read_file';
 import body from '../js/shared';
 /* eslint-disable class-methods-use-this */
 class FoodListController {
-  getAllFoods(req, res) {
+  getAllFood(req, res) {
     const food = read.readFromFile().foodList;
-    return res.status(200).json(food);
+    return res.status(200).json({
+      food,
+      message: 'Food Returned Successfully',
+    });
   }
 
   getFood(req, res) {
@@ -13,22 +16,21 @@ class FoodListController {
     const food = read.readFromFile().foodList;
     for (let i = 0; i < food.length; i += 1) {
       if (food[i].id === Number(id)) {
-        return res.status(200).json(food[i]);
+        return res.status(200).json({
+          food: food[i],
+          message: 'One food returned Successfully',
+        });
       }
     }
     return res.status(404).json({
-      status: 'Food Not found',
+      message: 'Food Not found',
     });
   }
 
   postFood(req, res) {
-    const imagePath = `${req.protocol}://${req.headers.host}/${req.file.path}`;
-    const verify = body.verifyBody(req, res);
-    if (!(verify)) {
-      return;
-    }
     const food = read.readFromFile();
     // Generate Unique ID
+    const imagePath = body.imagePicker(req);
     const id = body.generateID(food.foodList);
     const newFoodlist = {
       id,
@@ -40,7 +42,7 @@ class FoodListController {
     fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
       if (err) {
         return res.status(500).json({
-          error: 'Error making request',
+          message: 'Error making request',
         });
       }
       return res.json({
@@ -51,27 +53,24 @@ class FoodListController {
   }
 
   updateFood(req, res) {
-    const reqData = req.body;
-    const verify = body.verifyBody();
-    if (!(verify === true)) {
-      return;
-    }
     const { id } = req.params;
+    const imagePath = body.imagePicker(req);
     const food = read.readFromFile();
     for (let i = 0; i < food.foodList.length; i += 1) {
       if (food.foodList[i].id === Number(id)) {
         const newfood = food.foodList[i];
-        newfood.food = reqData.food;
-        newfood.price = reqData.price;
+        newfood.food = req.body.food;
+        newfood.price = req.body.price;
+        newfood.imagePath = imagePath;
         fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
           if (err) {
             return res.json({
-              error: 'Error updating food',
+              message: 'Error updating food',
             });
           }
           return res.status(200).json({
             request: food.foodList[i],
-            success: 'Food Updated',
+            message: 'Food Updated',
           });
         });
       }
@@ -85,18 +84,18 @@ class FoodListController {
     const foodList = food.foodList.filter(x => x.id !== Number(id));
     if (foodList.length === food.foodList.length) {
       return res.status(404).json({
-        error: 'Food Not Found',
+        message: 'Food Not Found',
       });
     }
     food.foodList = foodList;
     fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
       if (err) {
         return res.status(500).json({
-          error: 'error deleting food',
+          message: 'error deleting food',
         });
       }
       return res.status(200).json({
-        success: 'Food deleted',
+        message: 'Food deleted',
       });
     });
   }
@@ -109,7 +108,7 @@ class FoodListController {
     }
     return res.status(200).json({
       total,
-      status: 'Success',
+      message: 'Success, Total Returned',
     });
   }
 }

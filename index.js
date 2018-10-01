@@ -13,6 +13,12 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/v1', apiRoutes);
 app.use('/api/v1', userRoutes);
 
+app.get('/', (req, res) => {
+  res.status(200).send({
+    product: 'Welcome to Food Fast API',
+    message: '/api/v1 before every route',
+  });
+});
 // custom 404 handler
 app.use((req, res, next) => {
   const error = new Error('Not Found');

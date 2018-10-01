@@ -32,9 +32,9 @@ describe('API endpoint GET /orders', () => {
     .get('/api/v1/orders')
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Array');
-      expect(res.body[0]).to.be.an('object');
-      expect(res.body[0]).to.have.property('id');
+      expect(res.body.orders).to.be.an('Array');
+      expect(res.body.orders[0]).to.have.property('id');
+      res.body.orders[0].should.have.property('price').eql(20);
     }));
 
   it('Should return one order', () => chai.request(url)
@@ -42,8 +42,9 @@ describe('API endpoint GET /orders', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('id');
-      expect(res.body).to.have.property('food');
+      expect(res.body.order.food).to.be.an('Array');
+      res.body.order.should.have.property('id').eql(8);
+      res.body.order.should.have.property('user_id').eql(1);
     }));
 
   it('Should return not found', () => chai.request(url)
@@ -51,7 +52,7 @@ describe('API endpoint GET /orders', () => {
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('status');
+      res.body.should.have.property('message').eql('Food Not found');
     }));
 
   it('Invalid Route should give 404', () => chai.request(url)
@@ -70,7 +71,8 @@ describe('API endpoint PUT /orders/id', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      res.body.should.have.property('success').eql('Status Updated');
+      res.body.should.have.property('message').eql('Status Updated');
+      res.body.request.should.have.property('status').eql('declined');
     }));
 });
 
@@ -79,9 +81,11 @@ describe('API endpoint GET /foodlist', () => {
     .get('/api/v1/foodlist')
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Array');
-      expect(res.body[0]).to.be.an('object');
-      expect(res.body[0]).to.have.property('id');
+      expect(res.body).to.be.an('object');
+      expect(res.body.food).to.be.an('Array');
+      expect(res.body.food[0]).to.be.an('object');
+      expect(res.body.food[0]).to.have.property('id');
+      res.body.food[0].should.have.property('food').eql('beans')
     }));
 
   it('Should return one order', () => chai.request(url)
@@ -89,9 +93,8 @@ describe('API endpoint GET /foodlist', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('id');
-      expect(res.body).to.have.property('food');
-      res.body.should.have.property('imagePath').eql('http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG');
+      expect(res.body.food).to.have.property('id');
+      res.body.food.should.have.property('imagePath').eql('http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG');
     }));
 
   it('Should return not found', () => chai.request(url)
@@ -99,8 +102,7 @@ describe('API endpoint GET /foodlist', () => {
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.property('status');
-      res.body.should.have.property('status').eql('Food Not found');
+      res.body.should.have.property('message').eql('Food Not found');
     }));
 });
 
@@ -110,7 +112,7 @@ describe('API endpoint to Delete food from foodlist', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      res.body.should.have.property('success').eql('Food deleted');
+      res.body.should.have.property('message').eql('Food deleted');
     }));
 
   it('Should return error if food not found', () => chai.request(url)
@@ -118,7 +120,7 @@ describe('API endpoint to Delete food from foodlist', () => {
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
-      res.body.should.have.property('error').eql('Food Not Found');
+      res.body.should.have.property('message').eql('Food Not Found');
     }));
 });
 
@@ -128,6 +130,6 @@ describe('API endpoint to GET total price of food ordered', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      res.body.should.have.property('status').eql('Success');
+      res.body.should.have.property('message').eql('Success, Total Returned');
     }));
 });
