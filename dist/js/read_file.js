@@ -16,14 +16,16 @@ var readFromFile = function readFromFile() {
   return food;
 };
 // check if food is available, return true
-var isFoodAvailable = function isFoodAvailable(food) {
+var isFoodAvailable = function isFoodAvailable(req, res, next) {
   var foods = readFromFile().foodList;
   for (var i = 0; i < foods.length; i += 1) {
-    if (food.toLowerCase() === foods[i].food.toLowerCase()) {
-      return true;
+    if (req.body.food.toLowerCase() === foods[i].food.toLowerCase()) {
+      return res.status(409).json({
+        message: 'Food Already in FoodList'
+      });
     }
   }
-  return false;
+  next();
 };
 exports.default = {
   readFromFile: readFromFile,

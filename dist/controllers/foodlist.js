@@ -58,26 +58,9 @@ var FoodListController = function () {
   }, {
     key: 'postFood',
     value: function postFood(req, res) {
-      var imagePath = void 0;
-      if (!req.file) {
-        // set default image
-        imagePath = req.protocol + '://' + req.headers.host + '/uploads\\default.jpg';
-      } else {
-        imagePath = req.protocol + '://' + req.headers.host + '/' + req.file.path;
-      }
-      var verify = _shared2.default.verifyBody(req, res);
-      if (verify !== true) {
-        return;
-      }
-      var isFood = _read_file2.default.isFoodAvailable(req.body.food);
-      if (isFood) {
-        // conflict
-        return res.status(409).send({
-          message: 'Food Already in FoodList'
-        });
-      }
       var food = _read_file2.default.readFromFile();
       // Generate Unique ID
+      var imagePath = _shared2.default.imagePicker(req);
       var id = _shared2.default.generateID(food.foodList);
       var newFoodlist = {
         id: id,
@@ -101,20 +84,17 @@ var FoodListController = function () {
   }, {
     key: 'updateFood',
     value: function updateFood(req, res) {
-      var reqData = req.body;
-      var verify = _shared2.default.verifyBody();
-      if (!(verify === true)) {
-        return;
-      }
       var id = req.params.id;
 
+      var imagePath = _shared2.default.imagePicker(req);
       var food = _read_file2.default.readFromFile();
 
       var _loop = function _loop(i) {
         if (food.foodList[i].id === Number(id)) {
           var newfood = food.foodList[i];
-          newfood.food = reqData.food;
-          newfood.price = reqData.price;
+          newfood.food = req.body.food;
+          newfood.price = req.body.price;
+          newfood.imagePath = imagePath;
           _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
             if (err) {
               return res.json({

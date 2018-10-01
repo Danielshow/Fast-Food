@@ -1,5 +1,5 @@
 export default {
-  verifyBody(req, res) {
+  verifyBody(req, res, next) {
     if (!req.body.food) {
       return res.status(400).send({
         status: 'Bad Request',
@@ -11,9 +11,9 @@ export default {
         message: 'Request must contain Price',
       });
     }
-    return true;
+    next();
   },
-  verifyBodyandQuantity(req, res) {
+  verifyBodyandQuantity(req, res, next) {
     if (!req.body.food) {
       return res.status(400).send({
         status: 'Bad Request',
@@ -30,9 +30,12 @@ export default {
         message: 'Request must contain Quantity of foods',
       });
     }
-    return true;
+    next();
   },
-  verifyLenghtOfVariables(foodAdded, quantity, price, res) {
+  verifyLenghtOfVariables(req, res, next) {
+    const foodAdded = req.body.food.split(',');
+    const quantity = req.body.quantity.split(',');
+    const price = req.body.price.split(',');
     if (foodAdded.length > quantity.length) {
       // partial content
       return res.status(206).send({
@@ -47,10 +50,10 @@ export default {
     } if (quantity.length !== price.length) {
       return res.status(206).send({
         status: 'Incomplete content',
-        message: 'Price for each food is incomlete',
+        message: 'Price for each food is incomplete',
       });
     }
-    return true;
+    next();
   },
   generateRandomNumber() {
     return Math.floor(Math.random() * 10 + 1);
@@ -63,5 +66,12 @@ export default {
       id = food[food.length - 1].id + 1;
     }
     return id;
+  },
+  imagePicker(req) {
+    if (!req.file) {
+      // set default image
+      return `${req.protocol}://${req.headers.host}/uploads\\default.jpg`;
+    }
+    return `${req.protocol}://${req.headers.host}/${req.file.path}`;
   },
 };

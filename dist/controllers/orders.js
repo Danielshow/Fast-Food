@@ -79,20 +79,8 @@ var OrderController = function () {
   }, {
     key: 'postOrder',
     value: function postOrder(req, res) {
-      var newFood = req.body;
-      var checkbody = _shared2.default.verifyBodyandQuantity(req, res);
-      if (checkbody !== true) {
-        return;
-      }
-      // split the food and price if they are more than one
-      var foodAdded = newFood.food.split(',');
-      var quantity = newFood.quantity.split(',');
-      var price = newFood.price.split(',');
-      // check if food and quantity are of same length
-      var verify = _shared2.default.verifyLenghtOfVariables(foodAdded, quantity, price, res);
-      if (verify !== true) {
-        return;
-      }
+      var quantity = req.body.quantity.split(',');
+      var price = req.body.price.split(',');
       // multiply quantity by their price to get total price
       var addedPrice = 0;
       for (var i = 0; i < quantity.length; i += 1) {
@@ -105,7 +93,7 @@ var OrderController = function () {
       var id = _shared2.default.generateID(food.userOrder);
       var updatedFood = {
         id: id,
-        food: foodAdded,
+        food: req.body.food.split(','),
         quantity: quantity,
         price: price,
         status: 'Pending',
@@ -127,7 +115,6 @@ var OrderController = function () {
   }, {
     key: 'updateOrderStatus',
     value: function updateOrderStatus(req, res) {
-      // status must be passed with the body
       if (!req.body.status) {
         res.json({
           message: 'Status Not sent'

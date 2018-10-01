@@ -6,14 +6,16 @@ const readFromFile = (() => {
   return food;
 });
 // check if food is available, return true
-const isFoodAvailable = ((food) => {
+const isFoodAvailable = ((req, res, next) => {
   const foods = readFromFile().foodList;
   for (let i = 0; i < foods.length; i += 1) {
-    if (food.toLowerCase() === foods[i].food.toLowerCase()) {
-      return true;
+    if (req.body.food.toLowerCase() === foods[i].food.toLowerCase()) {
+      return res.status(409).json({
+        message: 'Food Already in FoodList',
+      });
     }
   }
-  return false;
+  next();
 });
 export default {
   readFromFile,

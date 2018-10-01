@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  verifyBody: function verifyBody(req, res) {
+  verifyBody: function verifyBody(req, res, next) {
     if (!req.body.food) {
       return res.status(400).send({
         status: 'Bad Request',
@@ -16,9 +16,9 @@ exports.default = {
         message: 'Request must contain Price'
       });
     }
-    return true;
+    next();
   },
-  verifyBodyandQuantity: function verifyBodyandQuantity(req, res) {
+  verifyBodyandQuantity: function verifyBodyandQuantity(req, res, next) {
     if (!req.body.food) {
       return res.status(400).send({
         status: 'Bad Request',
@@ -35,9 +35,12 @@ exports.default = {
         message: 'Request must contain Quantity of foods'
       });
     }
-    return true;
+    next();
   },
-  verifyLenghtOfVariables: function verifyLenghtOfVariables(foodAdded, quantity, price, res) {
+  verifyLenghtOfVariables: function verifyLenghtOfVariables(req, res, next) {
+    var foodAdded = req.body.food.split(',');
+    var quantity = req.body.quantity.split(',');
+    var price = req.body.price.split(',');
     if (foodAdded.length > quantity.length) {
       // partial content
       return res.status(206).send({
@@ -52,10 +55,10 @@ exports.default = {
     }if (quantity.length !== price.length) {
       return res.status(206).send({
         status: 'Incomplete content',
-        message: 'Price for each food is incomlete'
+        message: 'Price for each food is incomplete'
       });
     }
-    return true;
+    next();
   },
   generateRandomNumber: function generateRandomNumber() {
     return Math.floor(Math.random() * 10 + 1);
@@ -68,5 +71,12 @@ exports.default = {
       id = food[food.length - 1].id + 1;
     }
     return id;
+  },
+  imagePicker: function imagePicker(req) {
+    if (!req.file) {
+      // set default image
+      return req.protocol + '://' + req.headers.host + '/uploads\\default.jpg';
+    }
+    return req.protocol + '://' + req.headers.host + '/' + req.file.path;
   }
 };

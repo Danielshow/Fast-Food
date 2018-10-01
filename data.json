@@ -29,6 +29,22 @@
       "price": 1350,
       "status": "Pending",
       "user_id": 3
+    },
+    {
+      "id": 10,
+      "food": [
+        "domodo",
+        "fish",
+        "meat"
+      ],
+      "quantity": [
+        "3",
+        "6",
+        "7"
+      ],
+      "price": 6260,
+      "status": "Pending",
+      "user_id": 1
     }
   ],
   "foodList": [
@@ -40,9 +56,15 @@
     },
     {
       "id": 32,
-      "food": "beans",
-      "price": "9000",
-      "imagePath": "http://localhost:3000/uploads\\2018-09-21T08-12-53.356Z1.PNG"
+      "food": "domodo",
+      "price": "450",
+      "imagePath": "http://localhost:3000/uploads\\default.jpg"
+    },
+    {
+      "id": 33,
+      "food": "dodo",
+      "price": "450",
+      "imagePath": "http://localhost:3000/uploads\\default.jpg"
     }
   ]
 }

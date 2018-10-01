@@ -45,20 +45,8 @@ class OrderController {
   }
 
   postOrder(req, res) {
-    const newFood = req.body;
-    const checkbody = body.verifyBodyandQuantity(req, res);
-    if (checkbody !== true) {
-      return;
-    }
-    // split the food and price if they are more than one
-    const foodAdded = newFood.food.split(',');
-    const quantity = newFood.quantity.split(',');
-    let price = newFood.price.split(',');
-    // check if food and quantity are of same length
-    const verify = body.verifyLenghtOfVariables(foodAdded, quantity, price, res);
-    if (verify !== true) {
-      return;
-    }
+    const quantity = req.body.quantity.split(',');
+    let price = req.body.price.split(',');
     // multiply quantity by their price to get total price
     let addedPrice = 0;
     for (let i = 0; i < quantity.length; i += 1) {
@@ -71,7 +59,7 @@ class OrderController {
     const id = body.generateID(food.userOrder);
     const updatedFood = {
       id,
-      food: foodAdded,
+      food: req.body.food.split(','),
       quantity,
       price,
       status: 'Pending',
@@ -92,7 +80,6 @@ class OrderController {
   }
 
   updateOrderStatus(req, res) {
-    // status must be passed with the body
     if (!req.body.status) {
       res.json({
         message: 'Status Not sent',

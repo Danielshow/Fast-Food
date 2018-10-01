@@ -28,26 +28,9 @@ class FoodListController {
   }
 
   postFood(req, res) {
-    let imagePath;
-    if (!req.file) {
-      // set default image
-      imagePath = `${req.protocol}://${req.headers.host}/uploads\\default.jpg`;
-    } else {
-      imagePath = `${req.protocol}://${req.headers.host}/${req.file.path}`;
-    }
-    const verify = body.verifyBody(req, res);
-    if (verify !== true) {
-      return;
-    }
-    const isFood = read.isFoodAvailable(req.body.food);
-    if (isFood) {
-      // conflict
-      return res.status(409).send({
-        message: 'Food Already in FoodList',
-      });
-    }
     const food = read.readFromFile();
     // Generate Unique ID
+    const imagePath = body.imagePicker(req);
     const id = body.generateID(food.foodList);
     const newFoodlist = {
       id,
@@ -70,18 +53,15 @@ class FoodListController {
   }
 
   updateFood(req, res) {
-    const reqData = req.body;
-    const verify = body.verifyBody();
-    if (!(verify === true)) {
-      return;
-    }
     const { id } = req.params;
+    const imagePath = body.imagePicker(req);
     const food = read.readFromFile();
     for (let i = 0; i < food.foodList.length; i += 1) {
       if (food.foodList[i].id === Number(id)) {
         const newfood = food.foodList[i];
-        newfood.food = reqData.food;
-        newfood.price = reqData.price;
+        newfood.food = req.body.food;
+        newfood.price = req.body.price;
+        newfood.imagePath = imagePath;
         fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
           if (err) {
             return res.json({
