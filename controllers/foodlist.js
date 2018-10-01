@@ -1,52 +1,55 @@
-import fs from 'fs';
-import read from '../js/read_file';
 import body from '../js/shared';
+import db from '../db/index';
 /* eslint-disable class-methods-use-this */
 class FoodListController {
   getAllFood(req, res) {
-    const food = read.readFromFile().foodList;
-    return res.status(200).json({
-      food,
-      message: 'Food Returned Successfully',
+    db.query('SELECT * FROM foodlist', (err, data) => {
+      if (err) {
+        res.status(500).json({
+          message: err.message,
+        });
+      }
+      return res.status(200).json({
+        food: data.rows,
+        message: 'Food Returned Successfully',
+      });
     });
   }
 
   getFood(req, res) {
     const { id } = req.params;
-    const food = read.readFromFile().foodList;
-    for (let i = 0; i < food.length; i += 1) {
-      if (food[i].id === Number(id)) {
+    db.query('SELECT * FROM foodlist WHERE id=$1', [id], (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          message: err.message,
+        });
+      }
+      if (data.rows.length > 0) {
         return res.status(200).json({
-          food: food[i],
+          food: data.rows[0],
           message: 'One food returned Successfully',
         });
       }
-    }
-    return res.status(404).json({
-      message: 'Food Not found',
+      return res.status(404).json({
+        message: 'Food not found',
+      });
     });
   }
 
   postFood(req, res) {
-    const food = read.readFromFile();
-    // Generate Unique ID
     const imagePath = body.imagePicker(req);
-    const id = body.generateID(food.foodList);
-    const newFoodlist = {
-      id,
-      food: req.body.food,
-      price: req.body.price,
-      imagePath,
-    };
-    food.foodList.push(newFoodlist);
-    fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
+    db.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, imagePath], (err) => {
       if (err) {
         return res.status(500).json({
-          message: 'Error making request',
+          message: err.message,
         });
       }
-      return res.json({
-        request: newFoodlist,
+      return res.status(200).json({
+        request: {
+          food: req.body.food,
+          price: req.body.price,
+          image: imagePath,
+        },
         message: 'Food Added Successfully',
       });
     });
@@ -55,43 +58,30 @@ class FoodListController {
   updateFood(req, res) {
     const { id } = req.params;
     const imagePath = body.imagePicker(req);
-    const food = read.readFromFile();
-    for (let i = 0; i < food.foodList.length; i += 1) {
-      if (food.foodList[i].id === Number(id)) {
-        const newfood = food.foodList[i];
-        newfood.food = req.body.food;
-        newfood.price = req.body.price;
-        newfood.imagePath = imagePath;
-        fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
-          if (err) {
-            return res.json({
-              message: 'Error updating food',
-            });
-          }
-          return res.status(200).json({
-            request: food.foodList[i],
-            message: 'Food Updated',
-          });
+    db.query('UPDATE foodlist SET food=$1,price=$2,image=$3 WHERE id=$4', [req.body.food, req.body.price, imagePath, id], (err) => {
+      if (err) {
+        return res.status(500).json({
+          message: err.message,
         });
       }
-    }
+      return res.status(200).json({
+        request: {
+          food: req.body.food,
+          price: req.body.price,
+          image: imagePath,
+        },
+        message: 'Food Updated',
+      });
+    });
   }
 
   deleteFood(req, res) {
+    // set food not found
     const { id } = req.params;
-    const food = read.readFromFile();
-
-    const foodList = food.foodList.filter(x => x.id !== Number(id));
-    if (foodList.length === food.foodList.length) {
-      return res.status(404).json({
-        message: 'Food Not Found',
-      });
-    }
-    food.foodList = foodList;
-    fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
+    db.query('DELETE from foodlist WHERE id=$1', [id], (err) => {
       if (err) {
         return res.status(500).json({
-          message: 'error deleting food',
+          message: err.message,
         });
       }
       return res.status(200).json({
@@ -101,14 +91,16 @@ class FoodListController {
   }
 
   getTotal(req, res) {
-    const newData = read.readFromFile();
-    let total = 0;
-    for (let i = 0; i < newData.userOrder.length; i += 1) {
-      total += newData.userOrder[i].price;
-    }
-    return res.status(200).json({
-      total,
-      message: 'Success, Total Returned',
+    db.query('SELECT sum(price) from ORDERS', (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          message: err.message,
+        });
+      }
+      return res.status(200).json({
+        total: data.rows[0].sum,
+        message: 'Success, Total Returned',
+      });
     });
   }
 }

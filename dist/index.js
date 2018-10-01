@@ -24,10 +24,6 @@ var _foodlist = require('./routes/foodlist');
 
 var _foodlist2 = _interopRequireDefault(_foodlist);
 
-var _index = require('./db/index');
-
-var _index2 = _interopRequireDefault(_index);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
@@ -37,12 +33,6 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 app.use('/uploads', _express2.default.static('uploads'));
-_index2.default.query('SELECT * FROM users', function (err, res) {
-  if (err) {
-    console.log(err);
-  }
-  console.log(res.rows);
-});
 // use routes folder
 app.use('/api/v1', _orders2.default);
 app.use('/api/v1', _foodlist2.default);

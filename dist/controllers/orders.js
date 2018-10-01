@@ -6,17 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _fs = require('fs');
+var _index = require('../db/index');
 
-var _fs2 = _interopRequireDefault(_fs);
-
-var _read_file = require('../js/read_file');
-
-var _read_file2 = _interopRequireDefault(_read_file);
-
-var _shared = require('../js/shared');
-
-var _shared2 = _interopRequireDefault(_shared);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31,10 +23,16 @@ var OrderController = function () {
   _createClass(OrderController, [{
     key: 'getAllOrder',
     value: function getAllOrder(req, res) {
-      var food = _read_file2.default.readFromFile();
-      return res.status(200).json({
-        orders: food.userOrder,
-        message: 'Orders returned Successfully'
+      _index2.default.query('SELECT * FROM orders', function (err, data) {
+        if (err) {
+          res.status(500).json({
+            message: err.message
+          });
+        }
+        return res.status(200).json({
+          orders: data.rows,
+          message: 'Orders returned successfully'
+        });
       });
     }
   }, {
@@ -42,17 +40,21 @@ var OrderController = function () {
     value: function getOrder(req, res) {
       var id = req.params.id;
 
-      var food = _read_file2.default.readFromFile().userOrder;
-      for (var i = 0; i < food.length; i += 1) {
-        if (food[i].id === Number(id)) {
-          return res.status(200).json({
-            order: food[i],
-            message: 'Order returned successfully'
+      _index2.default.query('SELECT * FROM orders WHERE id=$1', [id], function (err, data) {
+        if (err) {
+          return res.status(500).json({
+            message: err.message
           });
         }
-      }
-      return res.status(404).json({
-        message: 'Food Not found'
+        if (data.rows.length > 0) {
+          return res.status(200).json({
+            order: data.rows[0],
+            message: 'One order returned Successfully'
+          });
+        }
+        return res.status(404).json({
+          message: 'Food not found'
+        });
       });
     }
   }, {
@@ -60,54 +62,51 @@ var OrderController = function () {
     value: function getUserOrder(req, res) {
       var id = req.params.id;
 
-      var food = _read_file2.default.readFromFile().userOrder;
-      food = food.filter(function (x) {
-        return x.user_id === Number(id);
+      _index2.default.query('SELECT * FROM orders WHERE user_id=$1', [id], function (err, data) {
+        if (err) {
+          return res.status(500).json({
+            message: err.message
+          });
+        }
+        if (data.rows.length > 0) {
+          return res.status(200).json({
+            food: data.rows,
+            message: 'food returned Successfully'
+          });
+        }
+        return res.status(404).json({
+          message: 'Food by user not found'
+        });
       });
-      if (food.length > 0) {
-        res.status(200).json({
-          food: food,
-          userId: id,
-          message: 'specific user order returned successfully'
-        });
-      } else {
-        res.status(404).json({
-          message: 'Not Found'
-        });
-      }
     }
   }, {
     key: 'postOrder',
     value: function postOrder(req, res) {
       var quantity = req.body.quantity.split(',');
+      var food = req.body.food.split(',');
       var price = req.body.price.split(',');
+      // set to token
+      var userId = 2;
       // multiply quantity by their price to get total price
       var addedPrice = 0;
       for (var i = 0; i < quantity.length; i += 1) {
         addedPrice += Number(price[i]) * Number(quantity[i]);
       }
       price = addedPrice;
-      // generate random number
-      var userId = _shared2.default.generateRandomNumber();
-      var food = _read_file2.default.readFromFile();
-      var id = _shared2.default.generateID(food.userOrder);
-      var updatedFood = {
-        id: id,
-        food: req.body.food.split(','),
-        quantity: quantity,
-        price: price,
-        status: 'Pending',
-        user_id: userId
-      };
-      food.userOrder.push(updatedFood);
-      _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
+      _index2.default.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], function (err) {
         if (err) {
           return res.status(500).json({
-            message: 'Error adding food'
+            message: err.message
           });
         }
         return res.status(200).json({
-          request: updatedFood,
+          request: {
+            food: food,
+            quantity: quantity,
+            price: price,
+            status: 'new',
+            userId: userId
+          },
           message: 'Food Added to order list Successfully'
         });
       });
@@ -123,28 +122,16 @@ var OrderController = function () {
       var status = req.body.status;
       var id = req.params.id;
 
-      var food = _read_file2.default.readFromFile();
-
-      var _loop = function _loop(i) {
-        if (food.userOrder[i].id === Number(id)) {
-          food.userOrder[i].status = status;
-          _fs2.default.writeFile('data.json', JSON.stringify(food, null, 2), function (err) {
-            if (err) {
-              return res.json({
-                message: 'Error updating food'
-              });
-            }
-            return res.json({
-              request: food.userOrder[i],
-              message: 'Status Updated'
-            });
+      _index2.default.query('UPDATE orders SET status=$1 WHERE id=$2', [status, id], function (err) {
+        if (err) {
+          return res.status(500).json({
+            message: err.message
           });
         }
-      };
-
-      for (var i = 0; i < food.userOrder.length; i += 1) {
-        _loop(i);
-      }
+        return res.json({
+          message: 'Food Status Updated'
+        });
+      });
     }
   }]);
 

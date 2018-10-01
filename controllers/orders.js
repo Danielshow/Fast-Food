@@ -1,79 +1,86 @@
-import fs from 'fs';
-import read from '../js/read_file';
-import body from '../js/shared';
+import db from '../db/index';
 /* eslint-disable class-methods-use-this */
 class OrderController {
   getAllOrder(req, res) {
-    const food = read.readFromFile();
-    return res.status(200).json({
-      orders: food.userOrder,
-      message: 'Orders returned Successfully',
+    db.query('SELECT * FROM orders', (err, data) => {
+      if (err) {
+        res.status(500).json({
+          message: err.message,
+        });
+      }
+      return res.status(200).json({
+        orders: data.rows,
+        message: 'Orders returned successfully',
+      });
     });
   }
 
   getOrder(req, res) {
     const { id } = req.params;
-    const food = read.readFromFile().userOrder;
-    for (let i = 0; i < food.length; i += 1) {
-      if (food[i].id === Number(id)) {
-        return res.status(200).json({
-          order: food[i],
-          message: 'Order returned successfully',
+    db.query('SELECT * FROM orders WHERE id=$1', [id], (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          message: err.message,
         });
       }
-    }
-    return res.status(404).json({
-      message: 'Food Not found',
+      if (data.rows.length > 0) {
+        return res.status(200).json({
+          order: data.rows[0],
+          message: 'One order returned Successfully',
+        });
+      }
+      return res.status(404).json({
+        message: 'Food not found',
+      });
     });
   }
 
   getUserOrder(req, res) {
     const { id } = req.params;
-    let food = read.readFromFile().userOrder;
-    food = food.filter(x => x.user_id === Number(id));
-    if (food.length > 0) {
-      res.status(200).json({
-        food,
-        userId: id,
-        message: 'specific user order returned successfully',
+    db.query('SELECT * FROM orders WHERE user_id=$1', [id], (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          message: err.message,
+        });
+      }
+      if (data.rows.length > 0) {
+        return res.status(200).json({
+          food: data.rows,
+          message: 'food returned Successfully',
+        });
+      }
+      return res.status(404).json({
+        message: 'Food by user not found',
       });
-    } else {
-      res.status(404).json({
-        message: 'Not Found',
-      });
-    }
+    });
   }
 
   postOrder(req, res) {
     const quantity = req.body.quantity.split(',');
+    const food = req.body.food.split(',');
     let price = req.body.price.split(',');
+    // set to token
+    const userId = 2;
     // multiply quantity by their price to get total price
     let addedPrice = 0;
     for (let i = 0; i < quantity.length; i += 1) {
       addedPrice += Number(price[i]) * Number(quantity[i]);
     }
     price = addedPrice;
-    // generate random number
-    const userId = body.generateRandomNumber();
-    const food = read.readFromFile();
-    const id = body.generateID(food.userOrder);
-    const updatedFood = {
-      id,
-      food: req.body.food.split(','),
-      quantity,
-      price,
-      status: 'Pending',
-      user_id: userId,
-    };
-    food.userOrder.push(updatedFood);
-    fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
+    db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], (err) => {
       if (err) {
         return res.status(500).json({
-          message: 'Error adding food',
+          message: err.message,
         });
       }
       return res.status(200).json({
-        request: updatedFood,
+        request: {
+          food,
+          quantity,
+          price,
+          status: 'new',
+          userId,
+        },
         message: 'Food Added to order list Successfully',
       });
     });
@@ -87,23 +94,16 @@ class OrderController {
     }
     const { status } = req.body;
     const { id } = req.params;
-    const food = read.readFromFile();
-    for (let i = 0; i < food.userOrder.length; i += 1) {
-      if (food.userOrder[i].id === Number(id)) {
-        food.userOrder[i].status = status;
-        fs.writeFile('data.json', JSON.stringify(food, null, 2), (err) => {
-          if (err) {
-            return res.json({
-              message: 'Error updating food',
-            });
-          }
-          return res.json({
-            request: food.userOrder[i],
-            message: 'Status Updated',
-          });
+    db.query('UPDATE orders SET status=$1 WHERE id=$2', [status, id], (err) => {
+      if (err) {
+        return res.status(500).json({
+          message: err.message,
         });
       }
-    }
+      return res.json({
+        message: 'Food Status Updated',
+      });
+    });
   }
 }
 
