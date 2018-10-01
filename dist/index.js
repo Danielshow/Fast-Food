@@ -12,6 +12,10 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _orders = require('./routes/orders');
 
 var _orders2 = _interopRequireDefault(_orders);
@@ -22,6 +26,7 @@ var _foodlist2 = _interopRequireDefault(_foodlist);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_dotenv2.default.config();
 var app = (0, _express2.default)();
 // bodyparser middleware
 app.use(_bodyParser2.default.json());
@@ -52,8 +57,8 @@ app.use(function (error, req, res, next) {
     error: error.message
   });
 });
-app.listen(process.env.PORT || 3000, function () {
-  console.log('Server Listen on port ' + (process.env.PORT || 3000));
+app.listen(process.env.PORT, function () {
+  console.log('Server Listen on port ' + process.env.PORT);
 });
 
 exports.default = app;
