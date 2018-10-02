@@ -12,6 +12,12 @@ db.query('DROP TABLE IF EXISTS foodlist', (err) => {
   }
 });
 
+db.query('DROP TABLE IF EXISTS users', (err) => {
+  if (err) {
+    console.log(err);
+  }
+});
+
 db.query('DROP TYPE IF EXISTS status', (err) => {
   if (err) {
     console.log(err);

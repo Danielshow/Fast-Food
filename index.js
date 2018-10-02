@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/orders';
 import userRoutes from './routes/foodlist';
+import authRoutes from './routes/auth';
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use('/uploads', express.static('uploads'));
 // use routes folder
 app.use('/api/v1', apiRoutes);
 app.use('/api/v1', userRoutes);
+app.use('/api/v1', authRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send({

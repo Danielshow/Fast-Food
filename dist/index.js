@@ -24,6 +24,10 @@ var _foodlist = require('./routes/foodlist');
 
 var _foodlist2 = _interopRequireDefault(_foodlist);
 
+var _auth = require('./routes/auth');
+
+var _auth2 = _interopRequireDefault(_auth);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
@@ -36,6 +40,7 @@ app.use('/uploads', _express2.default.static('uploads'));
 // use routes folder
 app.use('/api/v1', _orders2.default);
 app.use('/api/v1', _foodlist2.default);
+app.use('/api/v1', _auth2.default);
 
 app.get('/', function (req, res) {
   res.status(200).send({

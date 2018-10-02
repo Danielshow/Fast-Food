@@ -1,5 +1,5 @@
 export default {
-  verifyBody(req, res, next) {
+  verifyBody: (req, res, next) => {
     if (!req.body.food) {
       return res.status(400).send({
         status: 'Bad Request',
@@ -13,7 +13,7 @@ export default {
     }
     next();
   },
-  verifyBodyandQuantity(req, res, next) {
+  verifyBodyandQuantity: (req, res, next) => {
     if (!req.body.food) {
       return res.status(400).send({
         status: 'Bad Request',
@@ -32,7 +32,7 @@ export default {
     }
     next();
   },
-  verifyLenghtOfVariables(req, res, next) {
+  verifyLenghtOfVariables: (req, res, next) => {
     const foodAdded = req.body.food.split(',');
     const quantity = req.body.quantity.split(',');
     const price = req.body.price.split(',');
@@ -55,10 +55,10 @@ export default {
     }
     next();
   },
-  generateRandomNumber() {
+  generateRandomNumber: () => {
     return Math.floor(Math.random() * 10 + 1);
   },
-  generateID(food) {
+  generateID: (food) => {
     let id = 0;
     if (food[food.length - 1].id === undefined) {
       id = 1;
@@ -67,7 +67,7 @@ export default {
     }
     return id;
   },
-  imagePicker(req) {
+  imagePicker: (req) => {
     if (!req.file) {
       // set default image
       return `${req.protocol}://${req.headers.host}/uploads\\default.jpg`;
