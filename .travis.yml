@@ -9,11 +9,8 @@ cache:
 services:
   - postgresql
 before_script:
-  - export PGUSER=postgres
-  - export PGHOST=localhost
-  - export PGPASSWORD=
-  - export PGPORT=5432
-  - psql -c 'create database foodfast;' -U postgres
+  - psql -c "create database foodfast;" -U postgres
+  - psql -c "CREATE USER Danielshow WITH PASSWORD '';" -U postgres
   - npm run createTable
 before_install:
   - npm install coveralls
