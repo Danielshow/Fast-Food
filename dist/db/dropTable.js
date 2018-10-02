@@ -17,3 +17,14 @@ _index2.default.query('DROP TABLE IF EXISTS foodlist', function (err) {
     console.log(err);
   }
 });
+
+_index2.default.query('DROP TYPE IF EXISTS status', function (err) {
+  if (err) {
+    console.log(err);
+  }
+  _index2.default.query('CREATE TYPE status AS ENUM (\'new\', \'processing\', \'cancelled\', \'complete\')', function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+});

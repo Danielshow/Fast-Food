@@ -25,9 +25,9 @@ var orderStatus = {
 };
 // for post food
 var postFood = {
-  food: 'rice,beans',
-  quantity: '1,4',
-  price: '34,67'
+  food: 'rice',
+  price: '340',
+  quantity: '1'
 };
 
 describe('API endpoint POST /orders', function () {
@@ -35,7 +35,7 @@ describe('API endpoint POST /orders', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/orders').send(postFood).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('food').eql('rice,beans'.split(','));
+      res.body.request.should.have.property('food');
       res.body.request.should.have.property('status').eql('new');
     });
   });
@@ -48,7 +48,7 @@ describe('API endpoint GET /orders', function () {
       expect(res.body.orders).to.be.an('Array');
       expect(res.body.orders[0]).to.have.property('id');
       res.body.orders[0].should.have.property('id').eql(1);
-      res.body.orders[0].should.have.property('food').eql('rice,beans');
+      res.body.orders[0].should.have.property('food').eql('rice');
     });
   });
 
