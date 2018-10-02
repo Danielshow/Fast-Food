@@ -50,7 +50,7 @@ export default {
   isEmailExist: (req, res, next) => {
     db.query('SELECT email from users', (err, data) => {
       if (err) {
-        console.log(err);
+        return next(err);
       }
       for (let i = 0; i < data.rows.length; i += 1) {
         if (data.rows[i].email === req.body.email) {
@@ -65,7 +65,7 @@ export default {
   isEmailInDb: (req, res, next) => {
     db.query('SELECT email from users', (err, data) => {
       if (err) {
-        console.log(err);
+        return next(err);
       }
       for (let i = 0; i < data.rows.length; i += 1) {
         if (data.rows[i].email === req.body.email) {

@@ -37,6 +37,12 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 app.use('/uploads', _express2.default.static('uploads'));
+
+app.use(function (err, req, res, next) {
+  res.status(500).json({
+    message: err.message
+  });
+});
 // use routes folder
 app.use('/api/v1', _orders2.default);
 app.use('/api/v1', _foodlist2.default);

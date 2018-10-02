@@ -22,12 +22,10 @@ var OrderController = function () {
 
   _createClass(OrderController, [{
     key: 'getAllOrder',
-    value: function getAllOrder(req, res) {
+    value: function getAllOrder(req, res, next) {
       _index2.default.query('SELECT * FROM orders', function (err, data) {
         if (err) {
-          res.status(500).json({
-            message: err.message
-          });
+          return next(err);
         }
         return res.status(200).json({
           orders: data.rows,
@@ -37,14 +35,12 @@ var OrderController = function () {
     }
   }, {
     key: 'getOrder',
-    value: function getOrder(req, res) {
+    value: function getOrder(req, res, next) {
       var id = req.params.id;
 
       _index2.default.query('SELECT * FROM orders WHERE id=$1', [id], function (err, data) {
         if (err) {
-          return res.status(500).json({
-            message: err.message
-          });
+          return next(err);
         }
         if (data.rows.length > 0) {
           return res.status(200).json({
@@ -59,14 +55,12 @@ var OrderController = function () {
     }
   }, {
     key: 'getUserOrder',
-    value: function getUserOrder(req, res) {
+    value: function getUserOrder(req, res, next) {
       var id = req.params.id;
 
       _index2.default.query('SELECT * FROM orders WHERE user_id=$1', [id], function (err, data) {
         if (err) {
-          return res.status(500).json({
-            message: err.message
-          });
+          return next(err);
         }
         if (data.rows.length > 0) {
           return res.status(200).json({
@@ -81,13 +75,11 @@ var OrderController = function () {
     }
   }, {
     key: 'postOrder',
-    value: function postOrder(req, res) {
+    value: function postOrder(req, res, next) {
       var quantity = req.body.quantity.split(',');
       var food = req.body.food.split(',');
       var price = req.body.price.split(',');
-      // set to token
       var userId = 2;
-      // multiply quantity by their price to get total price
       var addedPrice = 0;
       for (var i = 0; i < quantity.length; i += 1) {
         addedPrice += Number(price[i]) * Number(quantity[i]);
@@ -95,9 +87,7 @@ var OrderController = function () {
       price = addedPrice;
       _index2.default.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], function (err) {
         if (err) {
-          return res.status(500).json({
-            message: err.message
-          });
+          return next(err);
         }
         return res.status(200).json({
           request: {
@@ -113,7 +103,7 @@ var OrderController = function () {
     }
   }, {
     key: 'updateOrderStatus',
-    value: function updateOrderStatus(req, res) {
+    value: function updateOrderStatus(req, res, next) {
       if (!req.body.status) {
         res.json({
           message: 'Status Not sent'
@@ -124,9 +114,7 @@ var OrderController = function () {
 
       _index2.default.query('UPDATE orders SET status=$1 WHERE id=$2', [status, id], function (err) {
         if (err) {
-          return res.status(500).json({
-            message: err.message
-          });
+          return next(err);
         }
         return res.json({
           message: 'Food Status Updated'

@@ -60,18 +60,6 @@ exports.default = {
     }
     next();
   },
-  generateRandomNumber: function generateRandomNumber() {
-    return Math.floor(Math.random() * 10 + 1);
-  },
-  generateID: function generateID(food) {
-    var id = 0;
-    if (food[food.length - 1].id === undefined) {
-      id = 1;
-    } else {
-      id = food[food.length - 1].id + 1;
-    }
-    return id;
-  },
   imagePicker: function imagePicker(req) {
     if (!req.file) {
       // set default image

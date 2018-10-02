@@ -2,13 +2,12 @@ import bcrypt from 'bcryptjs';
 import db from '../db/index';
 /* eslint-disable class-methods-use-this */
 class AuthController {
-  register(req, res) {
-    // email, password, address, name
+  register(req, res, next) {
     const password = bcrypt.hashSync(req.body.password, 10);
     const params = [req.body.name, req.body.email, password, req.body.address];
     db.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, (err) => {
       if (err) {
-        console.log(err);
+        return next(err);
       }
       return res.status(200).json({
         request: {
@@ -21,10 +20,10 @@ class AuthController {
     });
   }
 
-  login(req, res) {
+  login(req, res, next) {
     db.query('SELECT * from users WHERE email=$1', [req.body.email], (err, data) => {
       if (err) {
-        console.log(err);
+        return next(err);
       }
       if (data.rows.length > 0) {
         const compare = bcrypt.compareSync(req.body.password, data.rows[0].password);

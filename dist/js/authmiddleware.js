@@ -60,7 +60,7 @@ exports.default = {
   isEmailExist: function isEmailExist(req, res, next) {
     _index2.default.query('SELECT email from users', function (err, data) {
       if (err) {
-        console.log(err);
+        return next(err);
       }
       for (var i = 0; i < data.rows.length; i += 1) {
         if (data.rows[i].email === req.body.email) {
@@ -75,7 +75,7 @@ exports.default = {
   isEmailInDb: function isEmailInDb(req, res, next) {
     _index2.default.query('SELECT email from users', function (err, data) {
       if (err) {
-        console.log(err);
+        return next(err);
       }
       for (var i = 0; i < data.rows.length; i += 1) {
         if (data.rows[i].email === req.body.email) {

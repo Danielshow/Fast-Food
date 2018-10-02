@@ -14,9 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var isFoodAvailable = function isFoodAvailable(req, res, next) {
   _index2.default.query('SELECT food from foodlist', function (err, data) {
     if (err) {
-      return res.json({
-        message: err.message
-      });
+      return next(err);
     }
     for (var i = 0; i < data.rows.length; i += 1) {
       if (req.body.food.toLowerCase() === data.rows[i].food.toLowerCase()) {
