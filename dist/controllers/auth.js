@@ -14,10 +14,6 @@ var _index = require('../db/index');
 
 var _index2 = _interopRequireDefault(_index);
 
-var _shared = require('../js/shared');
-
-var _shared2 = _interopRequireDefault(_shared);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30,13 +26,12 @@ var AuthController = function () {
 
   _createClass(AuthController, [{
     key: 'register',
-    value: function register(req, res) {
-      // email, password, address, name
-      var password = _bcryptjs2.default.hashSync('req.body.password', 10);
+    value: function register(req, res, next) {
+      var password = _bcryptjs2.default.hashSync(req.body.password, 10);
       var params = [req.body.name, req.body.email, password, req.body.address];
       _index2.default.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, function (err) {
         if (err) {
-          console.log(err);
+          return next(err);
         }
         return res.status(200).json({
           request: {
@@ -46,6 +41,26 @@ var AuthController = function () {
           },
           message: 'Registered Successfully'
         });
+      });
+    }
+  }, {
+    key: 'login',
+    value: function login(req, res, next) {
+      _index2.default.query('SELECT * from users WHERE email=$1', [req.body.email], function (err, data) {
+        if (err) {
+          return next(err);
+        }
+        if (data.rows.length > 0) {
+          var compare = _bcryptjs2.default.compareSync(req.body.password, data.rows[0].password);
+          if (compare) {
+            return res.json({
+              message: 'Login in Successful'
+            });
+          }
+          return res.json({
+            message: 'Auth failed, Incorrect Password'
+          });
+        }
       });
     }
   }]);

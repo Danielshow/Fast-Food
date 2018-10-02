@@ -1,12 +1,10 @@
 import db from '../db/index';
 /* eslint-disable class-methods-use-this */
 class OrderController {
-  getAllOrder(req, res) {
+  getAllOrder(req, res, next) {
     db.query('SELECT * FROM orders', (err, data) => {
       if (err) {
-        res.status(500).json({
-          message: err.message,
-        });
+        return next(err);
       }
       return res.status(200).json({
         orders: data.rows,
@@ -15,13 +13,11 @@ class OrderController {
     });
   }
 
-  getOrder(req, res) {
+  getOrder(req, res, next) {
     const { id } = req.params;
     db.query('SELECT * FROM orders WHERE id=$1', [id], (err, data) => {
       if (err) {
-        return res.status(500).json({
-          message: err.message,
-        });
+        return next(err);
       }
       if (data.rows.length > 0) {
         return res.status(200).json({
@@ -35,13 +31,11 @@ class OrderController {
     });
   }
 
-  getUserOrder(req, res) {
+  getUserOrder(req, res, next) {
     const { id } = req.params;
     db.query('SELECT * FROM orders WHERE user_id=$1', [id], (err, data) => {
       if (err) {
-        return res.status(500).json({
-          message: err.message,
-        });
+        return next(err);
       }
       if (data.rows.length > 0) {
         return res.status(200).json({
@@ -55,13 +49,11 @@ class OrderController {
     });
   }
 
-  postOrder(req, res) {
+  postOrder(req, res, next) {
     const quantity = req.body.quantity.split(',');
     const food = req.body.food.split(',');
     let price = req.body.price.split(',');
-    // set to token
     const userId = 2;
-    // multiply quantity by their price to get total price
     let addedPrice = 0;
     for (let i = 0; i < quantity.length; i += 1) {
       addedPrice += Number(price[i]) * Number(quantity[i]);
@@ -69,9 +61,7 @@ class OrderController {
     price = addedPrice;
     db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], (err) => {
       if (err) {
-        return res.status(500).json({
-          message: err.message,
-        });
+        return next(err);
       }
       return res.status(200).json({
         request: {
@@ -86,7 +76,7 @@ class OrderController {
     });
   }
 
-  updateOrderStatus(req, res) {
+  updateOrderStatus(req, res, next) {
     if (!req.body.status) {
       res.json({
         message: 'Status Not sent',
@@ -96,9 +86,7 @@ class OrderController {
     const { id } = req.params;
     db.query('UPDATE orders SET status=$1 WHERE id=$2', [status, id], (err) => {
       if (err) {
-        return res.status(500).json({
-          message: err.message,
-        });
+        return next(err);
       }
       return res.json({
         message: 'Food Status Updated',

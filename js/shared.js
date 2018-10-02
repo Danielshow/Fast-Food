@@ -55,18 +55,6 @@ export default {
     }
     next();
   },
-  generateRandomNumber: () => {
-    return Math.floor(Math.random() * 10 + 1);
-  },
-  generateID: (food) => {
-    let id = 0;
-    if (food[food.length - 1].id === undefined) {
-      id = 1;
-    } else {
-      id = food[food.length - 1].id + 1;
-    }
-    return id;
-  },
   imagePicker: (req) => {
     if (!req.file) {
       // set default image

@@ -12,6 +12,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/uploads', express.static('uploads'));
+
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    message: err.message,
+  })
+})
 // use routes folder
 app.use('/api/v1', apiRoutes);
 app.use('/api/v1', userRoutes);
