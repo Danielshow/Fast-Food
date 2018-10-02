@@ -18,7 +18,6 @@ var storage = _multer2.default.diskStorage({
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
   }
 });
-
 var fileFilter = function fileFilter(req, file, cb) {
   if (file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
     cb(null, true);
@@ -26,7 +25,6 @@ var fileFilter = function fileFilter(req, file, cb) {
     cb(new Error('Only image files are allowed'), false);
   }
 };
-
 var upload = (0, _multer2.default)({
   storage: storage,
   limits: {
