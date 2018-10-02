@@ -1,10 +1,6 @@
 language: node_js
 env:
-  - PGDATABASE=foodfast_test
   - PGUSER=postgres
-  - PGHOST=localhost
-  - PGPASSWORD=
-  - PGPORT=5432
 node_js:
   - "stable"
 cache:
