@@ -5,12 +5,6 @@ import valid from '../js/shared';
 class AuthController {
   register(req, res) {
     // email, password, address, name
-    const isValid = valid.validate(req.body.email);
-    if (!isValid) {
-      return res.status(400).json({
-        message: 'Email format is wrong',
-      });
-    }
     const password = bcrypt.hashSync('req.body.password', 10);
     const params = [req.body.name, req.body.email, password, req.body.address];
     db.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, (err) => {

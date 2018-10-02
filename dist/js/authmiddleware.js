@@ -27,5 +27,15 @@ exports.default = {
       });
     }
     next();
+  },
+  validate: function validate(req, res, next) {
+    var re = /\S+@\S+\.\S+/;
+    var valid = re.test(req.body.email);
+    if (!valid) {
+      return res.status(400).json({
+        message: 'Email format is wrong'
+      });
+    }
+    next();
   }
 };

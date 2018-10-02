@@ -23,4 +23,14 @@ export default {
     }
     next();
   },
+  validate: (req, res, next) => {
+    const re = /\S+@\S+\.\S+/;
+    const valid = re.test(req.body.email);
+    if (!valid) {
+      return res.status(400).json({
+        message: 'Email format is wrong',
+      });
+    }
+    next();
+  },
 };

@@ -32,12 +32,6 @@ var AuthController = function () {
     key: 'register',
     value: function register(req, res) {
       // email, password, address, name
-      var isValid = _shared2.default.validate(req.body.email);
-      if (!isValid) {
-        return res.status(400).json({
-          message: 'Email format is wrong'
-        });
-      }
       var password = _bcryptjs2.default.hashSync('req.body.password', 10);
       var params = [req.body.name, req.body.email, password, req.body.address];
       _index2.default.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, function (err) {
