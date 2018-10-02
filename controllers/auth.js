@@ -11,11 +11,20 @@ class AuthController {
         message: 'Email format is wrong',
       });
     }
-    return res.status(200).json({
-      name: req.body.name,
-      password: req.body.password,
-      email: req.body.email,
-      address: req.body.address,
+    const password = bcrypt.hashSync('req.body.password', 10);
+    const params = [req.body.name, req.body.email, password, req.body.address];
+    db.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      return res.status(200).json({
+        request: {
+          name: req.body.name,
+          email: req.body.email,
+          address: req.body.address,
+        },
+        message: 'Registered Successfully',
+      });
     });
   }
 }
