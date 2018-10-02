@@ -74,4 +74,8 @@ export default {
     }
     return `${req.protocol}://${req.headers.host}/${req.file.path}`;
   },
+  validate(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  },
 };

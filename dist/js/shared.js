@@ -78,5 +78,9 @@ exports.default = {
       return req.protocol + '://' + req.headers.host + '/uploads\\default.jpg';
     }
     return req.protocol + '://' + req.headers.host + '/' + req.file.path;
+  },
+  validate: function validate(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
   }
 };
