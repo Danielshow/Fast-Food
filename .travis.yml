@@ -9,6 +9,10 @@ cache:
 services:
   - postgresql
 before_script:
+  - export PGUSER=postgres
+  - export PGHOST=localhost
+  - export PGPASSWORD=null
+  - export PGPORT=5432
   - psql -c 'create database foodfast;' -U postgres
   - npm run createTable
 before_install:
