@@ -1,9 +1,19 @@
 language: node_js
+env:
+  - PGHOST=localhost
+  - PGDATABASE=foodfast
+  - PGUSER=postgres
+  - PGPORT=5432
 node_js:
   - "stable"
 cache:
   directories:
     - "node_modules"
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database foodfast;' -U postgres
+  - npm run createTable
 before_install:
   - npm install coveralls
 after_script:

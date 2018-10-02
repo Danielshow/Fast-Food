@@ -1,4 +1,7 @@
-const { Pool } = require('pg');
+import { Pool } from 'pg';
+import env from 'dotenv';
+
+env.config();
 
 const pool = new Pool();
 // create table

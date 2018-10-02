@@ -8,6 +8,7 @@
     "test": "nyc mocha ./dist/test/appTest.js --exit",
     "build": "rm -rf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
     "start": "npm run build && nodemon dist/index.js",
+    "createTable": "node dist/db/table.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
