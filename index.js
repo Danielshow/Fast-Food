@@ -1,8 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 import apiRoutes from './routes/orders';
 import userRoutes from './routes/foodlist';
 
+dotenv.config();
 const app = express();
 // bodyparser middleware
 app.use(bodyParser.json());
@@ -33,8 +35,8 @@ app.use((error, req, res, next) => {
     error: error.message,
   });
 });
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server Listen on port ${process.env.PORT || 3000}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server Listen on port ${process.env.PORT}`);
 });
 
 export default app;
