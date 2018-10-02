@@ -1,5 +1,5 @@
 import db from './index';
-db.query(`CREATE TYPE status AS ENUM ('new', 'processing', 'cancelled', 'complete')`, (err => {
+db.query(`CREATE TYPE status AS ENUM ('New', 'processing', 'cancelled', 'complete')`, (err => {
   if (err) {
     console.log(err);
   }
