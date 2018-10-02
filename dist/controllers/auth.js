@@ -32,7 +32,7 @@ var AuthController = function () {
     key: 'register',
     value: function register(req, res) {
       // email, password, address, name
-      var password = _bcryptjs2.default.hashSync('req.body.password', 10);
+      var password = _bcryptjs2.default.hashSync(req.body.password, 10);
       var params = [req.body.name, req.body.email, password, req.body.address];
       _index2.default.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, function (err) {
         if (err) {
@@ -46,6 +46,26 @@ var AuthController = function () {
           },
           message: 'Registered Successfully'
         });
+      });
+    }
+  }, {
+    key: 'login',
+    value: function login(req, res) {
+      _index2.default.query('SELECT * from users WHERE email=$1', [req.body.email], function (err, data) {
+        if (err) {
+          console.log(err);
+        }
+        if (data.rows.length > 0) {
+          var compare = _bcryptjs2.default.compareSync(req.body.password, data.rows[0].password);
+          if (compare) {
+            return res.json({
+              message: 'Authenticated'
+            });
+          }
+          return res.json({
+            message: 'Auth failed'
+          });
+        }
       });
     }
   }]);

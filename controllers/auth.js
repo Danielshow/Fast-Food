@@ -1,11 +1,10 @@
 import bcrypt from 'bcryptjs';
 import db from '../db/index';
-import valid from '../js/shared';
 /* eslint-disable class-methods-use-this */
 class AuthController {
   register(req, res) {
     // email, password, address, name
-    const password = bcrypt.hashSync('req.body.password', 10);
+    const password = bcrypt.hashSync(req.body.password, 10);
     const params = [req.body.name, req.body.email, password, req.body.address];
     db.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, (err) => {
       if (err) {
@@ -19,6 +18,25 @@ class AuthController {
         },
         message: 'Registered Successfully',
       });
+    });
+  }
+
+  login(req, res) {
+    db.query('SELECT * from users WHERE email=$1', [req.body.email], (err, data) => {
+      if (err) {
+        console.log(err);
+      }
+      if (data.rows.length > 0) {
+        const compare = bcrypt.compareSync(req.body.password, data.rows[0].password);
+        if (compare) {
+          return res.json({
+            message: 'Login in Successful',
+          });
+        }
+        return res.json({
+          message: 'Auth failed, Incorrect Password',
+        });
+      }
     });
   }
 }
