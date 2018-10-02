@@ -9,7 +9,7 @@ router.get('/orders', OrderController.getAllOrder);
 // get one order by ID
 router.get('/orders/:id', OrderController.getOrder);
 // get orders by a specific logged in user by their user_id
-router.get('/userorder/:id', OrderController.getUserOrder);
+router.get('/users/:id', OrderController.getUserOrder);
 // post new orders to the admin page by users
 router.post('/orders', [body.verifyBodyandQuantity, body.verifyLenghtOfVariables], OrderController.postOrder);
 // Edit order Status declined, completed, pending by admin

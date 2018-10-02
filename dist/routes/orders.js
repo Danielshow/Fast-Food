@@ -24,7 +24,7 @@ router.get('/orders', _orders2.default.getAllOrder);
 // get one order by ID
 router.get('/orders/:id', _orders2.default.getOrder);
 // get orders by a specific logged in user by their user_id
-router.get('/userorder/:id', _orders2.default.getUserOrder);
+router.get('/users/:id', _orders2.default.getUserOrder);
 // post new orders to the admin page by users
 router.post('/orders', [_shared2.default.verifyBodyandQuantity, _shared2.default.verifyLenghtOfVariables], _orders2.default.postOrder);
 // Edit order Status declined, completed, pending by admin

@@ -14,7 +14,7 @@ const food = {
 
 describe('API endpoint POST /foodlist', () => {
   it('Should post food', () => chai.request(url)
-    .post('/api/v1/foodlist')
+    .post('/api/v1/menu')
     .send(food)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -25,7 +25,7 @@ describe('API endpoint POST /foodlist', () => {
 });
 describe('API endpoint GET /foodlist', () => {
   it('Should return all foods in foodlist', () => chai.request(url)
-    .get('/api/v1/foodlist')
+    .get('/api/v1/menu')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -35,7 +35,7 @@ describe('API endpoint GET /foodlist', () => {
     }));
 
   it('Should return one order', () => chai.request(url)
-    .get('/api/v1/foodlist/1')
+    .get('/api/v1/menu/1')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -43,7 +43,7 @@ describe('API endpoint GET /foodlist', () => {
     }));
 
   it('Should return not found', () => chai.request(url)
-    .get('/api/v1/foodlist/100')
+    .get('/api/v1/menu/100')
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
@@ -53,7 +53,7 @@ describe('API endpoint GET /foodlist', () => {
 
 describe('API endpoint to Delete food from foodlist', () => {
   it('Should delete food from foodlist with a specified ID', () => chai.request(url)
-    .delete('/api/v1/foodlist/1')
+    .delete('/api/v1/menu/1')
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');

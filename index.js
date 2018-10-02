@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import apiRoutes from './routes/orders';
-import userRoutes from './routes/foodlist';
+import orderRoutes from './routes/orders';
+import menuRoutes from './routes/menu';
 import authRoutes from './routes/auth';
 
 dotenv.config();
@@ -19,8 +19,8 @@ app.use((err, req, res, next) => {
   })
 })
 // use routes folder
-app.use('/api/v1', apiRoutes);
-app.use('/api/v1', userRoutes);
+app.use('/api/v1', orderRoutes);
+app.use('/api/v1', menuRoutes);
 app.use('/api/v1', authRoutes);
 
 app.get('/', (req, res) => {

@@ -10,9 +10,9 @@ var _multer_config = require('../js/multer_config');
 
 var _multer_config2 = _interopRequireDefault(_multer_config);
 
-var _foodlist = require('../controllers/foodlist');
+var _menu = require('../controllers/menu');
 
-var _foodlist2 = _interopRequireDefault(_foodlist);
+var _menu2 = _interopRequireDefault(_menu);
 
 var _shared = require('../js/shared');
 
@@ -28,15 +28,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = (0, _express.Router)();
 
 // get food list available on the webpage
-router.get('/foodlist', _foodlist2.default.getAllFood);
+router.get('/menu', _menu2.default.getAllFood);
 // get foodlist by ID
-router.get('/foodlist/:id', _foodlist2.default.getFood);
+router.get('/menu/:id', _menu2.default.getFood);
 // post new food to foodlist by admin
-router.post('/foodlist', _multer_config2.default.single('foodImage'), [_shared2.default.verifyBody, _read_file2.default.isFoodAvailable], _foodlist2.default.postFood);
+router.post('/menu', _multer_config2.default.single('foodImage'), [_shared2.default.verifyBody, _read_file2.default.isFoodAvailable], _menu2.default.postFood);
 // Admin can update food from foodList
-router.put('/foodlist/:id', _multer_config2.default.single('foodImage'), [_shared2.default.verifyBody], _foodlist2.default.updateFood);
+router.put('/menu/:id', _multer_config2.default.single('foodImage'), [_shared2.default.verifyBody], _menu2.default.updateFood);
 // Delete food from foodList
-router.delete('/foodlist/:id', _foodlist2.default.deleteFood);
+router.delete('/menu/:id', _menu2.default.deleteFood);
 // get the price of all food ordered by users
-router.get('/total', _foodlist2.default.getTotal);
+router.get('/total', _menu2.default.getTotal);
 exports.default = router;

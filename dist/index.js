@@ -20,9 +20,9 @@ var _orders = require('./routes/orders');
 
 var _orders2 = _interopRequireDefault(_orders);
 
-var _foodlist = require('./routes/foodlist');
+var _menu = require('./routes/menu');
 
-var _foodlist2 = _interopRequireDefault(_foodlist);
+var _menu2 = _interopRequireDefault(_menu);
 
 var _auth = require('./routes/auth');
 
@@ -45,7 +45,7 @@ app.use(function (err, req, res, next) {
 });
 // use routes folder
 app.use('/api/v1', _orders2.default);
-app.use('/api/v1', _foodlist2.default);
+app.use('/api/v1', _menu2.default);
 app.use('/api/v1', _auth2.default);
 
 app.get('/', function (req, res) {
