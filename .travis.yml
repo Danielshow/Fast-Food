@@ -1,6 +1,6 @@
 language: node_js
 env:
-  - PGUSER=postgres
+  - PGUSER=postgres JWT_KEY="danielisagoodboy"
 node_js:
   - "stable"
 cache:

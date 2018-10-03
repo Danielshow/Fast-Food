@@ -10,7 +10,8 @@
     "start": "npm run build && nodemon dist/index.js",
     "drop_table": "node dist/db/dropTable.js",
     "create_table": "node dist/db/table.js",
-    "table": "npm run drop_table && npm run create_table",
+    "default_admin": "node dist/db/defaultadmin.js",
+    "table": "npm run drop_table && npm run create_table && npm run default_admin",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -24,6 +25,7 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "multer": "^1.3.1",
     "nodemon": "^1.18.4",
     "nyc": "^13.0.1",
