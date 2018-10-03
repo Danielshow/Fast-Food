@@ -28,9 +28,20 @@ _index2.default.query('DROP TYPE IF EXISTS status', function (err) {
   if (err) {
     console.log(err);
   }
-  _index2.default.query('CREATE TYPE status AS ENUM (\'new\', \'processing\', \'cancelled\', \'complete\')', function (err) {
+  _index2.default.query('CREATE TYPE status AS ENUM (\'new\', \'processing\', \'cancelled\', \'complete\')', function (error) {
     if (err) {
-      console.log(err);
+      console.log(error);
+    }
+  });
+});
+
+_index2.default.query('DROP TYPE IF EXISTS roles', function (err) {
+  if (err) {
+    console.log(err);
+  }
+  _index2.default.query('CREATE TYPE roles AS ENUM (\'user\', \'admin\')', function (error) {
+    if (err) {
+      console.log(error);
     }
   });
 });

@@ -16,8 +16,8 @@ app.use('/uploads', express.static('uploads'));
 app.use((err, req, res, next) => {
   res.status(500).json({
     message: err.message,
-  })
-})
+  });
+});
 // use routes folder
 app.use('/api/v1', orderRoutes);
 app.use('/api/v1', menuRoutes);

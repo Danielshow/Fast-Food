@@ -7,5 +7,7 @@ const router = Router();
 
 router.post('/auth/signup', [body.verifyBody, body.validate, body.isEmailExist], AuthController.register);
 router.post('/auth/login', [body.verifySignin, body.isEmailInDb], AuthController.login);
+router.post('/auth/login/admin', [body.verifySignin, body.isEmailInDb], AuthController.adminRegister);
+
 
 export default router;

@@ -21,5 +21,6 @@ var router = (0, _express.Router)();
 
 router.post('/auth/signup', [_authmiddleware2.default.verifyBody, _authmiddleware2.default.validate, _authmiddleware2.default.isEmailExist], _auth2.default.register);
 router.post('/auth/login', [_authmiddleware2.default.verifySignin, _authmiddleware2.default.isEmailInDb], _auth2.default.login);
+router.post('/auth/login/admin', [_authmiddleware2.default.verifySignin, _authmiddleware2.default.isEmailInDb], _auth2.default.adminRegister);
 
 exports.default = router;

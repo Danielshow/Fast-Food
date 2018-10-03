@@ -10,6 +10,9 @@ chai.use(chaiHttp);
 const orderStatus = {
   status: 'processing',
 };
+
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
+const dantoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88";
 // for post food
 const postFood = {
   food: 'rice',
@@ -17,9 +20,69 @@ const postFood = {
   quantity: '1',
 };
 
+const admin = {
+  email: 'admin@fastfood.com',
+  password: 'admin',
+};
+
+const newUser = {
+  email: 'danielshot@gmail.com',
+  name: 'opeyemi',
+  password: 'daniel',
+  address: 'Ikorodu',
+};
+
+const testUser = {
+  name: 'daniel',
+  password: 'tolu',
+  address: 'Lagos',
+};
+
+const newUserLogin = {
+  email: 'danielshot@gmail.com',
+  password: 'daniel',
+};
+// .set('Authorization', `Bearer ${token}`)
+// sign up
+describe('API endpoint for POST auth/signup', () => {
+  it('Should register user', () => chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send(newUser)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body.request).to.be.an('Object');
+      res.body.request.should.have.property('name');
+      res.body.request.should.have.property('email').eql('danielshot@gmail.com');
+      res.body.request.should.have.property('address').eql('Ikorodu');
+      res.body.should.have.property('message').eql('Registered Successfully');
+    }));
+
+  it('Should Return error if email field is empty', () => chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send(testUser)
+    .then((res) => {
+      expect(res).to.have.status(206);
+      res.body.should.have.property('message').eql('Email must be included in the body');
+    }));
+});
+
+// signin
+describe('API endpoint for POST auth/login', () => {
+  it('Should Login user', () => chai.request(url)
+    .post('/api/v1/auth/login')
+    .send(newUserLogin)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('Object');
+      res.body.should.have.property('message').eql('Login Successful');
+      res.body.should.have.property('token')
+    }));
+});
+
 describe('API endpoint POST /orders', () => {
   it('Should post food', () => chai.request(url)
     .post('/api/v1/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
     .send(postFood)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -32,6 +95,7 @@ describe('API endpoint POST /orders', () => {
 describe('API endpoint GET /orders', () => {
   it('Should return all orders', () => chai.request(url)
     .get('/api/v1/orders')
+    .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body.orders).to.be.an('Array');
@@ -42,6 +106,7 @@ describe('API endpoint GET /orders', () => {
 
   it('Should return one order', () => chai.request(url)
     .get('/api/v1/orders/1')
+    .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -51,6 +116,7 @@ describe('API endpoint GET /orders', () => {
 
   it('Should return not found', () => chai.request(url)
     .get('/api/v1/orders/100')
+    .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
@@ -69,6 +135,7 @@ describe('API endpoint GET /orders', () => {
 describe('API endpoint PUT /orders/id', () => {
   it('Should update order status', () => chai.request(url)
     .put('/api/v1/orders/1')
+    .set('Authorization', `Bearer ${token}`)
     .send(orderStatus)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -80,6 +147,7 @@ describe('API endpoint PUT /orders/id', () => {
 describe('API endpoint to GET total price of food ordered', () => {
   it('Should return price of food ordered', () => chai.request(url)
     .get('/api/v1/total')
+    .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');

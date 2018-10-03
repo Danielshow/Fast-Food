@@ -10,6 +10,10 @@ var _bcryptjs = require('bcryptjs');
 
 var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
 
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 var _index = require('../db/index');
 
 var _index2 = _interopRequireDefault(_index);
@@ -28,8 +32,27 @@ var AuthController = function () {
     key: 'register',
     value: function register(req, res, next) {
       var password = _bcryptjs2.default.hashSync(req.body.password, 10);
-      var params = [req.body.name, req.body.email, password, req.body.address];
-      _index2.default.query('INSERT INTO users(name, email, password, address) VALUES($1,$2,$3,$4)', params, function (err) {
+      var params = [req.body.name, req.body.email, password, req.body.address, 'user'];
+      _index2.default.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.status(200).json({
+          request: {
+            name: req.body.name,
+            email: req.body.email,
+            address: req.body.address
+          },
+          message: 'Registered Successfully'
+        });
+      });
+    }
+  }, {
+    key: 'adminRegister',
+    value: function adminRegister(req, res, next) {
+      var password = _bcryptjs2.default.hashSync(req.body.password, 10);
+      var params = [req.body.name, req.body.email, password, req.body.address, 'admin'];
+      _index2.default.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, function (err) {
         if (err) {
           return next(err);
         }
@@ -53,8 +76,13 @@ var AuthController = function () {
         if (data.rows.length > 0) {
           var compare = _bcryptjs2.default.compareSync(req.body.password, data.rows[0].password);
           if (compare) {
+            var token = _jsonwebtoken2.default.sign({
+              email: data.rows[0].email,
+              userid: data.rows[0].id
+            }, process.env.JWT_KEY);
             return res.json({
-              message: 'Login in Successful'
+              message: 'Login Successful',
+              token: token
             });
           }
           return res.json({

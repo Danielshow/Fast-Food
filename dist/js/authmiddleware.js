@@ -60,7 +60,7 @@ exports.default = {
       }
       for (var i = 0; i < data.rows.length; i += 1) {
         if (data.rows[i].email === req.body.email) {
-          return res.status(400).send({
+          return res.status(409).send({
             message: 'Email already exist'
           });
         }

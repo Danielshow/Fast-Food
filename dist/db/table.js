@@ -18,7 +18,7 @@ _index2.default.query('CREATE TABLE foodlist(\nid serial PRIMARY KEY,\nfood text
   }
 });
 
-_index2.default.query('CREATE TABLE users(\nid serial PRIMARY KEY,\nname text NOT NULL,\nemail text NOT NULL,\npassword text NOT NULL,\naddress text NOT NULL\n)', function (err) {
+_index2.default.query('CREATE TABLE users(\nid serial PRIMARY KEY,\nname text NOT NULL,\nemail text NOT NULL,\npassword text NOT NULL,\naddress text NOT NULL,\nroles roles NOT NULL\n)', function (err) {
   if (err) {
     console.log(err);
   }

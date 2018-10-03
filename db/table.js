@@ -29,7 +29,8 @@ id serial PRIMARY KEY,
 name text NOT NULL,
 email text NOT NULL,
 password text NOT NULL,
-address text NOT NULL
+address text NOT NULL,
+roles roles NOT NULL
 )`, (err) => {
   if (err) {
     console.log(err);
