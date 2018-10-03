@@ -6,11 +6,7 @@
   "scripts": {
     "lint": "eslint ./routes --fix",
     "test": "nyc mocha ./dist/test --exit",
-    "start": "nodemon dist/index.js",
-    "drop_table": "node dist/db/dropTable.js",
-    "create_table": "node dist/db/table.js",
-    "default_admin": "node dist/db/defaultadmin.js",
-    "table": "npm run drop_table && npm run create_table && npm run default_admin",
+    "start": "node dist/index.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
