@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/Danielshow/Fast-Food.svg?branch=develop)](https://travis-ci.org/Danielshow/Fast-Food)
-[![Coverage Status](https://coveralls.io/repos/github/Danielshow/Fast-Food/badge.svg?branch=ft-api-implement-post-authadmin-#160981175)](https://coveralls.io/github/Danielshow/Fast-Food?branch=ft-api-implement-post-authadmin-#160981175)
+[![Coverage Status](https://coveralls.io/repos/github/Danielshow/Fast-Food/badge.svg?branch=develop)](https://coveralls.io/github/Danielshow/Fast-Food?branch=develop)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/Danielshow/Fast-Food)
 
 # Fast_food_fast
@@ -47,11 +47,11 @@ npm run test
 
 | HTTP verb | Routes  | Description |
 |-----------| ------------- | ------------- |
-| GET | /api/v1/foodlist  | Get all available food on the webpage  |
-| GET | /api/v1/foodlist/:id  | Get one food by ID  |
-| POST | /api/v1/foodlist  | Post new food  |
-| PUT | /api/v1/foodlist  | Update posted food |
-| DELETE | /api/v1/foodlist/:id  | Delete one food from the foodlist by ID |
+| GET | /api/v1/menu  | Get all available food on the webpage  |
+| GET | /api/v1/menu/:id  | Get one food by ID  |
+| POST | /api/v1/menu  | Post new food  |
+| PUT | /api/v1/menu  | Update posted food |
+| DELETE | /api/v1/menu/:id  | Delete one food from the foodlist by ID |
 | GET | /api/v1/price  | Get Price of all food ordered |
 | GET | /  | Shows welcome page |
 | GET | /api/v1/orders  | Get all ordered foods  |
