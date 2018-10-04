@@ -1,6 +1,6 @@
 export default {
   verifyBody: (req, res, next) => {
-    if (!req.body.food) {
+    if (!req.body.food || req.body.food.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain food',
@@ -14,17 +14,17 @@ export default {
     next();
   },
   verifyBodyandQuantity: (req, res, next) => {
-    if (!req.body.food) {
+    if (!req.body.food || req.body.food.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain food',
       });
-    } if (!req.body.price) {
+    } if (!req.body.price || req.body.price.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain Price',
       });
-    } if (!req.body.quantity) {
+    } if (!req.body.quantity || req.body.quantity.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain Quantity of foods',
