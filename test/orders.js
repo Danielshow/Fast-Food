@@ -12,7 +12,7 @@ const orderStatus = {
 };
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
-const dantoken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88";
+const dantoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88';
 // for post food
 const postFood = {
   food: 'rice',
@@ -94,5 +94,25 @@ describe('API endpoint to GET total price of food ordered', () => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Success, Total Returned');
+    }));
+});
+
+describe('API endpoint to GET a particular order', () => {
+  it('Should return order specific to a particular user with valid credentials', () => chai.request(url)
+    .get('/api/v1/users/3/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+    }));
+
+
+  it('Should return error when a user with valid credentials try to access another person resource', () => chai.request(url)
+    .get('/api/v1/users/2/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('Auth Fail, You are not authorize to view this resource');
     }));
 });

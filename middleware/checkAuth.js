@@ -39,4 +39,22 @@ export default {
       });
     }
   },
+
+  isUserResource: (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_KEY);
+      req.decoded = decoded;
+      if (Number(decoded.userid) !== Number(req.params.id)) {
+        return res.status(403).send({
+          message: 'Auth Fail, You are not authorize to view this resource',
+        });
+      }
+      return next();
+    } catch (err) {
+      return res.status(401).json({
+        message: 'Authentication fail',
+      });
+    }
+  },
 };
