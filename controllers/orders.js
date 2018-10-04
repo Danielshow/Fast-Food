@@ -53,7 +53,7 @@ class OrderController {
     const quantity = req.body.quantity.split(',');
     const food = req.body.food.split(',');
     let price = req.body.price.split(',');
-    const userId = 2;
+    const userId = req.decoded.userid;
     let addedPrice = 0;
     for (let i = 0; i < quantity.length; i += 1) {
       addedPrice += Number(price[i]) * Number(quantity[i]);
