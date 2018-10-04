@@ -11,8 +11,8 @@ const orderStatus = {
   status: 'processing',
 };
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
-const dantoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88";
+const token = process.env.TOKEN1;
+const dantoken = process.env.TOKEN2;
 // for post food
 const postFood = {
   food: 'rice',
@@ -20,67 +20,10 @@ const postFood = {
   quantity: '1',
 };
 
-const admin = {
-  email: 'admin@fastfood.com',
-  password: 'admin',
-};
-
-const newUser = {
-  email: 'danielshot@gmail.com',
-  name: 'opeyemi',
-  password: 'daniel',
-  address: 'Ikorodu',
-};
-
-const testUser = {
-  name: 'daniel',
-  password: 'tolu',
-  address: 'Lagos',
-};
-
-const newUserLogin = {
-  email: 'danielshot@gmail.com',
-  password: 'daniel',
-};
 // .set('Authorization', `Bearer ${token}`)
-// sign up
-describe('API endpoint for POST auth/signup', () => {
-  it('Should register user', () => chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(newUser)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name');
-      res.body.request.should.have.property('email').eql('danielshot@gmail.com');
-      res.body.request.should.have.property('address').eql('Ikorodu');
-      res.body.should.have.property('message').eql('Registered Successfully');
-    }));
-
-  it('Should Return error if email field is empty', () => chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(testUser)
-    .then((res) => {
-      expect(res).to.have.status(206);
-      res.body.should.have.property('message').eql('Email must be included in the body');
-    }));
-});
-
-// signin
-describe('API endpoint for POST auth/login', () => {
-  it('Should Login user', () => chai.request(url)
-    .post('/api/v1/auth/login')
-    .send(newUserLogin)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      res.body.should.have.property('message').eql('Login Successful');
-      res.body.should.have.property('token')
-    }));
-});
 
 describe('API endpoint POST /orders', () => {
-  it('Should post food', () => chai.request(url)
+  it('Should post orders given the user is logged in and token is sent through the headers', () => chai.request(url)
     .post('/api/v1/orders')
     .set('Authorization', `Bearer ${dantoken}`)
     .send(postFood)
@@ -93,7 +36,7 @@ describe('API endpoint POST /orders', () => {
 });
 
 describe('API endpoint GET /orders', () => {
-  it('Should return all orders', () => chai.request(url)
+  it('Should return all orders given an admin is logged in with valid credentials and token is sent through the headers', () => chai.request(url)
     .get('/api/v1/orders')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
@@ -104,7 +47,7 @@ describe('API endpoint GET /orders', () => {
       res.body.orders[0].should.have.property('food').eql('rice');
     }));
 
-  it('Should return one order', () => chai.request(url)
+  it('Should return one order given an admin with valid credentials', () => chai.request(url)
     .get('/api/v1/orders/1')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
@@ -113,13 +56,31 @@ describe('API endpoint GET /orders', () => {
       res.body.order.should.have.property('id').eql(1);
     }));
 
-  it('Should return not found', () => chai.request(url)
+  it('Should return not found when food ID is not in the database', () => chai.request(url)
     .get('/api/v1/orders/100')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Food not found');
+    }));
+
+  it('ID must be a number and less than 9000', () => chai.request(url)
+    .get('/api/v1/orders/1009999')
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
+    }));
+
+  it('ID must be a not be a Letter', () => chai.request(url)
+    .get('/api/v1/orders/hjj')
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
     }));
 
   it('Invalid Route should give 404', () => chai.request(url)
@@ -132,7 +93,7 @@ describe('API endpoint GET /orders', () => {
 });
 // put orders
 describe('API endpoint PUT /orders/id', () => {
-  it('Should update order status', () => chai.request(url)
+  it('Should update order status when status is not empty and a valid status is given', () => chai.request(url)
     .put('/api/v1/orders/1')
     .set('Authorization', `Bearer ${token}`)
     .send(orderStatus)
@@ -144,12 +105,32 @@ describe('API endpoint PUT /orders/id', () => {
 });
 
 describe('API endpoint to GET total price of food ordered', () => {
-  it('Should return price of food ordered', () => chai.request(url)
+  it('Should return price of food all food ordered when an admin with valid credentials make request', () => chai.request(url)
     .get('/api/v1/total')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Success, Total Returned');
+    }));
+});
+
+describe('API endpoint to GET a particular order', () => {
+  it('Should return order specific to a particular user with valid credentials', () => chai.request(url)
+    .get('/api/v1/users/3/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+    }));
+
+
+  it('Should return error when a user with valid credentials try to access another person resource', () => chai.request(url)
+    .get('/api/v1/users/2/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('Auth Fail, You are not authorize to view this resource');
     }));
 });

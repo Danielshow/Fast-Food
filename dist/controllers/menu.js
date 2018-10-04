@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _shared = require('../js/shared');
+var _shared = require('../middleware/shared');
 
 var _shared2 = _interopRequireDefault(_shared);
 
@@ -49,7 +49,7 @@ var FoodListController = function () {
         if (data.rows.length > 0) {
           return res.status(200).json({
             food: data.rows[0],
-            message: 'One food returned Successfully'
+            message: 'Food returned Successfully'
           });
         }
         return res.status(404).json({
@@ -67,7 +67,7 @@ var FoodListController = function () {
         }
         return res.status(200).json({
           request: {
-            food: req.body.food,
+            food: req.body.food.trim(),
             price: req.body.price,
             image: imagePath
           },
@@ -87,7 +87,7 @@ var FoodListController = function () {
         }
         return res.status(200).json({
           request: {
-            food: req.body.food,
+            food: req.body.food.trim(),
             price: req.body.price,
             image: imagePath
           },

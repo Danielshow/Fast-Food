@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import AuthController from '../controllers/auth';
-import body from '../js/authmiddleware';
-import checkAuth from '../js/checkAuth';
+import body from '../middleware/auth';
+import checkAuth from '../middleware/checkAuth';
 
 // initialize router
 const router = Router();

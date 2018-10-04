@@ -24,8 +24,8 @@ var orderStatus = {
   status: 'processing'
 };
 
-var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
-var dantoken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88";
+var token = process.env.TOKEN1;
+var dantoken = process.env.TOKEN2;
 // for post food
 var postFood = {
   food: 'rice',
@@ -33,64 +33,10 @@ var postFood = {
   quantity: '1'
 };
 
-var admin = {
-  email: 'admin@fastfood.com',
-  password: 'admin'
-};
-
-var newUser = {
-  email: 'danielshot@gmail.com',
-  name: 'opeyemi',
-  password: 'daniel',
-  address: 'Ikorodu'
-};
-
-var testUser = {
-  name: 'daniel',
-  password: 'tolu',
-  address: 'Lagos'
-};
-
-var newUserLogin = {
-  email: 'danielshot@gmail.com',
-  password: 'daniel'
-};
 // .set('Authorization', `Bearer ${token}`)
-// sign up
-describe('API endpoint for POST auth/signup', function () {
-  it('Should register user', function () {
-    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(newUser).then(function (res) {
-      expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name');
-      res.body.request.should.have.property('email').eql('danielshot@gmail.com');
-      res.body.request.should.have.property('address').eql('Ikorodu');
-      res.body.should.have.property('message').eql('Registered Successfully');
-    });
-  });
-
-  it('Should Return error if email field is empty', function () {
-    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(testUser).then(function (res) {
-      expect(res).to.have.status(206);
-      res.body.should.have.property('message').eql('Email must be included in the body');
-    });
-  });
-});
-
-// signin
-describe('API endpoint for POST auth/login', function () {
-  it('Should Login user', function () {
-    return _chai2.default.request(_index2.default).post('/api/v1/auth/login').send(newUserLogin).then(function (res) {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      res.body.should.have.property('message').eql('Login Successful');
-      res.body.should.have.property('token');
-    });
-  });
-});
 
 describe('API endpoint POST /orders', function () {
-  it('Should post food', function () {
+  it('Should post orders given the user is logged in and token is sent through the headers', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer ' + dantoken).send(postFood).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body.request).to.be.an('Object');
@@ -101,7 +47,7 @@ describe('API endpoint POST /orders', function () {
 });
 
 describe('API endpoint GET /orders', function () {
-  it('Should return all orders', function () {
+  it('Should return all orders given an admin is logged in with valid credentials and token is sent through the headers', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body.orders).to.be.an('Array');
@@ -111,7 +57,7 @@ describe('API endpoint GET /orders', function () {
     });
   });
 
-  it('Should return one order', function () {
+  it('Should return one order given an admin with valid credentials', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders/1').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -119,11 +65,27 @@ describe('API endpoint GET /orders', function () {
     });
   });
 
-  it('Should return not found', function () {
+  it('Should return not found when food ID is not in the database', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders/100').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Food not found');
+    });
+  });
+
+  it('ID must be a number and less than 9000', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/orders/1009999').set('Authorization', 'Bearer ' + token).then(function (res) {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
+    });
+  });
+
+  it('ID must be a not be a Letter', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/orders/hjj').set('Authorization', 'Bearer ' + token).then(function (res) {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
     });
   });
 
@@ -137,7 +99,7 @@ describe('API endpoint GET /orders', function () {
 });
 // put orders
 describe('API endpoint PUT /orders/id', function () {
-  it('Should update order status', function () {
+  it('Should update order status when status is not empty and a valid status is given', function () {
     return _chai2.default.request(_index2.default).put('/api/v1/orders/1').set('Authorization', 'Bearer ' + token).send(orderStatus).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -147,11 +109,28 @@ describe('API endpoint PUT /orders/id', function () {
 });
 
 describe('API endpoint to GET total price of food ordered', function () {
-  it('Should return price of food ordered', function () {
+  it('Should return price of food all food ordered when an admin with valid credentials make request', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/total').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Success, Total Returned');
+    });
+  });
+});
+
+describe('API endpoint to GET a particular order', function () {
+  it('Should return order specific to a particular user with valid credentials', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/users/3/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+    });
+  });
+
+  it('Should return error when a user with valid credentials try to access another person resource', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/users/2/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('Auth Fail, You are not authorize to view this resource');
     });
   });
 });

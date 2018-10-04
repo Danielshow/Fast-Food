@@ -6,7 +6,7 @@ const { expect } = chai;
 const should = chai.should();
 chai.use(chaiHttp);
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
+const token = process.env.TOKEN1;
 
 const newUser = {
   email: 'danielshoit@gmail.com',
@@ -35,7 +35,7 @@ const newUserLogin = {
 // .set('Authorization', `Bearer ${token}`)
 // sign up
 describe('API endpoint for POST auth/signup', () => {
-  it('Should register user', () => chai.request(url)
+  it('Should register user given a valid credentials, and a user supply their email, name, password and address', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(newUser)
     .then((res) => {
@@ -47,7 +47,7 @@ describe('API endpoint for POST auth/signup', () => {
       res.body.should.have.property('message').eql('Registered Successfully');
     }));
 
-  it('Should Return error if email field is empty', () => chai.request(url)
+  it('Should Return error if email field is empty or email field has whitespace only', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(testUser)
     .then((res) => {
@@ -56,7 +56,7 @@ describe('API endpoint for POST auth/signup', () => {
     }));
 
 
-  it('Should Return error if password field is empty', () => chai.request(url)
+  it('Should Return error if password field is empty or password field has only whitespace', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send({
       email: 'daniels@gmail.com',
@@ -68,7 +68,7 @@ describe('API endpoint for POST auth/signup', () => {
     }));
 
 
-  it('Should Return error if email syntax is wrong', () => chai.request(url)
+  it('Should Return error if email syntax is wrong, Email syntax should be dan@yahoo.com', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send({
       email: 'danielsgmail.com',
@@ -81,7 +81,7 @@ describe('API endpoint for POST auth/signup', () => {
       res.body.should.have.property('message').eql('Email format is wrong');
     }));
 
-  it('Should Return error if email exists', () => chai.request(url)
+  it('Should Return error if email exists in the database. Email must be unique', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send({
       email: 'admin@foodfast.com',
@@ -97,7 +97,7 @@ describe('API endpoint for POST auth/signup', () => {
 
 // signin
 describe('API endpoint for POST auth/login', () => {
-  it('Should Login user', () => chai.request(url)
+  it('Should Login user given a valid credentials and user supply email and password', () => chai.request(url)
     .post('/api/v1/auth/login')
     .send(newUserLogin)
     .then((res) => {
@@ -107,7 +107,7 @@ describe('API endpoint for POST auth/login', () => {
       res.body.should.have.property('token');
     }));
 
-  it('Should Return error if email is not included', () => chai.request(url)
+  it('Should Return error if email is not included or email contain only whitespace', () => chai.request(url)
     .post('/api/v1/auth/login')
     .send({
       password: 'daniel',
@@ -118,7 +118,7 @@ describe('API endpoint for POST auth/login', () => {
       res.body.should.have.property('message').eql('Email must be included in the body');
     }));
 
-  it('Should Return error if password is not included', () => chai.request(url)
+  it('Should Return error if password is not included or password contain only whitespace', () => chai.request(url)
     .post('/api/v1/auth/login')
     .send({
       email: 'daniel@yahoo.com',
@@ -130,7 +130,7 @@ describe('API endpoint for POST auth/login', () => {
     }));
 
 
-  it('Should Return error if email does not exist', () => chai.request(url)
+  it('Should Return error if email does not exist, User must register before Login', () => chai.request(url)
     .post('/api/v1/auth/login')
     .send({
       email: 'danielopeyemi@yahoo.com',
@@ -141,11 +141,24 @@ describe('API endpoint for POST auth/login', () => {
       expect(res.body).to.be.an('Object');
       res.body.should.have.property('message').eql('Email does not exist');
     }));
+
+
+  it('Should Return error if password is wrong', () => chai.request(url)
+    .post('/api/v1/auth/login')
+    .send({
+      email: 'danielshoit@gmail.com',
+      password: 'dani jjele',
+    })
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('Object');
+      res.body.should.have.property('message').eql('Invalid Credentials');
+    }));
 });
 // admin login
 
 describe('API endpoint POST /auth/signup/admin', () => {
-  it('Should create admin', () => chai.request(url)
+  it('Should create admin account with administrative priviledges given valid credentials', () => chai.request(url)
     .post('/api/v1/auth/signup/admin')
     .set('Authorization', `Bearer ${token}`)
     .send(admin)
@@ -157,7 +170,7 @@ describe('API endpoint POST /auth/signup/admin', () => {
       res.body.should.have.property('message').eql('Registered Successfully');
     }));
 
-  it('Should send auth failed if token is not sent', () => chai.request(url)
+  it('Should send auth failed if token is not sent. Token must be send with the header', () => chai.request(url)
     .post('/api/v1/auth/signup/admin')
     .send(admin)
     .then((res) => {

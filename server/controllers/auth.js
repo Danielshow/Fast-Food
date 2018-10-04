@@ -5,16 +5,16 @@ import db from '../db/index';
 class AuthController {
   register(req, res, next) {
     const password = bcrypt.hashSync(req.body.password, 10);
-    const params = [req.body.name, req.body.email, password, req.body.address, 'user'];
+    const params = [req.body.name.trim().toLowerCase(), req.body.email.trim().toLowerCase(), password, req.body.address.trim().toLowerCase(), 'user'];
     db.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, (err) => {
       if (err) {
         return next(err);
       }
       return res.status(200).json({
         request: {
-          name: req.body.name,
-          email: req.body.email,
-          address: req.body.address,
+          name: req.body.name.trim(),
+          email: req.body.email.trim(),
+          address: req.body.address.trim(),
         },
         message: 'Registered Successfully',
       });
@@ -23,16 +23,16 @@ class AuthController {
 
   adminRegister(req, res, next) {
     const password = bcrypt.hashSync(req.body.password, 10);
-    const params = [req.body.name, req.body.email, password, req.body.address, 'admin'];
+    const params = [req.body.name.trim().toLowerCase(), req.body.email.trim().toLowerCase(), password, req.body.address.trim().toLowerCase(), 'admin'];
     db.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, (err) => {
       if (err) {
         return next(err);
       }
       return res.status(200).json({
         request: {
-          name: req.body.name,
-          email: req.body.email,
-          address: req.body.address,
+          name: req.body.name.trim(),
+          email: req.body.email.trim(),
+          address: req.body.address.trim(),
         },
         message: 'Registered Successfully',
       });
@@ -40,7 +40,7 @@ class AuthController {
   }
 
   login(req, res, next) {
-    db.query('SELECT * from users WHERE email=$1', [req.body.email], (err, data) => {
+    db.query('SELECT * from users WHERE email=$1', [req.body.email.toLowerCase()], (err, data) => {
       if (err) {
         return next(err);
       }
@@ -51,13 +51,13 @@ class AuthController {
             email: data.rows[0].email,
             userid: data.rows[0].id,
           }, process.env.JWT_KEY);
-          return res.json({
+          return res.status(200).json({
             message: 'Login Successful',
             token,
           });
         }
-        return res.json({
-          message: 'Auth failed, Incorrect Password',
+        return res.status(403).json({
+          message: 'Invalid Credentials',
         });
       }
     });

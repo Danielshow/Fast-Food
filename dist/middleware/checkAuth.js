@@ -51,5 +51,23 @@ exports.default = {
         message: 'Authentication fail'
       });
     }
+  },
+
+  isUserResource: function isUserResource(req, res, next) {
+    try {
+      var token = req.headers.authorization.split(' ')[1];
+      var decoded = _jsonwebtoken2.default.verify(token, process.env.JWT_KEY);
+      req.decoded = decoded;
+      if (Number(decoded.userid) !== Number(req.params.id)) {
+        return res.status(403).send({
+          message: 'Auth Fail, You are not authorize to view this resource'
+        });
+      }
+      return next();
+    } catch (err) {
+      return res.status(401).json({
+        message: 'Authentication fail'
+      });
+    }
   }
 };

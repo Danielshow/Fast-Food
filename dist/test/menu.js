@@ -19,8 +19,8 @@ var expect = _chai2.default.expect;
 var should = _chai2.default.should();
 _chai2.default.use(_chaiHttp2.default);
 // token
-var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
-var dantoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88';
+var token = process.env.TOKEN1;
+var dantoken = process.env.TOKEN2;
 
 // for post FoodList
 var food = {
@@ -33,8 +33,17 @@ var updateFood = {
   price: 5000
 };
 
+var wrongfood = {
+  food: '    ',
+  price: 67
+};
+
+var wrongfood2 = {
+  food: 'sphagetti'
+};
+
 describe('API endpoint POST /menu', function () {
-  it('Should post food', function () {
+  it('Should post food to the food menu given food field is not empty', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/menu').set('Authorization', 'Bearer ' + token).send(food).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body.request).to.be.an('Object');
@@ -42,9 +51,36 @@ describe('API endpoint POST /menu', function () {
       res.body.request.should.have.property('price').eql(3000);
     });
   });
+
+  it('Should return error given food field is empty', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/menu').set('Authorization', 'Bearer ' + token).send(wrongfood).then(function (res) {
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('Object');
+      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('message').eql('Request must contain food');
+    });
+  });
+
+  it('Should return error given price field is empty', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/menu').set('Authorization', 'Bearer ' + token).send(wrongfood2).then(function (res) {
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('Object');
+      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('message').eql('Request must contain Price');
+    });
+  });
+
+  it('Should return error if food already exist', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/menu').set('Authorization', 'Bearer ' + token).send(food).then(function (res) {
+      expect(res).to.have.status(409);
+      expect(res.body).to.be.an('Object');
+      res.body.should.have.property('message').eql('Food Already in FoodList');
+    });
+  });
 });
+
 describe('API endpoint GET /menu', function () {
-  it('Should return all foods in foodlist', function () {
+  it('Should return all foods in the foodlist', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/menu').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -54,7 +90,7 @@ describe('API endpoint GET /menu', function () {
     });
   });
 
-  it('Should return one menu', function () {
+  it('Should return one food from the folldlist when accessed through the food ID', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/menu/1').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -62,7 +98,7 @@ describe('API endpoint GET /menu', function () {
     });
   });
 
-  it('Should return not found', function () {
+  it('Should return not found when food ID is not in the database', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/menu/100').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
@@ -72,7 +108,7 @@ describe('API endpoint GET /menu', function () {
 });
 
 describe('API endpoint to Delete food from foodlist', function () {
-  it('Should delete food from foodlist with a specified ID', function () {
+  it('Should delete food from foodlist with a specified ID and return food deleted', function () {
     return _chai2.default.request(_index2.default).delete('/api/v1/menu/1').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -81,14 +117,36 @@ describe('API endpoint to Delete food from foodlist', function () {
   });
 });
 
-describe('API endpoint POST /menu', function () {
-  it('Should update food', function () {
+describe('API endpoint PUT /menu', function () {
+  it('Should update food given food field and price is not empty', function () {
     return _chai2.default.request(_index2.default).put('/api/v1/menu/1').set('Authorization', 'Bearer ' + token).send(updateFood).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body.request).to.be.an('Object');
       res.body.request.should.have.property('food').eql('meat');
       res.body.request.should.have.property('price').eql(5000);
       res.body.should.have.property('message').eql('Food Updated');
+    });
+  });
+
+  it('Should return error given food field is empty', function () {
+    return _chai2.default.request(_index2.default).put('/api/v1/menu/1').set('Authorization', 'Bearer ' + token).send({
+      price: 780
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('Object');
+      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('message').eql('Request must contain food');
+    });
+  });
+
+  it('Should return error given price field is empty', function () {
+    return _chai2.default.request(_index2.default).put('/api/v1/menu/1').set('Authorization', 'Bearer ' + token).send({
+      food: 'Dodo'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('Object');
+      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('message').eql('Request must contain Price');
     });
   });
 });
