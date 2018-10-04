@@ -20,64 +20,7 @@ const postFood = {
   quantity: '1',
 };
 
-const admin = {
-  email: 'admin@fastfood.com',
-  password: 'admin',
-};
-
-const newUser = {
-  email: 'danielshot@gmail.com',
-  name: 'opeyemi',
-  password: 'daniel',
-  address: 'Ikorodu',
-};
-
-const testUser = {
-  name: 'daniel',
-  password: 'tolu',
-  address: 'Lagos',
-};
-
-const newUserLogin = {
-  email: 'danielshot@gmail.com',
-  password: 'daniel',
-};
 // .set('Authorization', `Bearer ${token}`)
-// sign up
-describe('API endpoint for POST auth/signup', () => {
-  it('Should register user', () => chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(newUser)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name');
-      res.body.request.should.have.property('email').eql('danielshot@gmail.com');
-      res.body.request.should.have.property('address').eql('Ikorodu');
-      res.body.should.have.property('message').eql('Registered Successfully');
-    }));
-
-  it('Should Return error if email field is empty', () => chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(testUser)
-    .then((res) => {
-      expect(res).to.have.status(206);
-      res.body.should.have.property('message').eql('Email must be included in the body');
-    }));
-});
-
-// signin
-describe('API endpoint for POST auth/login', () => {
-  it('Should Login user', () => chai.request(url)
-    .post('/api/v1/auth/login')
-    .send(newUserLogin)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      res.body.should.have.property('message').eql('Login Successful');
-      res.body.should.have.property('token')
-    }));
-});
 
 describe('API endpoint POST /orders', () => {
   it('Should post food', () => chai.request(url)

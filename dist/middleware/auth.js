@@ -12,7 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
   verifyBody: function verifyBody(req, res, next) {
-    if (!req.body.email) {
+    if (!req.body.email || req.body.email.trim().length < 1) {
       return res.status(206).json({
         message: 'Email must be included in the body'
       });
@@ -20,11 +20,11 @@ exports.default = {
       return res.status(206).json({
         message: 'password must be included in the body'
       });
-    }if (!req.body.address) {
+    }if (!req.body.address || req.body.address.trim().length < 1) {
       return res.status(206).json({
         message: 'Address must be included in the body'
       });
-    }if (!req.body.name) {
+    }if (!req.body.name || req.body.name.trim().length < 1) {
       return res.status(206).json({
         message: 'Name must be included in the body'
       });
@@ -33,7 +33,7 @@ exports.default = {
   },
   validate: function validate(req, res, next) {
     var re = /\S+@\S+\.\S+/;
-    var valid = re.test(req.body.email);
+    var valid = re.test(req.body.email.trim());
     if (!valid) {
       return res.status(400).json({
         message: 'Email format is wrong'
@@ -42,11 +42,11 @@ exports.default = {
     next();
   },
   verifySignin: function verifySignin(req, res, next) {
-    if (!req.body.email) {
+    if (!req.body.email || req.body.email.trim().length < 1) {
       return res.status(206).json({
         message: 'Email must be included in the body'
       });
-    }if (!req.body.password) {
+    }if (!req.body.password || req.body.password.trim().length < 1) {
       return res.status(206).json({
         message: 'password must be included in the body'
       });
@@ -59,7 +59,7 @@ exports.default = {
         return next(err);
       }
       for (var i = 0; i < data.rows.length; i += 1) {
-        if (data.rows[i].email === req.body.email) {
+        if (data.rows[i].email.toLowerCase() === req.body.email.trim().toLowerCase()) {
           return res.status(409).send({
             message: 'Email already exist'
           });
@@ -74,7 +74,7 @@ exports.default = {
         return next(err);
       }
       for (var i = 0; i < data.rows.length; i += 1) {
-        if (data.rows[i].email === req.body.email) {
+        if (data.rows[i].email.toLowerCase() === req.body.email.trim().toLowerCase()) {
           return next();
         }
       }

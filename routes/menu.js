@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import upload from '../js/multer_config';
+import upload from '../middleware/multer_config';
 import FoodlistController from '../controllers/menu';
-import body from '../js/shared';
-import read from '../js/read_file';
-import checkAuth from '../js/checkAuth';
+import body from '../middleware/shared';
+import read from '../middleware/read_file';
+import checkAuth from '../middleware/checkAuth';
 // initialize router
 const router = Router();
 
