@@ -5,7 +5,7 @@ import db from '../db/index';
 class AuthController {
   register(req, res, next) {
     const password = bcrypt.hashSync(req.body.password, 10);
-    const params = [req.body.name, req.body.email, password, req.body.address, 'user'];
+    const params = [req.body.name.trim().toLowerCase(), req.body.email.trim().toLowerCase(), password, req.body.address.trim().toLowerCase(), 'user'];
     db.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, (err) => {
       if (err) {
         return next(err);
@@ -23,7 +23,7 @@ class AuthController {
 
   adminRegister(req, res, next) {
     const password = bcrypt.hashSync(req.body.password, 10);
-    const params = [req.body.name, req.body.email, password, req.body.address, 'admin'];
+    const params = [req.body.name.trim().toLowerCase(), req.body.email.trim().toLowerCase(), password, req.body.address.trim().toLowerCase(), 'admin'];
     db.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, (err) => {
       if (err) {
         return next(err);
@@ -40,7 +40,7 @@ class AuthController {
   }
 
   login(req, res, next) {
-    db.query('SELECT * from users WHERE email=$1', [req.body.email], (err, data) => {
+    db.query('SELECT * from users WHERE email=$1', [req.body.email.toLowerCase()], (err, data) => {
       if (err) {
         return next(err);
       }
@@ -57,7 +57,7 @@ class AuthController {
           });
         }
         return res.status(403).json({
-          message: 'Auth failed',
+          message: 'Invalid Credentials',
         });
       }
     });

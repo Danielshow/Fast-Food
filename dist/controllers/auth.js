@@ -32,7 +32,7 @@ var AuthController = function () {
     key: 'register',
     value: function register(req, res, next) {
       var password = _bcryptjs2.default.hashSync(req.body.password, 10);
-      var params = [req.body.name, req.body.email, password, req.body.address, 'user'];
+      var params = [req.body.name.trim().toLowerCase(), req.body.email.trim().toLowerCase(), password, req.body.address.trim().toLowerCase(), 'user'];
       _index2.default.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, function (err) {
         if (err) {
           return next(err);
@@ -51,7 +51,7 @@ var AuthController = function () {
     key: 'adminRegister',
     value: function adminRegister(req, res, next) {
       var password = _bcryptjs2.default.hashSync(req.body.password, 10);
-      var params = [req.body.name, req.body.email, password, req.body.address, 'admin'];
+      var params = [req.body.name.trim().toLowerCase(), req.body.email.trim().toLowerCase(), password, req.body.address.trim().toLowerCase(), 'admin'];
       _index2.default.query('INSERT INTO users(name, email, password, address, roles) VALUES($1,$2,$3,$4,$5)', params, function (err) {
         if (err) {
           return next(err);
@@ -69,7 +69,7 @@ var AuthController = function () {
   }, {
     key: 'login',
     value: function login(req, res, next) {
-      _index2.default.query('SELECT * from users WHERE email=$1', [req.body.email], function (err, data) {
+      _index2.default.query('SELECT * from users WHERE email=$1', [req.body.email.toLowerCase()], function (err, data) {
         if (err) {
           return next(err);
         }
@@ -86,7 +86,7 @@ var AuthController = function () {
             });
           }
           return res.status(403).json({
-            message: 'Auth failed'
+            message: 'Invalid Credentials'
           });
         }
       });

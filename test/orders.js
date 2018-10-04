@@ -23,7 +23,7 @@ const postFood = {
 // .set('Authorization', `Bearer ${token}`)
 
 describe('API endpoint POST /orders', () => {
-  it('Should post food', () => chai.request(url)
+  it('Should post orders given the user is logged in and token is sent through the headers', () => chai.request(url)
     .post('/api/v1/orders')
     .set('Authorization', `Bearer ${dantoken}`)
     .send(postFood)
@@ -36,7 +36,7 @@ describe('API endpoint POST /orders', () => {
 });
 
 describe('API endpoint GET /orders', () => {
-  it('Should return all orders', () => chai.request(url)
+  it('Should return all orders given an admin is logged in with valid credentials and token is sent through the headers', () => chai.request(url)
     .get('/api/v1/orders')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
@@ -47,7 +47,7 @@ describe('API endpoint GET /orders', () => {
       res.body.orders[0].should.have.property('food').eql('rice');
     }));
 
-  it('Should return one order', () => chai.request(url)
+  it('Should return one order given an admin with valid credentials', () => chai.request(url)
     .get('/api/v1/orders/1')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
@@ -56,7 +56,7 @@ describe('API endpoint GET /orders', () => {
       res.body.order.should.have.property('id').eql(1);
     }));
 
-  it('Should return not found', () => chai.request(url)
+  it('Should return not found when food ID is not in the database', () => chai.request(url)
     .get('/api/v1/orders/100')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
@@ -75,7 +75,7 @@ describe('API endpoint GET /orders', () => {
 });
 // put orders
 describe('API endpoint PUT /orders/id', () => {
-  it('Should update order status', () => chai.request(url)
+  it('Should update order status when status is not empty and a valid status is given', () => chai.request(url)
     .put('/api/v1/orders/1')
     .set('Authorization', `Bearer ${token}`)
     .send(orderStatus)
@@ -87,7 +87,7 @@ describe('API endpoint PUT /orders/id', () => {
 });
 
 describe('API endpoint to GET total price of food ordered', () => {
-  it('Should return price of food ordered', () => chai.request(url)
+  it('Should return price of food all food ordered when an admin with valid credentials make request', () => chai.request(url)
     .get('/api/v1/total')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
