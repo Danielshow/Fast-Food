@@ -36,7 +36,7 @@ var postFood = {
 // .set('Authorization', `Bearer ${token}`)
 
 describe('API endpoint POST /orders', function () {
-  it('Should post food', function () {
+  it('Should post orders given the user is logged in and token is sent through the headers', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer ' + dantoken).send(postFood).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body.request).to.be.an('Object');
@@ -47,7 +47,7 @@ describe('API endpoint POST /orders', function () {
 });
 
 describe('API endpoint GET /orders', function () {
-  it('Should return all orders', function () {
+  it('Should return all orders given an admin is logged in with valid credentials and token is sent through the headers', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body.orders).to.be.an('Array');
@@ -57,7 +57,7 @@ describe('API endpoint GET /orders', function () {
     });
   });
 
-  it('Should return one order', function () {
+  it('Should return one order given an admin with valid credentials', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders/1').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -65,7 +65,7 @@ describe('API endpoint GET /orders', function () {
     });
   });
 
-  it('Should return not found', function () {
+  it('Should return not found when food ID is not in the database', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders/100').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
@@ -83,7 +83,7 @@ describe('API endpoint GET /orders', function () {
 });
 // put orders
 describe('API endpoint PUT /orders/id', function () {
-  it('Should update order status', function () {
+  it('Should update order status when status is not empty and a valid status is given', function () {
     return _chai2.default.request(_index2.default).put('/api/v1/orders/1').set('Authorization', 'Bearer ' + token).send(orderStatus).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
@@ -93,7 +93,7 @@ describe('API endpoint PUT /orders/id', function () {
 });
 
 describe('API endpoint to GET total price of food ordered', function () {
-  it('Should return price of food ordered', function () {
+  it('Should return price of food all food ordered when an admin with valid credentials make request', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/total').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');

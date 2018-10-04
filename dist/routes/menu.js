@@ -38,7 +38,7 @@ router.get('/menu/:id', _checkAuth2.default.verifyToken, _menu2.default.getFood)
 // post new food to foodlist by admin
 router.post('/menu', _checkAuth2.default.verifyAdminToken, _multer_config2.default.single('foodImage'), [_shared2.default.verifyBody, _read_file2.default.isFoodAvailable], _menu2.default.postFood);
 // Admin can update food from foodList
-router.put('/menu/:id', _checkAuth2.default.verifyAdminToken, _multer_config2.default.single('foodImage'), [_shared2.default.verifyBody], _menu2.default.updateFood);
+router.put('/menu/:id', _checkAuth2.default.verifyAdminToken, _multer_config2.default.single('foodImage'), [_shared2.default.verifyBody, _read_file2.default.isFoodAvailable], _menu2.default.updateFood);
 // Delete food from foodList
 router.delete('/menu/:id', _checkAuth2.default.verifyAdminToken, _menu2.default.deleteFood);
 // get the price of all food ordered by users
