@@ -19,7 +19,7 @@ var expect = _chai2.default.expect;
 var should = _chai2.default.should();
 _chai2.default.use(_chaiHttp2.default);
 
-var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
+var token = process.env.TOKEN1;
 
 var newUser = {
   email: 'danielshoit@gmail.com',

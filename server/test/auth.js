@@ -6,7 +6,7 @@ const { expect } = chai;
 const should = chai.should();
 chai.use(chaiHttp);
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
+const token = process.env.TOKEN1;
 
 const newUser = {
   email: 'danielshoit@gmail.com',
