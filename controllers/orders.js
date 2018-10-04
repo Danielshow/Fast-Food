@@ -22,7 +22,7 @@ class OrderController {
       if (data.rows.length > 0) {
         return res.status(200).json({
           order: data.rows[0],
-          message: 'One order returned Successfully',
+          message: 'Order returned Successfully',
         });
       }
       return res.status(404).json({
@@ -59,7 +59,7 @@ class OrderController {
       addedPrice += Number(price[i]) * Number(quantity[i]);
     }
     price = addedPrice;
-    db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], (err) => {
+    db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food.toLowerCase(), req.body.quantity, price, userId, 'new'], (err) => {
       if (err) {
         return next(err);
       }
@@ -77,16 +77,18 @@ class OrderController {
   }
 
   updateOrderStatus(req, res, next) {
-    if (!req.body.status) {
+    if (!req.body.status || req.body.status.trim().length < 1) {
       res.json({
         message: 'Status Not sent',
       });
     }
     const { status } = req.body;
     const { id } = req.params;
-    db.query('UPDATE orders SET status=$1 WHERE id=$2', [status, id], (err) => {
+    db.query('UPDATE orders SET status=$1 WHERE id=$2', [status.toLowerCase(), id], (err) => {
       if (err) {
-        return next(err);
+        return res.status(400).send({
+          message: 'status should be either New,Processing,Cancelled or Complete.',
+        });
       }
       return res.json({
         message: 'Food Status Updated',

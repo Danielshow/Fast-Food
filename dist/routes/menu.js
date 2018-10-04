@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _express = require('express');
 
-var _multer_config = require('../js/multer_config');
+var _multer_config = require('../middleware/multer_config');
 
 var _multer_config2 = _interopRequireDefault(_multer_config);
 
@@ -14,15 +14,15 @@ var _menu = require('../controllers/menu');
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _shared = require('../js/shared');
+var _shared = require('../middleware/shared');
 
 var _shared2 = _interopRequireDefault(_shared);
 
-var _read_file = require('../js/read_file');
+var _read_file = require('../middleware/read_file');
 
 var _read_file2 = _interopRequireDefault(_read_file);
 
-var _checkAuth = require('../js/checkAuth');
+var _checkAuth = require('../middleware/checkAuth');
 
 var _checkAuth2 = _interopRequireDefault(_checkAuth);
 

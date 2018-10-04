@@ -1,11 +1,11 @@
 export default {
   verifyBody: (req, res, next) => {
-    if (!req.body.food) {
+    if (!req.body.food || req.body.food.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain food',
       });
-    } if (!req.body.price) {
+    } if (!req.body.price || req.body.price.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain Price',
@@ -14,17 +14,17 @@ export default {
     next();
   },
   verifyBodyandQuantity: (req, res, next) => {
-    if (!req.body.food) {
+    if (!req.body.food || req.body.food.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain food',
       });
-    } if (!req.body.price) {
+    } if (!req.body.price || req.body.price.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain Price',
       });
-    } if (!req.body.quantity) {
+    } if (!req.body.quantity || req.body.quantity.trim().length < 1) {
       return res.status(400).send({
         status: 'Bad Request',
         message: 'Request must contain Quantity of foods',
@@ -33,9 +33,9 @@ export default {
     next();
   },
   verifyLenghtOfVariables: (req, res, next) => {
-    const foodAdded = req.body.food.split(',');
-    const quantity = req.body.quantity.split(',');
-    const price = req.body.price.split(',');
+    const foodAdded = req.body.food.trim().split(',');
+    const quantity = req.body.quantity.trim().split(',');
+    const price = req.body.price.trim().split(',');
     if (foodAdded.length > quantity.length) {
       // partial content
       return res.status(206).send({

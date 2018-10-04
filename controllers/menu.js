@@ -1,4 +1,4 @@
-import body from '../js/shared';
+import body from '../middleware/shared';
 import db from '../db/index';
 /* eslint-disable class-methods-use-this */
 class FoodListController {
@@ -23,7 +23,7 @@ class FoodListController {
       if (data.rows.length > 0) {
         return res.status(200).json({
           food: data.rows[0],
-          message: 'One food returned Successfully',
+          message: 'Food returned Successfully',
         });
       }
       return res.status(404).json({
@@ -34,13 +34,13 @@ class FoodListController {
 
   postFood(req, res, next) {
     const imagePath = body.imagePicker(req);
-    db.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, imagePath], (err) => {
+    db.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food.toLowerCase(), req.body.price.toLowerCase(), imagePath], (err) => {
       if (err) {
         return next(err);
       }
       return res.status(200).json({
         request: {
-          food: req.body.food,
+          food: req.body.food.trim(),
           price: req.body.price,
           image: imagePath,
         },
@@ -52,13 +52,13 @@ class FoodListController {
   updateFood(req, res, next) {
     const { id } = req.params;
     const imagePath = body.imagePicker(req);
-    db.query('UPDATE foodlist SET food=$1,price=$2,image=$3 WHERE id=$4', [req.body.food, req.body.price, imagePath, id], (err) => {
+    db.query('UPDATE foodlist SET food=$1,price=$2,image=$3 WHERE id=$4', [req.body.food.trim().toLowerCase(), req.body.price, imagePath, id], (err) => {
       if (err) {
         return next(err);
       }
       return res.status(200).json({
         request: {
-          food: req.body.food,
+          food: req.body.food.trim(),
           price: req.body.price,
           image: imagePath,
         },

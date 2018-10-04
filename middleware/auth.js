@@ -2,19 +2,19 @@ import db from '../db/index';
 
 export default {
   verifyBody: (req, res, next) => {
-    if (!req.body.email) {
+    if (!req.body.email || req.body.email.trim().length < 1) {
       return res.status(206).json({
         message: 'Email must be included in the body',
       });
-    } if (!req.body.password) {
+    } if (!req.body.password || req.body.password.trim().length < 1) {
       return res.status(206).json({
         message: 'password must be included in the body',
       });
-    } if (!req.body.address) {
+    } if (!req.body.address || req.body.address.trim().length < 1) {
       return res.status(206).json({
         message: 'Address must be included in the body',
       });
-    } if (!req.body.name) {
+    } if (!req.body.name || req.body.name.trim().length < 1) {
       return res.status(206).json({
         message: 'Name must be included in the body',
       });
@@ -32,11 +32,11 @@ export default {
     next();
   },
   verifySignin: (req, res, next) => {
-    if (!req.body.email) {
+    if (!req.body.email || req.body.email.trim().length < 1) {
       return res.status(206).json({
         message: 'Email must be included in the body',
       });
-    } if (!req.body.password) {
+    } if (!req.body.password || req.body.password.trim().length < 1) {
       return res.status(206).json({
         message: 'password must be included in the body',
       });
@@ -49,7 +49,7 @@ export default {
         return next(err);
       }
       for (let i = 0; i < data.rows.length; i += 1) {
-        if (data.rows[i].email === req.body.email) {
+        if (data.rows[i].email.toLowerCase() === req.body.email.trim().toLowerCase()) {
           return res.status(409).send({
             message: 'Email already exist',
           });
@@ -64,7 +64,7 @@ export default {
         return next(err);
       }
       for (let i = 0; i < data.rows.length; i += 1) {
-        if (data.rows[i].email === req.body.email) {
+        if (data.rows[i].email.toLowerCase() === req.body.email.trim().toLowerCase()) {
           return next();
         }
       }

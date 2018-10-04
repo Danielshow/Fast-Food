@@ -29,65 +29,11 @@ var dantoken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3R
 // for post food
 var postFood = {
   food: 'rice',
-  price: '340',
+  price: 340,
   quantity: '1'
 };
 
-var admin = {
-  email: 'admin@fastfood.com',
-  password: 'admin'
-};
-
-var newUser = {
-  email: 'danielshot@gmail.com',
-  name: 'opeyemi',
-  password: 'daniel',
-  address: 'Ikorodu'
-};
-
-var testUser = {
-  name: 'daniel',
-  password: 'tolu',
-  address: 'Lagos'
-};
-
-var newUserLogin = {
-  email: 'danielshot@gmail.com',
-  password: 'daniel'
-};
 // .set('Authorization', `Bearer ${token}`)
-// sign up
-describe('API endpoint for POST auth/signup', function () {
-  it('Should register user', function () {
-    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(newUser).then(function (res) {
-      expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name');
-      res.body.request.should.have.property('email').eql('danielshot@gmail.com');
-      res.body.request.should.have.property('address').eql('Ikorodu');
-      res.body.should.have.property('message').eql('Registered Successfully');
-    });
-  });
-
-  it('Should Return error if email field is empty', function () {
-    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(testUser).then(function (res) {
-      expect(res).to.have.status(206);
-      res.body.should.have.property('message').eql('Email must be included in the body');
-    });
-  });
-});
-
-// signin
-describe('API endpoint for POST auth/login', function () {
-  it('Should Login user', function () {
-    return _chai2.default.request(_index2.default).post('/api/v1/auth/login').send(newUserLogin).then(function (res) {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      res.body.should.have.property('message').eql('Login Successful');
-      res.body.should.have.property('token');
-    });
-  });
-});
 
 describe('API endpoint POST /orders', function () {
   it('Should post food', function () {
