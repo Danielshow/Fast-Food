@@ -7,7 +7,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 // token
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
-const dantoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88";
+const dantoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88';
 
 // for post FoodList
 const food = {
@@ -18,7 +18,7 @@ const food = {
 const updateFood = {
   food: 'meat',
   price: 5000,
-}
+};
 
 describe('API endpoint POST /menu', () => {
   it('Should post food', () => chai.request(url)
