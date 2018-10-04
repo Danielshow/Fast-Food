@@ -73,4 +73,12 @@ export default {
       });
     });
   },
+  isValidID: (req, res, next) => {
+    if (isNaN(req.params.id) || Number(req.params.id) > 9000) {
+      return res.status(403).json({
+        message: 'ID must be a number and less than 9000',
+      });
+    }
+    return next();
+  },
 };

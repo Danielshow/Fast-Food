@@ -73,6 +73,22 @@ describe('API endpoint GET /orders', function () {
     });
   });
 
+  it('ID must be a number and less than 9000', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/orders/1009999').set('Authorization', 'Bearer ' + token).then(function (res) {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
+    });
+  });
+
+  it('ID must be a not be a Letter', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/orders/hjj').set('Authorization', 'Bearer ' + token).then(function (res) {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
+    });
+  });
+
   it('Invalid Route should give 404', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/anyroute').then(function (res) {
       expect(res).to.have.status(404);

@@ -65,6 +65,24 @@ describe('API endpoint GET /orders', () => {
       res.body.should.have.property('message').eql('Food not found');
     }));
 
+  it('ID must be a number and less than 9000', () => chai.request(url)
+    .get('/api/v1/orders/1009999')
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
+    }));
+
+  it('ID must be a not be a Letter', () => chai.request(url)
+    .get('/api/v1/orders/hjj')
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('ID must be a number and less than 9000');
+    }));
+
   it('Invalid Route should give 404', () => chai.request(url)
     .get('/api/v1/anyroute')
     .then((res) => {
