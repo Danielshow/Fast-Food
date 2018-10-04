@@ -116,7 +116,6 @@ describe('API endpoint GET /orders', function () {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       res.body.order.should.have.property('id').eql(1);
-      res.body.order.should.have.property('user_id').eql(2);
     });
   });
 
