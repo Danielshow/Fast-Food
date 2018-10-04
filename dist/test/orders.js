@@ -25,7 +25,7 @@ var orderStatus = {
 };
 
 var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGZvb2RmYXN0LmNvbSIsInVzZXJpZCI6MSwiaWF0IjoxNTM4NTgxMTI0fQ.ANn_QoRyNFwUGnBJIZxE-rSVAgk_s5o36C-KPTgRbP0';
-var dantoken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88";
+var dantoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbHNob3RAZ21haWwuY29tIiwidXNlcmlkIjozLCJpYXQiOjE1Mzg1ODEzNDB9.OYdjYiAdriDqHCV4n2-9ngy696SaomTUDcJ8lgJjN88';
 // for post food
 var postFood = {
   food: 'rice',
@@ -98,6 +98,23 @@ describe('API endpoint to GET total price of food ordered', function () {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Success, Total Returned');
+    });
+  });
+});
+
+describe('API endpoint to GET a particular order', function () {
+  it('Should return order specific to a particular user with valid credentials', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/users/3/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+    });
+  });
+
+  it('Should return error when a user with valid credentials try to access another person resource', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/users/2/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('Auth Fail, You are not authorize to view this resource');
     });
   });
 });
