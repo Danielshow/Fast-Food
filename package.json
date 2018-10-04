@@ -4,10 +4,10 @@
   "description": "Web application for ordering food",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./routes --fix",
+    "lint": "eslint ./server/routes --fix",
     "test": "nyc mocha ./dist/test --exit",
-    "build": "rm -rf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
-    "start": "npm run build && nodemon dist/index.js",
+    "build": "rm -rf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
+    "start": "npm run build && nodemon ./dist/index.js",
     "drop_table": "node dist/db/dropTable.js",
     "create_table": "node dist/db/table.js",
     "default_admin": "node dist/db/defaultadmin.js",
