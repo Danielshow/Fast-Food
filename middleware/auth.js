@@ -6,7 +6,7 @@ export default {
       return res.status(206).json({
         message: 'Email must be included in the body',
       });
-    } if (!req.body.password || req.body.password.trim().length < 1 ) {
+    } if (!req.body.password) {
       return res.status(206).json({
         message: 'password must be included in the body',
       });

@@ -38,9 +38,9 @@ exports.default = {
     next();
   },
   verifyLenghtOfVariables: function verifyLenghtOfVariables(req, res, next) {
-    var foodAdded = req.body.food.split(',');
-    var quantity = req.body.quantity.split(',');
-    var price = req.body.price.split(',');
+    var foodAdded = req.body.food.trim().split(',');
+    var quantity = req.body.quantity.trim().split(',');
+    var price = req.body.price.trim().split(',');
     if (foodAdded.length > quantity.length) {
       // partial content
       return res.status(206).send({

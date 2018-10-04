@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import OrderController from '../controllers/orders';
-import body from '../js/shared';
-import checkAuth from '../js/checkAuth';
+import body from '../middleware/shared';
+import checkAuth from '../middleware/checkAuth';
 // initialize router
 const router = Router();
 

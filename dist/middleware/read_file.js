@@ -17,7 +17,7 @@ var isFoodAvailable = function isFoodAvailable(req, res, next) {
       return next(err);
     }
     for (var i = 0; i < data.rows.length; i += 1) {
-      if (req.body.food.toLowerCase() === data.rows[i].food.toLowerCase()) {
+      if (req.body.food.trim().toLowerCase() === data.rows[i].food.toLowerCase()) {
         return res.status(409).json({
           message: 'Food Already in FoodList'
         });

@@ -45,7 +45,7 @@ var OrderController = function () {
         if (data.rows.length > 0) {
           return res.status(200).json({
             order: data.rows[0],
-            message: 'One order returned Successfully'
+            message: 'Order returned Successfully'
           });
         }
         return res.status(404).json({
@@ -79,7 +79,7 @@ var OrderController = function () {
       var quantity = req.body.quantity.split(',');
       var food = req.body.food.split(',');
       var price = req.body.price.split(',');
-      var userId = 2;
+      var userId = req.decoded.userid;
       var addedPrice = 0;
       for (var i = 0; i < quantity.length; i += 1) {
         addedPrice += Number(price[i]) * Number(quantity[i]);
@@ -104,7 +104,7 @@ var OrderController = function () {
   }, {
     key: 'updateOrderStatus',
     value: function updateOrderStatus(req, res, next) {
-      if (!req.body.status) {
+      if (!req.body.status || req.body.status.trim().length < 1) {
         res.json({
           message: 'Status Not sent'
         });
@@ -112,9 +112,11 @@ var OrderController = function () {
       var status = req.body.status;
       var id = req.params.id;
 
-      _index2.default.query('UPDATE orders SET status=$1 WHERE id=$2', [status, id], function (err) {
+      _index2.default.query('UPDATE orders SET status=$1 WHERE id=$2', [status.toLowerCase(), id], function (err) {
         if (err) {
-          return next(err);
+          return res.status(400).send({
+            message: 'status should be either New,Processing,Cancelled or Complete.'
+          });
         }
         return res.json({
           message: 'Food Status Updated'

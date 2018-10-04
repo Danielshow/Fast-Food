@@ -10,11 +10,11 @@ var _orders = require('../controllers/orders');
 
 var _orders2 = _interopRequireDefault(_orders);
 
-var _shared = require('../js/shared');
+var _shared = require('../middleware/shared');
 
 var _shared2 = _interopRequireDefault(_shared);
 
-var _checkAuth = require('../js/checkAuth');
+var _checkAuth = require('../middleware/checkAuth');
 
 var _checkAuth2 = _interopRequireDefault(_checkAuth);
 

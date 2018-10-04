@@ -12,9 +12,9 @@ class AuthController {
       }
       return res.status(200).json({
         request: {
-          name: req.body.name,
-          email: req.body.email,
-          address: req.body.address,
+          name: req.body.name.trim(),
+          email: req.body.email.trim(),
+          address: req.body.address.trim(),
         },
         message: 'Registered Successfully',
       });
@@ -30,9 +30,9 @@ class AuthController {
       }
       return res.status(200).json({
         request: {
-          name: req.body.name,
-          email: req.body.email,
-          address: req.body.address,
+          name: req.body.name.trim(),
+          email: req.body.email.trim(),
+          address: req.body.address.trim(),
         },
         message: 'Registered Successfully',
       });
@@ -51,13 +51,13 @@ class AuthController {
             email: data.rows[0].email,
             userid: data.rows[0].id,
           }, process.env.JWT_KEY);
-          return res.json({
+          return res.status(200).json({
             message: 'Login Successful',
             token,
           });
         }
-        return res.json({
-          message: 'Auth failed, Incorrect Password',
+        return res.status(403).json({
+          message: 'Auth failed',
         });
       }
     });
