@@ -33,6 +33,15 @@ describe('API endpoint POST /orders', () => {
       res.body.request.should.have.property('food');
       res.body.request.should.have.property('status').eql('new');
     }));
+
+  it('Should send an error if an Invalid token is sent. Token must be send with the header', () => chai.request(url)
+    .post('/api/v1/orders')
+    .set('Authorization', 'Bearer jdjdj')
+    .send(postFood)
+    .then((res) => {
+      expect(res).to.have.status(401);
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    }));
 });
 
 describe('API endpoint GET /orders', () => {
@@ -132,5 +141,22 @@ describe('API endpoint to GET a particular order', () => {
       expect(res).to.have.status(403);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Auth Fail, You are not authorize to view this resource');
+    }));
+
+  it('Should return error when a user pass in wrong token', () => chai.request(url)
+    .get('/api/v1/users/2/orders')
+    .set('Authorization', 'Bearer jjlllk')
+    .then((res) => {
+      expect(res).to.have.status(401);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    }));
+
+  it('Should return error when no token is passed for a protected field', () => chai.request(url)
+    .get('/api/v1/users/2/orders')
+    .then((res) => {
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.an('object');
+      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
     }));
 });
