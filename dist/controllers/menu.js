@@ -68,7 +68,7 @@ var FoodListController = function () {
         return res.status(200).json({
           request: {
             food: req.body.food.trim(),
-            price: req.body.price,
+            price: Number(req.body.price),
             image: imagePath
           },
           message: 'Food Added Successfully'
@@ -88,7 +88,7 @@ var FoodListController = function () {
         return res.status(200).json({
           request: {
             food: req.body.food.trim(),
-            price: req.body.price,
+            price: Number(req.body.price),
             image: imagePath
           },
           message: 'Food Updated'
