@@ -3,7 +3,7 @@ import OrderController from '../controllers/orders';
 import body from '../middleware/shared';
 import checkAuth from '../middleware/checkAuth';
 import checkID from '../middleware/auth';
-import listVerify from '../middleware/list_verify'
+import listVerify from '../middleware/list_verify';
 // initialize router
 const router = Router();
 
