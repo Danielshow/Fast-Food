@@ -22,6 +22,10 @@ var _auth = require('../middleware/auth');
 
 var _auth2 = _interopRequireDefault(_auth);
 
+var _list_verify = require('../middleware/list_verify');
+
+var _list_verify2 = _interopRequireDefault(_list_verify);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // initialize router
@@ -34,7 +38,7 @@ router.get('/orders/:id', _checkAuth2.default.verifyAdminToken, [_auth2.default.
 // get orders by a specific logged in user by their user_id
 router.get('/users/:id/orders', [_auth2.default.isValidID], _checkAuth2.default.isUserResource, _orders2.default.getUserOrder);
 // post new orders to the admin page by users
-router.post('/orders', _checkAuth2.default.verifyToken, [_shared2.default.verifyBodyandQuantity, _shared2.default.verifyLenghtOfVariables], _orders2.default.postOrder);
+router.post('/orders', _checkAuth2.default.verifyToken, [_shared2.default.verifyBodyandQuantity, _shared2.default.verifyLenghtOfVariables, _list_verify2.default], _orders2.default.postOrder);
 // Edit order Status declined, completed, pending by admin
 router.put('/orders/:id', _checkAuth2.default.verifyAdminToken, [_auth2.default.isValidID], _orders2.default.updateOrderStatus);
 

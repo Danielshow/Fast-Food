@@ -82,17 +82,23 @@ var OrderController = function () {
       var userId = req.decoded.userid;
       var addedPrice = 0;
       for (var i = 0; i < quantity.length; i += 1) {
-        addedPrice += Number(price[i]) * Number(quantity[i]);
+        addedPrice += Number(price[i].trim()) * Number(quantity[i].trim());
       }
       price = addedPrice;
-      _index2.default.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], function (err) {
+      var quantityList = [];
+      var foodlist = [];
+      for (var j = 0; j < food.length; j += 1) {
+        quantityList.push(food[j].trim());
+        foodlist.push(quantity[j].trim());
+      }
+      _index2.default.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [foodlist.join(','), quantityList.join(','), price, userId, 'new'], function (err) {
         if (err) {
           return next(err);
         }
         return res.status(200).json({
           request: {
-            food: food,
-            quantity: quantity,
+            food: foodlist,
+            quantity: quantityList,
             price: price,
             status: 'new',
             userId: userId

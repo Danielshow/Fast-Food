@@ -10,6 +10,11 @@ export default {
         status: 'Bad Request',
         message: 'Request must contain Price',
       });
+    } if (isNaN(req.body.price)) {
+      return res.status(400).send({
+        status: 'Bad Request',
+        message: 'Price must be Number',
+      });
     }
     next();
   },
