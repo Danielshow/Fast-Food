@@ -12,6 +12,15 @@ const newUser = {
   email: 'danielshoit@gmail.com',
   name: 'opeyemi',
   password: 'daniel',
+  confirmpassword: 'daniel',
+  address: 'Ikorodu',
+};
+
+const fakeUser = {
+  email: 'daniels@gmail.com',
+  name: 'opeyemi',
+  password: 'daniel',
+  confirmpassword: 'dan',
   address: 'Ikorodu',
 };
 
@@ -19,6 +28,7 @@ const admin = {
   email: 'admin22@fastfood.com',
   name: 'opeyemi',
   password: 'daniel',
+  confirmpassword: 'daniel',
   address: 'Ikorodu',
 };
 
@@ -75,6 +85,7 @@ describe('API endpoint for POST auth/signup', () => {
       address: 'Home address',
       name: 'opeyemi',
       password: 'daniel',
+      confirmpassword: 'daniel',
     })
     .then((res) => {
       expect(res).to.have.status(400);
@@ -88,10 +99,47 @@ describe('API endpoint for POST auth/signup', () => {
       address: 'Home address',
       name: 'opeyemi',
       password: 'daniel',
+      confirmpassword: 'daniel',
     })
     .then((res) => {
       expect(res).to.have.status(409);
       res.body.should.have.property('message').eql('Email already exist');
+    }));
+
+
+  it('Should Return error if password is not equal to confirm password', () => chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send(fakeUser)
+    .then((res) => {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('password and confirmpassword not equal');
+    }));
+
+  it('Should Return error if password length is less than 6', () => chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: 'dani',
+      confirmpassword: 'dani',
+    })
+    .then((res) => {
+      expect(res).to.have.status(206);
+      res.body.should.have.property('message').eql('password must be a minimum of 6 characters');
+    }));
+
+  it('Should Return error if password length is less than 6', () => chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: 'dani',
+    })
+    .then((res) => {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('body must contain password and confirmpassword');
     }));
 });
 
