@@ -25,6 +25,15 @@ var newUser = {
   email: 'danielshoit@gmail.com',
   name: 'opeyemi',
   password: 'daniel',
+  confirmpassword: 'daniel',
+  address: 'Ikorodu'
+};
+
+var fakeUser = {
+  email: 'daniels@gmail.com',
+  name: 'opeyemi',
+  password: 'daniel',
+  confirmpassword: 'dan',
   address: 'Ikorodu'
 };
 
@@ -32,6 +41,7 @@ var admin = {
   email: 'admin22@fastfood.com',
   name: 'opeyemi',
   password: 'daniel',
+  confirmpassword: 'daniel',
   address: 'Ikorodu'
 };
 
@@ -81,7 +91,8 @@ describe('API endpoint for POST auth/signup', function () {
       email: 'danielsgmail.com',
       address: 'Home address',
       name: 'opeyemi',
-      password: 'daniel'
+      password: 'daniel',
+      confirmpassword: 'daniel'
     }).then(function (res) {
       expect(res).to.have.status(400);
       res.body.should.have.property('message').eql('Email format is wrong');
@@ -93,10 +104,43 @@ describe('API endpoint for POST auth/signup', function () {
       email: 'admin@foodfast.com',
       address: 'Home address',
       name: 'opeyemi',
-      password: 'daniel'
+      password: 'daniel',
+      confirmpassword: 'daniel'
     }).then(function (res) {
       expect(res).to.have.status(409);
       res.body.should.have.property('message').eql('Email already exist');
+    });
+  });
+
+  it('Should Return error if password is not equal to confirm password', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(fakeUser).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('password and confirmpassword not equal');
+    });
+  });
+
+  it('Should Return error if password length is less than 6', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: 'dani',
+      confirmpassword: 'dani'
+    }).then(function (res) {
+      expect(res).to.have.status(206);
+      res.body.should.have.property('message').eql('password must be a minimum of 6 characters');
+    });
+  });
+
+  it('Should Return error if password length is less than 6', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: 'dani'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('body must contain password and confirmpassword');
     });
   });
 });
