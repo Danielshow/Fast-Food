@@ -60,7 +60,6 @@ describe('API endpoint GET /orders', function () {
       expect(res.body.orders).to.be.an('Array');
       expect(res.body.orders[0]).to.have.property('id');
       res.body.orders[0].should.have.property('id').eql(1);
-      res.body.orders[0].should.have.property('food').eql('rice');
     });
   });
 
