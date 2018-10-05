@@ -175,6 +175,16 @@ describe('API endpoint POST /auth/signup/admin', () => {
     .send(admin)
     .then((res) => {
       expect(res).to.have.status(403);
-      res.body.should.have.property('message').eql('Authentication fail');
+      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
+    }));
+
+
+  it('Should send an error if an Invalid token is sent. Token must be send with the header', () => chai.request(url)
+    .post('/api/v1/auth/signup/admin')
+    .set('Authorization', 'Bearer jdjdj')
+    .send(admin)
+    .then((res) => {
+      expect(res).to.have.status(401);
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
     }));
 });

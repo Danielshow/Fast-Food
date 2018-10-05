@@ -15,7 +15,7 @@ export default {
         });
       }
       return res.status(403).json({
-        message: 'Authentication fail',
+        message: 'Authentication fail, Please provide Token',
       });
     }
   },
@@ -33,8 +33,8 @@ export default {
           if (data.rows[0].roles === 'admin') {
             return next();
           }
-          return res.status(401).json({
-            message: 'Authentication fail',
+          return res.status(403).json({
+            message: 'You are not authorize to do this',
           });
         }
       });
@@ -45,7 +45,7 @@ export default {
         });
       }
       return res.status(403).json({
-        message: 'Authentication fail',
+        message: 'Authentication fail, Please provide Token',
       });
     }
   },
@@ -68,7 +68,7 @@ export default {
         });
       }
       return res.status(403).json({
-        message: 'Authentication fail',
+        message: 'Authentication fail, Please provide Token',
       });
     }
   },
