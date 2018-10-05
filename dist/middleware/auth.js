@@ -90,5 +90,23 @@ exports.default = {
       });
     }
     return next();
+  },
+  confirmPassword: function confirmPassword(req, res, next) {
+    if (!req.body.password || !req.body.confirmpassword) {
+      return res.status(400).json({
+        message: 'body must contain password and confirmpassword'
+      });
+    }
+    if (req.body.password.length < 6) {
+      return res.status(206).json({
+        message: 'password must be a minimum of 6 characters'
+      });
+    }
+    if (req.body.password.trim() !== req.body.confirmpassword.trim()) {
+      return res.status(400).json({
+        message: 'password and confirmpassword not equal'
+      });
+    }
+    return next();
   }
 };
