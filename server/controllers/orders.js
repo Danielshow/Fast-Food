@@ -56,7 +56,7 @@ class OrderController {
     const userId = req.decoded.userid;
     let addedPrice = 0;
     for (let i = 0; i < quantity.length; i += 1) {
-      addedPrice += Number(price[i]) * Number(quantity[i]);
+      addedPrice += Number(price[i].trim()) * Number(quantity[i].trim());
     }
     price = addedPrice;
     db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], (err) => {

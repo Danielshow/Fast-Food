@@ -3,6 +3,7 @@ import OrderController from '../controllers/orders';
 import body from '../middleware/shared';
 import checkAuth from '../middleware/checkAuth';
 import checkID from '../middleware/auth';
+import listVerify from '../middleware/list_verify'
 // initialize router
 const router = Router();
 
@@ -13,7 +14,7 @@ router.get('/orders/:id', checkAuth.verifyAdminToken, [checkID.isValidID], Order
 // get orders by a specific logged in user by their user_id
 router.get('/users/:id/orders', [checkID.isValidID], checkAuth.isUserResource, OrderController.getUserOrder);
 // post new orders to the admin page by users
-router.post('/orders', checkAuth.verifyToken, [body.verifyBodyandQuantity, body.verifyLenghtOfVariables], OrderController.postOrder);
+router.post('/orders', checkAuth.verifyToken, [body.verifyBodyandQuantity, body.verifyLenghtOfVariables, listVerify], OrderController.postOrder);
 // Edit order Status declined, completed, pending by admin
 router.put('/orders/:id', checkAuth.verifyAdminToken, [checkID.isValidID], OrderController.updateOrderStatus);
 
