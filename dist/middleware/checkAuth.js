@@ -22,7 +22,12 @@ exports.default = {
       req.decoded = decoded;
       return next();
     } catch (err) {
-      return res.status(401).json({
+      if (req.headers.authorization) {
+        return res.status(401).json({
+          message: 'Authentication fail, Incorrect Token'
+        });
+      }
+      return res.status(403).json({
         message: 'Authentication fail'
       });
     }
@@ -47,7 +52,12 @@ exports.default = {
         }
       });
     } catch (err) {
-      return res.status(401).json({
+      if (req.headers.authorization) {
+        return res.status(401).json({
+          message: 'Authentication fail, Incorrect Token'
+        });
+      }
+      return res.status(403).json({
         message: 'Authentication fail'
       });
     }
@@ -65,7 +75,12 @@ exports.default = {
       }
       return next();
     } catch (err) {
-      return res.status(401).json({
+      if (req.headers.authorization) {
+        return res.status(401).json({
+          message: 'Authentication fail, Incorrect Token'
+        });
+      }
+      return res.status(403).json({
         message: 'Authentication fail'
       });
     }

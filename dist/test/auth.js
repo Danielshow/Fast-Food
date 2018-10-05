@@ -169,7 +169,7 @@ describe('API endpoint POST /auth/signup/admin', function () {
 
   it('Should send auth failed if token is not sent. Token must be send with the header', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/auth/signup/admin').send(admin).then(function (res) {
-      expect(res).to.have.status(401);
+      expect(res).to.have.status(403);
       res.body.should.have.property('message').eql('Authentication fail');
     });
   });

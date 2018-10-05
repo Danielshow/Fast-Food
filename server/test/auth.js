@@ -174,7 +174,7 @@ describe('API endpoint POST /auth/signup/admin', () => {
     .post('/api/v1/auth/signup/admin')
     .send(admin)
     .then((res) => {
-      expect(res).to.have.status(401);
+      expect(res).to.have.status(403);
       res.body.should.have.property('message').eql('Authentication fail');
     }));
 });
