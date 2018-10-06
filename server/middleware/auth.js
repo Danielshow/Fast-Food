@@ -4,18 +4,22 @@ export default {
   verifyBody: (req, res, next) => {
     if (!req.body.email || req.body.email.trim().length < 1) {
       return res.status(206).json({
+        status: 206,
         message: 'Email must be included in the body',
       });
     } if (!req.body.password) {
       return res.status(206).json({
+        status: 206,
         message: 'password must be included in the body',
       });
     } if (!req.body.address || req.body.address.trim().length < 1) {
       return res.status(206).json({
+        status: 206,
         message: 'Address must be included in the body',
       });
     } if (!req.body.name || req.body.name.trim().length < 1) {
       return res.status(206).json({
+        status: 206,
         message: 'Name must be included in the body',
       });
     }
@@ -26,6 +30,7 @@ export default {
     const valid = re.test(req.body.email.trim());
     if (!valid) {
       return res.status(400).json({
+        status: 400,
         message: 'Email format is wrong',
       });
     }
@@ -34,10 +39,12 @@ export default {
   verifySignin: (req, res, next) => {
     if (!req.body.email || req.body.email.trim().length < 1) {
       return res.status(206).json({
+        status: 206,
         message: 'Email must be included in the body',
       });
     } if (!req.body.password || req.body.password.trim().length < 1) {
       return res.status(206).json({
+        status: 206,
         message: 'password must be included in the body',
       });
     }
@@ -51,6 +58,7 @@ export default {
       for (let i = 0; i < data.rows.length; i += 1) {
         if (data.rows[i].email.toLowerCase() === req.body.email.trim().toLowerCase()) {
           return res.status(409).send({
+            status: 400,
             message: 'Email already exist',
           });
         }
@@ -69,6 +77,7 @@ export default {
         }
       }
       return res.status(400).json({
+        status: 400,
         message: 'Email does not exist',
       });
     });
@@ -76,6 +85,7 @@ export default {
   isValidID: (req, res, next) => {
     if (isNaN(req.params.id) || Number(req.params.id) > 9000) {
       return res.status(403).json({
+        status: 403,
         message: 'ID must be a number and less than 9000',
       });
     }
@@ -84,16 +94,19 @@ export default {
   confirmPassword: (req, res, next) => {
     if (!req.body.password || !req.body.confirmpassword) {
       return res.status(400).json({
+        status: 400,
         message: 'body must contain password and confirmpassword',
       });
     }
     if (req.body.password.length < 6) {
       return res.status(206).json({
+        status: 206,
         message: 'password must be a minimum of 6 characters',
-      })
+      });
     }
     if (req.body.password.trim() !== req.body.confirmpassword.trim()) {
       return res.status(400).json({
+        status: 400,
         message: 'password and confirmpassword not equal',
       });
     }

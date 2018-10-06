@@ -29,9 +29,9 @@ describe('API endpoint POST /orders', () => {
     .send(postFood)
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('food');
-      res.body.request.should.have.property('status').eql('new');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('food');
+      res.body.data.should.have.property('status').eql('new');
     }));
 
   it('Should send an error if an Invalid token is sent. Token must be send with the header', () => chai.request(url)
@@ -50,9 +50,10 @@ describe('API endpoint GET /orders', () => {
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body.orders).to.be.an('Array');
-      expect(res.body.orders[0]).to.have.property('id');
-      res.body.orders[0].should.have.property('id').eql(1);
+      expect(res.body.data).to.be.an('Array');
+      expect(res.body.data[0]).to.have.property('id');
+      res.body.data[0].should.have.property('id').eql(1);
+      res.body.data[0].should.have.property('food').eql('rice');
     }));
 
   it('Should return one order given an admin with valid credentials', () => chai.request(url)
@@ -61,7 +62,7 @@ describe('API endpoint GET /orders', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      res.body.order.should.have.property('id').eql(1);
+      res.body.data.should.have.property('id').eql(1);
     }));
 
   it('Should return not found when food ID is not in the database', () => chai.request(url)
