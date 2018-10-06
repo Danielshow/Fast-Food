@@ -11,7 +11,7 @@ const listVerify = (req, res, next) => {
     }
     if (food[i].trim() === '') {
       return res.status(400).json({
-        message: `Bad Request, Food at position ${i+1} cannot be empty`,
+        message: `Bad Request, Food at position ${i + 1} cannot be empty`,
       });
     }
   }

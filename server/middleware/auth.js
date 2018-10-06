@@ -1,5 +1,15 @@
 import db from '../db/index';
 
+const isPassword = (password) => {
+  const re = /\w+/;
+  return re.test(password);
+}
+
+const isSpaceInPassword = (password) => {
+  const re = /\s+/;
+  return re.test(password);
+}
+
 export default {
   verifyBody: (req, res, next) => {
     if (!req.body.email || req.body.email.trim().length < 1) {
@@ -109,6 +119,21 @@ export default {
         status: 400,
         message: 'password and confirmpassword not equal',
       });
+    }
+    return next();
+  },
+  isPasswordValid: (req, res, next) => {
+    if (!isPassword(req.body.password)) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Password must contain Letters or numbers'
+      });
+    }
+    if (isSpaceInPassword(req.body.password)) {
+      return res.status(400).json({
+        status: 400,
+        message: 'password must not contain spaces',
+      })
     }
     return next();
   },

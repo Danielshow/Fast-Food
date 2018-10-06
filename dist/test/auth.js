@@ -143,6 +143,32 @@ describe('API endpoint for POST auth/signup', function () {
       res.body.should.have.property('message').eql('body must contain password and confirmpassword');
     });
   });
+
+  it('Password should contain letters or numbers and any other characters', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: '......',
+      confirmpassword: '......'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Password must contain Letters or numbers');
+    });
+  });
+
+  it('Password should not contain spaces', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: 'zjj zz',
+      confirmpassword: 'ajj zz'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('password must not contain spaces');
+    });
+  });
 });
 
 // signin

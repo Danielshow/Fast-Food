@@ -10,6 +10,16 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var isPassword = function isPassword(password) {
+  var re = /\w+/;
+  return re.test(password);
+};
+
+var isSpaceInPassword = function isSpaceInPassword(password) {
+  var re = /\s+/;
+  return re.test(password);
+};
+
 exports.default = {
   verifyBody: function verifyBody(req, res, next) {
     if (!req.body.email || req.body.email.trim().length < 1) {
@@ -118,6 +128,21 @@ exports.default = {
       return res.status(400).json({
         status: 400,
         message: 'password and confirmpassword not equal'
+      });
+    }
+    return next();
+  },
+  isPasswordValid: function isPasswordValid(req, res, next) {
+    if (!isPassword(req.body.password)) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Password must contain Letters or numbers'
+      });
+    }
+    if (isSpaceInPassword(req.body.password)) {
+      return res.status(400).json({
+        status: 400,
+        message: 'password must not contain spaces'
       });
     }
     return next();
