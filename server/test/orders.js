@@ -53,10 +53,6 @@ describe('API endpoint GET /orders', () => {
       expect(res.body.data).to.be.an('Array');
       expect(res.body.data[0]).to.have.property('id');
       res.body.data[0].should.have.property('id').eql(1);
-<<<<<<< HEAD
-=======
-      res.body.data[0].should.have.property('food').eql('rice');
->>>>>>> 292710fb925bf773047d3ed279d2ca07585b3c25
     }));
 
   it('Should return one order given an admin with valid credentials', () => chai.request(url)
