@@ -51,7 +51,6 @@ describe('API endpoint GET /orders', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body.orders).to.be.an('Array');
-      expect(res.body.orders[0]).to.have.property('id');
       res.body.orders[0].should.have.property('id').eql(1);
     }));
 
@@ -82,7 +81,7 @@ describe('API endpoint GET /orders', () => {
       res.body.should.have.property('message').eql('ID must be a number and less than 9000');
     }));
 
-  it('ID must be a not be a Letter', () => chai.request(url)
+  it('ID must not be a Letter', () => chai.request(url)
     .get('/api/v1/orders/hjj')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
