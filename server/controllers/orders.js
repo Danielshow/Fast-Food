@@ -7,7 +7,9 @@ class OrderController {
         return next(err);
       }
       return res.status(200).json({
-        orders: data.rows,
+        TYPE: 'GET',
+        status: 200,
+        data: data.rows,
         message: 'Orders returned successfully',
       });
     });
@@ -21,11 +23,15 @@ class OrderController {
       }
       if (data.rows.length > 0) {
         return res.status(200).json({
-          order: data.rows[0],
+          TYPE: 'GET',
+          status: 200,
+          data: data.rows[0],
           message: 'Order returned Successfully',
         });
       }
       return res.status(404).json({
+        TYPE: 'GET',
+        status: 404,
         message: 'Food not found',
       });
     });
@@ -39,11 +45,15 @@ class OrderController {
       }
       if (data.rows.length > 0) {
         return res.status(200).json({
-          food: data.rows,
+          TYPE: 'GET',
+          status: 200,
+          data: data.rows,
           message: 'food returned Successfully',
         });
       }
       return res.status(404).json({
+        TYPE: 'GET',
+        status: 404,
         message: 'Food by user not found',
       });
     });
@@ -64,7 +74,9 @@ class OrderController {
         return next(err);
       }
       return res.status(200).json({
-        request: {
+        TYPE: 'POST',
+        status: 200,
+        data: {
           food,
           quantity,
           price,
@@ -78,7 +90,9 @@ class OrderController {
 
   updateOrderStatus(req, res, next) {
     if (!req.body.status || req.body.status.trim().length < 1) {
-      res.json({
+      res.status(206).json({
+        TYPE: 'PUT',
+        status: 206,
         message: 'Status Not sent',
       });
     }
@@ -87,10 +101,14 @@ class OrderController {
     db.query('UPDATE orders SET status=$1 WHERE id=$2', [status.toLowerCase(), id], (err) => {
       if (err) {
         return res.status(400).send({
+          TYPE: 'PUT',
+          status: 400,
           message: 'status should be either New,Processing,Cancelled or Complete.',
         });
       }
-      return res.json({
+      return res.status(200).json({
+        TYPE: 'PUT',
+        status: 200,
         message: 'Food Status Updated',
       });
     });

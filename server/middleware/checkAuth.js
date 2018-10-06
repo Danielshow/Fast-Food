@@ -11,10 +11,12 @@ export default {
     } catch (err) {
       if (req.headers.authorization) {
         return res.status(401).json({
+          status: 401,
           message: 'Authentication fail, Incorrect Token',
         });
       }
       return res.status(403).json({
+        status: 403,
         message: 'Authentication fail, Please provide Token',
       });
     }
@@ -34,6 +36,7 @@ export default {
             return next();
           }
           return res.status(403).json({
+            status: 403,
             message: 'You are not authorize to do this',
           });
         }
@@ -41,10 +44,12 @@ export default {
     } catch (err) {
       if (req.headers.authorization) {
         return res.status(401).json({
+          status: 401,
           message: 'Authentication fail, Incorrect Token',
         });
       }
       return res.status(403).json({
+        status: 403,
         message: 'Authentication fail, Please provide Token',
       });
     }
@@ -57,6 +62,7 @@ export default {
       req.decoded = decoded;
       if (Number(decoded.userid) !== Number(req.params.id)) {
         return res.status(403).send({
+          status: 403,
           message: 'Auth Fail, You are not authorize to view this resource',
         });
       }
@@ -64,10 +70,12 @@ export default {
     } catch (err) {
       if (req.headers.authorization) {
         return res.status(401).json({
+          status: 401,
           message: 'Authentication fail, Incorrect Token',
         });
       }
       return res.status(403).json({
+        status: 403,
         message: 'Authentication fail, Please provide Token',
       });
     }
