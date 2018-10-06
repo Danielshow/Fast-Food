@@ -36,9 +36,9 @@ describe('API endpoint POST /menu', () => {
     .send(food)
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('food').eql('rice');
-      res.body.request.should.have.property('price').eql(3000);
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('food').eql('rice');
+      res.body.data.should.have.property('price').eql(3000);
     }));
 
   it('Should return error given food field is empty', () => chai.request(url)
@@ -48,7 +48,7 @@ describe('API endpoint POST /menu', () => {
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain food');
     }));
 
@@ -59,7 +59,7 @@ describe('API endpoint POST /menu', () => {
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain Price');
     }));
 
@@ -82,9 +82,9 @@ describe('API endpoint GET /menu', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body.food).to.be.an('Array');
-      expect(res.body.food[0]).to.be.an('object');
-      expect(res.body.food[0]).to.have.property('id');
+      expect(res.body.data).to.be.an('Array');
+      expect(res.body.data[0]).to.be.an('object');
+      expect(res.body.data[0]).to.have.property('id');
     }));
 
   it('Should return one food from the folldlist when accessed through the food ID', () => chai.request(url)
@@ -93,7 +93,7 @@ describe('API endpoint GET /menu', () => {
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body.food).to.have.property('id');
+      expect(res.body.data).to.have.property('id');
     }));
 
   it('Should return not found when food ID is not in the database', () => chai.request(url)
@@ -124,9 +124,9 @@ describe('API endpoint PUT /menu', () => {
     .send(updateFood)
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('food').eql('meat');
-      res.body.request.should.have.property('price').eql(5000);
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('food').eql('meat');
+      res.body.data.should.have.property('price').eql(5000);
       res.body.should.have.property('message').eql('Food Updated');
     }));
 
@@ -139,7 +139,7 @@ describe('API endpoint PUT /menu', () => {
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain food');
     }));
 
@@ -152,7 +152,7 @@ describe('API endpoint PUT /menu', () => {
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain Price');
     }));
 });

@@ -50,10 +50,10 @@ describe('API endpoint for POST auth/signup', () => {
     .send(newUser)
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name');
-      res.body.request.should.have.property('email').eql('danielshoit@gmail.com');
-      res.body.request.should.have.property('address').eql('Ikorodu');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('name');
+      res.body.data.should.have.property('email').eql('danielshoit@gmail.com');
+      res.body.data.should.have.property('address').eql('Ikorodu');
       res.body.should.have.property('message').eql('Registered Successfully');
     }));
 
@@ -152,7 +152,8 @@ describe('API endpoint for POST auth/login', () => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Object');
       res.body.should.have.property('message').eql('Login Successful');
-      res.body.should.have.property('token');
+      res.body.should.have.property('data');
+      res.body.data.should.have.property('token');
     }));
 
   it('Should Return error if email is not included or email contain only whitespace', () => chai.request(url)
@@ -212,9 +213,9 @@ describe('API endpoint POST /auth/signup/admin', () => {
     .send(admin)
     .then((res) => {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name').equal('opeyemi');
-      res.body.request.should.have.property('address').eql('Ikorodu');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('name').equal('opeyemi');
+      res.body.data.should.have.property('address').eql('Ikorodu');
       res.body.should.have.property('message').eql('Registered Successfully');
     }));
 

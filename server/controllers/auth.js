@@ -11,7 +11,9 @@ class AuthController {
         return next(err);
       }
       return res.status(200).json({
-        request: {
+        TYPE: 'POST',
+        status: 200,
+        data: {
           name: req.body.name.trim(),
           email: req.body.email.trim(),
           address: req.body.address.trim(),
@@ -29,7 +31,9 @@ class AuthController {
         return next(err);
       }
       return res.status(200).json({
-        request: {
+        TYPE: 'POST',
+        status: 200,
+        data: {
           name: req.body.name.trim(),
           email: req.body.email.trim(),
           address: req.body.address.trim(),
@@ -52,11 +56,16 @@ class AuthController {
             userid: data.rows[0].id,
           }, process.env.JWT_KEY);
           return res.status(200).json({
+            TYPE: 'POST',
+            data: {
+              token,
+            },
             message: 'Login Successful',
-            token,
           });
         }
         return res.status(403).json({
+          TYPE: 'POST',
+          status: 403,
           message: 'Invalid Credentials',
         });
       }
