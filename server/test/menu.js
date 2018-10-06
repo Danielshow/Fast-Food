@@ -130,6 +130,18 @@ describe('API endpoint PUT /menu', () => {
       res.body.should.have.property('message').eql('Food Updated');
     }));
 
+  it('Price must be a number', () => chai.request(url)
+    .put('/api/v1/menu/1')
+    .set('Authorization', `Bearer ${token}`)
+    .send({
+      food: 'plantian chips',
+      price: '600',
+    })
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body.data.price).to.be.a('number');
+    }));
+
   it('Should return error given food field is empty', () => chai.request(url)
     .put('/api/v1/menu/1')
     .set('Authorization', `Bearer ${token}`)

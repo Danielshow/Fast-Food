@@ -46,9 +46,9 @@ describe('API endpoint POST /menu', function () {
   it('Should post food to the food menu given food field is not empty', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/menu').set('Authorization', 'Bearer ' + token).send(food).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('food').eql('rice');
-      res.body.request.should.have.property('price').eql(3000);
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('food').eql('rice');
+      res.body.data.should.have.property('price').eql(3000);
     });
   });
 
@@ -56,7 +56,7 @@ describe('API endpoint POST /menu', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/menu').set('Authorization', 'Bearer ' + token).send(wrongfood).then(function (res) {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain food');
     });
   });
@@ -65,7 +65,7 @@ describe('API endpoint POST /menu', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/menu').set('Authorization', 'Bearer ' + token).send(wrongfood2).then(function (res) {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain Price');
     });
   });
@@ -84,9 +84,9 @@ describe('API endpoint GET /menu', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/menu').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body.food).to.be.an('Array');
-      expect(res.body.food[0]).to.be.an('object');
-      expect(res.body.food[0]).to.have.property('id');
+      expect(res.body.data).to.be.an('Array');
+      expect(res.body.data[0]).to.be.an('object');
+      expect(res.body.data[0]).to.have.property('id');
     });
   });
 
@@ -94,7 +94,7 @@ describe('API endpoint GET /menu', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/menu/1').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body.food).to.have.property('id');
+      expect(res.body.data).to.have.property('id');
     });
   });
 
@@ -121,10 +121,20 @@ describe('API endpoint PUT /menu', function () {
   it('Should update food given food field and price is not empty', function () {
     return _chai2.default.request(_index2.default).put('/api/v1/menu/1').set('Authorization', 'Bearer ' + token).send(updateFood).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('food').eql('meat');
-      res.body.request.should.have.property('price').eql(5000);
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('food').eql('meat');
+      res.body.data.should.have.property('price').eql(5000);
       res.body.should.have.property('message').eql('Food Updated');
+    });
+  });
+
+  it('Price must be a number', function () {
+    return _chai2.default.request(_index2.default).put('/api/v1/menu/1').set('Authorization', 'Bearer ' + token).send({
+      food: 'plantian chips',
+      price: '600'
+    }).then(function (res) {
+      expect(res).to.have.status(200);
+      expect(res.body.data.price).to.be.a('number');
     });
   });
 
@@ -134,7 +144,7 @@ describe('API endpoint PUT /menu', function () {
     }).then(function (res) {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain food');
     });
   });
@@ -145,7 +155,7 @@ describe('API endpoint PUT /menu', function () {
     }).then(function (res) {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('status').eql('Bad Request');
+      res.body.should.have.property('status').eql(400);
       res.body.should.have.property('message').eql('Request must contain Price');
     });
   });
