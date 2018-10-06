@@ -61,10 +61,10 @@ describe('API endpoint for POST auth/signup', function () {
   it('Should register user given a valid credentials, and a user supply their email, name, password and address', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(newUser).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name');
-      res.body.request.should.have.property('email').eql('danielshoit@gmail.com');
-      res.body.request.should.have.property('address').eql('Ikorodu');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('name');
+      res.body.data.should.have.property('email').eql('danielshoit@gmail.com');
+      res.body.data.should.have.property('address').eql('Ikorodu');
       res.body.should.have.property('message').eql('Registered Successfully');
     });
   });
@@ -152,7 +152,8 @@ describe('API endpoint for POST auth/login', function () {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Object');
       res.body.should.have.property('message').eql('Login Successful');
-      res.body.should.have.property('token');
+      res.body.should.have.property('data');
+      res.body.data.should.have.property('token');
     });
   });
 
@@ -204,9 +205,9 @@ describe('API endpoint POST /auth/signup/admin', function () {
   it('Should create admin account with administrative priviledges given valid credentials', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/auth/signup/admin').set('Authorization', 'Bearer ' + token).send(admin).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name').equal('opeyemi');
-      res.body.request.should.have.property('address').eql('Ikorodu');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('name').equal('opeyemi');
+      res.body.data.should.have.property('address').eql('Ikorodu');
       res.body.should.have.property('message').eql('Registered Successfully');
     });
   });

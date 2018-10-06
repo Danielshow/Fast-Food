@@ -49,7 +49,7 @@ class FoodListController {
         status: 200,
         data: {
           food: req.body.food.trim(),
-          price: req.body.price,
+          price: Number(req.body.price),
           image: imagePath,
         },
         message: 'Food Added Successfully',
@@ -69,7 +69,7 @@ class FoodListController {
         status: 200,
         data: {
           food: req.body.food.trim(),
-          price: req.body.price,
+          price: Number(req.body.price),
           image: imagePath,
         },
         message: 'Food Updated',

@@ -66,10 +66,16 @@ class OrderController {
     const userId = req.decoded.userid;
     let addedPrice = 0;
     for (let i = 0; i < quantity.length; i += 1) {
-      addedPrice += Number(price[i]) * Number(quantity[i]);
+      addedPrice += Number(price[i].trim()) * Number(quantity[i].trim());
     }
     price = addedPrice;
-    db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [req.body.food, req.body.quantity, price, userId, 'new'], (err) => {
+    const quantityList = [];
+    const foodlist = [];
+    for (let j = 0; j < food.length; j += 1) {
+      quantityList.push(food[j].trim());
+      foodlist.push(quantity[j].trim());
+    }
+    db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [foodlist.join(','), quantityList.join(','), price, userId, 'new'], (err) => {
       if (err) {
         return next(err);
       }

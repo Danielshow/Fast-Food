@@ -39,9 +39,9 @@ describe('API endpoint POST /orders', function () {
   it('Should post orders given the user is logged in and token is sent through the headers', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer ' + dantoken).send(postFood).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('food');
-      res.body.request.should.have.property('status').eql('new');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('food');
+      res.body.data.should.have.property('status').eql('new');
     });
   });
 
@@ -57,10 +57,9 @@ describe('API endpoint GET /orders', function () {
   it('Should return all orders given an admin is logged in with valid credentials and token is sent through the headers', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.orders).to.be.an('Array');
-      expect(res.body.orders[0]).to.have.property('id');
-      res.body.orders[0].should.have.property('id').eql(1);
-      res.body.orders[0].should.have.property('food').eql('rice');
+      expect(res.body.data).to.be.an('Array');
+      expect(res.body.data[0]).to.have.property('id');
+      res.body.data[0].should.have.property('id').eql(1);
     });
   });
 
@@ -68,7 +67,7 @@ describe('API endpoint GET /orders', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders/1').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      res.body.order.should.have.property('id').eql(1);
+      res.body.data.should.have.property('id').eql(1);
     });
   });
 
@@ -88,7 +87,7 @@ describe('API endpoint GET /orders', function () {
     });
   });
 
-  it('ID must be a not be a Letter', function () {
+  it('ID must not be a Letter', function () {
     return _chai2.default.request(_index2.default).get('/api/v1/orders/hjj').set('Authorization', 'Bearer ' + token).then(function (res) {
       expect(res).to.have.status(403);
       expect(res.body).to.be.an('object');

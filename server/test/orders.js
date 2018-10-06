@@ -53,7 +53,6 @@ describe('API endpoint GET /orders', () => {
       expect(res.body.data).to.be.an('Array');
       expect(res.body.data[0]).to.have.property('id');
       res.body.data[0].should.have.property('id').eql(1);
-      res.body.data[0].should.have.property('food').eql('rice');
     }));
 
   it('Should return one order given an admin with valid credentials', () => chai.request(url)
@@ -83,7 +82,7 @@ describe('API endpoint GET /orders', () => {
       res.body.should.have.property('message').eql('ID must be a number and less than 9000');
     }));
 
-  it('ID must be a not be a Letter', () => chai.request(url)
+  it('ID must not be a Letter', () => chai.request(url)
     .get('/api/v1/orders/hjj')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
