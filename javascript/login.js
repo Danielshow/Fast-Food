@@ -25,7 +25,7 @@ const register = ((e) => {
     error.innerText = 'Password not match';
     return;
   }
-  window.location.replace('../profile.html');
+  window.location.replace('./profile.html');
 });
 
 const login = ((e) => {
