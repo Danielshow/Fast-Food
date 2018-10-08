@@ -32,7 +32,9 @@ var FoodListController = function () {
           return next(err);
         }
         return res.status(200).json({
-          food: data.rows,
+          TYPE: 'GET',
+          status: 200,
+          data: data.rows,
           message: 'Food Returned Successfully'
         });
       });
@@ -48,11 +50,15 @@ var FoodListController = function () {
         }
         if (data.rows.length > 0) {
           return res.status(200).json({
-            food: data.rows[0],
+            TYPE: 'GET',
+            status: 200,
+            data: data.rows[0],
             message: 'Food returned Successfully'
           });
         }
         return res.status(404).json({
+          TYPE: 'GET',
+          status: 404,
           message: 'Food not found'
         });
       });
@@ -66,7 +72,9 @@ var FoodListController = function () {
           return next(err);
         }
         return res.status(200).json({
-          request: {
+          TYPE: 'POST',
+          status: 200,
+          data: {
             food: req.body.food.trim(),
             price: Number(req.body.price),
             image: imagePath
@@ -86,7 +94,9 @@ var FoodListController = function () {
           return next(err);
         }
         return res.status(200).json({
-          request: {
+          TYPE: 'PUT',
+          status: 200,
+          data: {
             food: req.body.food.trim(),
             price: Number(req.body.price),
             image: imagePath
@@ -105,6 +115,8 @@ var FoodListController = function () {
           return next(err);
         }
         return res.status(200).json({
+          TYPE: 'DELETE',
+          status: '200',
           message: 'Food deleted'
         });
       });
@@ -117,7 +129,9 @@ var FoodListController = function () {
           return next(err);
         }
         return res.status(200).json({
-          total: data.rows[0].sum,
+          TYPE: 'GET',
+          status: 200,
+          data: data.rows[0].sum,
           message: 'Success, Total Returned'
         });
       });

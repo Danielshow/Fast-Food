@@ -38,7 +38,9 @@ var AuthController = function () {
           return next(err);
         }
         return res.status(200).json({
-          request: {
+          TYPE: 'POST',
+          status: 200,
+          data: {
             name: req.body.name.trim(),
             email: req.body.email.trim(),
             address: req.body.address.trim()
@@ -57,7 +59,9 @@ var AuthController = function () {
           return next(err);
         }
         return res.status(200).json({
-          request: {
+          TYPE: 'POST',
+          status: 200,
+          data: {
             name: req.body.name.trim(),
             email: req.body.email.trim(),
             address: req.body.address.trim()
@@ -81,11 +85,16 @@ var AuthController = function () {
               userid: data.rows[0].id
             }, process.env.JWT_KEY);
             return res.status(200).json({
-              message: 'Login Successful',
-              token: token
+              TYPE: 'POST',
+              data: {
+                token: token
+              },
+              message: 'Login Successful'
             });
           }
           return res.status(403).json({
+            TYPE: 'POST',
+            status: 403,
             message: 'Invalid Credentials'
           });
         }

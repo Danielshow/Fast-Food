@@ -28,7 +28,9 @@ var OrderController = function () {
           return next(err);
         }
         return res.status(200).json({
-          orders: data.rows,
+          TYPE: 'GET',
+          status: 200,
+          data: data.rows,
           message: 'Orders returned successfully'
         });
       });
@@ -44,11 +46,15 @@ var OrderController = function () {
         }
         if (data.rows.length > 0) {
           return res.status(200).json({
-            order: data.rows[0],
+            TYPE: 'GET',
+            status: 200,
+            data: data.rows[0],
             message: 'Order returned Successfully'
           });
         }
         return res.status(404).json({
+          TYPE: 'GET',
+          status: 404,
           message: 'Food not found'
         });
       });
@@ -64,11 +70,15 @@ var OrderController = function () {
         }
         if (data.rows.length > 0) {
           return res.status(200).json({
-            food: data.rows,
+            TYPE: 'GET',
+            status: 200,
+            data: data.rows,
             message: 'food returned Successfully'
           });
         }
         return res.status(404).json({
+          TYPE: 'GET',
+          status: 404,
           message: 'Food by user not found'
         });
       });
@@ -96,9 +106,11 @@ var OrderController = function () {
           return next(err);
         }
         return res.status(200).json({
-          request: {
-            food: foodlist,
-            quantity: quantityList,
+          TYPE: 'POST',
+          status: 200,
+          data: {
+            food: food,
+            quantity: quantity,
             price: price,
             status: 'new',
             userId: userId
@@ -111,7 +123,9 @@ var OrderController = function () {
     key: 'updateOrderStatus',
     value: function updateOrderStatus(req, res, next) {
       if (!req.body.status || req.body.status.trim().length < 1) {
-        res.json({
+        res.status(206).json({
+          TYPE: 'PUT',
+          status: 206,
           message: 'Status Not sent'
         });
       }
@@ -121,10 +135,14 @@ var OrderController = function () {
       _index2.default.query('UPDATE orders SET status=$1 WHERE id=$2', [status.toLowerCase(), id], function (err) {
         if (err) {
           return res.status(400).send({
+            TYPE: 'PUT',
+            status: 400,
             message: 'status should be either New,Processing,Cancelled or Complete.'
           });
         }
-        return res.json({
+        return res.status(200).json({
+          TYPE: 'PUT',
+          status: 200,
           message: 'Food Status Updated'
         });
       });
