@@ -45,6 +45,24 @@ exports.default = {
     }
     next();
   },
+  verifyRoles: function verifyRoles(req, res, next) {
+    if (!req.body.roles || req.body.roles.trim().length < 1) {
+      return res.status(400).json({
+        status: 400,
+        message: 'roles must be included in the body'
+      });
+    }
+    next();
+  },
+  checkRoles: function checkRoles(req, res, next) {
+    if (req.body.roles.toLowerCase() !== 'admin' && req.body.roles.toLowerCase() !== 'user') {
+      return res.status(400).json({
+        status: '400',
+        message: 'Roles must be either Admin or Users'
+      });
+    }
+    next();
+  },
   validate: function validate(req, res, next) {
     var re = /\S+@\S+\.\S+/;
     var valid = re.test(req.body.email.trim());

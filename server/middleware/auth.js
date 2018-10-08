@@ -3,12 +3,12 @@ import db from '../db/index';
 const isPassword = (password) => {
   const re = /\w+/;
   return re.test(password);
-}
+};
 
 const isSpaceInPassword = (password) => {
   const re = /\s+/;
   return re.test(password);
-}
+};
 
 export default {
   verifyBody: (req, res, next) => {
@@ -32,6 +32,24 @@ export default {
         status: 206,
         message: 'Name must be included in the body',
       });
+    }
+    next();
+  },
+  verifyRoles: (req, res, next) => {
+    if (!req.body.roles || req.body.roles.trim().length < 1) {
+      return res.status(400).json({
+        status: 400,
+        message: 'roles must be included in the body',
+      })
+    }
+    next()
+  },
+  checkRoles: (req, res, next) => {
+    if (req.body.roles.toLowerCase() !== 'admin' && req.body.roles.toLowerCase() !== 'user') {
+      return res.status(400).json({
+        status: '400',
+        message: 'Roles must be either Admin or Users',
+      })
     }
     next();
   },
@@ -126,14 +144,14 @@ export default {
     if (!isPassword(req.body.password)) {
       return res.status(400).json({
         status: 400,
-        message: 'Password must contain Letters or numbers'
+        message: 'Password must contain Letters or numbers',
       });
     }
     if (isSpaceInPassword(req.body.password)) {
       return res.status(400).json({
         status: 400,
         message: 'password must not contain spaces',
-      })
+      });
     }
     return next();
   },

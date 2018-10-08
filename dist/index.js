@@ -28,6 +28,10 @@ var _auth = require('./routes/auth');
 
 var _auth2 = _interopRequireDefault(_auth);
 
+var _users = require('./routes/users');
+
+var _users2 = _interopRequireDefault(_users);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
@@ -47,6 +51,7 @@ app.use(function (err, req, res, next) {
 app.use('/api/v1', _orders2.default);
 app.use('/api/v1', _menu2.default);
 app.use('/api/v1', _auth2.default);
+app.use('/api/v1', _users2.default);
 
 app.get('/', function (req, res) {
   res.status(200).send({
