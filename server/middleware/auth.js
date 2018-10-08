@@ -3,12 +3,12 @@ import db from '../db/index';
 const isPassword = (password) => {
   const re = /\w+/;
   return re.test(password);
-}
+};
 
 const isSpaceInPassword = (password) => {
   const re = /\s+/;
   return re.test(password);
-}
+};
 
 export default {
   verifyBody: (req, res, next) => {
@@ -33,7 +33,22 @@ export default {
         message: 'Name must be included in the body',
       });
     }
-    next();
+    return next();
+  },
+  verifyRoles: (req, res, next) => {
+    const roles = req.body.roles.toLowerCase();
+    if (!req.body.roles || req.body.roles.trim().length < 1) {
+      return res.status(400).json({
+        status: 400,
+        message: 'roles must be included in the body',
+      });
+    } if (roles !== 'admin' && roles !== 'user') {
+      return res.status(400).json({
+        status: '400',
+        message: 'Roles must be either Admin or Users',
+      });
+    }
+    return next();
   },
   validate: (req, res, next) => {
     const re = /\S+@\S+\.\S+/;
@@ -44,7 +59,7 @@ export default {
         message: 'Email format is wrong',
       });
     }
-    next();
+    return next();
   },
   verifySignin: (req, res, next) => {
     if (!req.body.email || req.body.email.trim().length < 1) {
@@ -58,7 +73,7 @@ export default {
         message: 'password must be included in the body',
       });
     }
-    next();
+    return next();
   },
   isEmailExist: (req, res, next) => {
     db.query('SELECT email from users', (err, data) => {
@@ -73,7 +88,7 @@ export default {
           });
         }
       }
-      next();
+      return next();
     });
   },
   isEmailInDb: (req, res, next) => {
@@ -126,14 +141,14 @@ export default {
     if (!isPassword(req.body.password)) {
       return res.status(400).json({
         status: 400,
-        message: 'Password must contain Letters or numbers'
+        message: 'Password must contain Letters or numbers',
       });
     }
     if (isSpaceInPassword(req.body.password)) {
       return res.status(400).json({
         status: 400,
         message: 'password must not contain spaces',
-      })
+      });
     }
     return next();
   },

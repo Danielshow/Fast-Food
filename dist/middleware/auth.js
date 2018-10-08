@@ -43,7 +43,22 @@ exports.default = {
         message: 'Name must be included in the body'
       });
     }
-    next();
+    return next();
+  },
+  verifyRoles: function verifyRoles(req, res, next) {
+    var roles = req.body.roles.toLowerCase();
+    if (!req.body.roles || req.body.roles.trim().length < 1) {
+      return res.status(400).json({
+        status: 400,
+        message: 'roles must be included in the body'
+      });
+    }if (roles !== 'admin' && roles !== 'user') {
+      return res.status(400).json({
+        status: '400',
+        message: 'Roles must be either Admin or Users'
+      });
+    }
+    return next();
   },
   validate: function validate(req, res, next) {
     var re = /\S+@\S+\.\S+/;
@@ -54,7 +69,7 @@ exports.default = {
         message: 'Email format is wrong'
       });
     }
-    next();
+    return next();
   },
   verifySignin: function verifySignin(req, res, next) {
     if (!req.body.email || req.body.email.trim().length < 1) {
@@ -68,7 +83,7 @@ exports.default = {
         message: 'password must be included in the body'
       });
     }
-    next();
+    return next();
   },
   isEmailExist: function isEmailExist(req, res, next) {
     _index2.default.query('SELECT email from users', function (err, data) {
@@ -83,7 +98,7 @@ exports.default = {
           });
         }
       }
-      next();
+      return next();
     });
   },
   isEmailInDb: function isEmailInDb(req, res, next) {

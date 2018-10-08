@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import orderRoutes from './routes/orders';
 import menuRoutes from './routes/menu';
 import authRoutes from './routes/auth';
+import userRoutes from './routes/users';
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.use((err, req, res, next) => {
 app.use('/api/v1', orderRoutes);
 app.use('/api/v1', menuRoutes);
 app.use('/api/v1', authRoutes);
+app.use('/api/v1', userRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send({
