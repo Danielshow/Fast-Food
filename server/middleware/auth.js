@@ -33,25 +33,22 @@ export default {
         message: 'Name must be included in the body',
       });
     }
-    next();
+    return next();
   },
   verifyRoles: (req, res, next) => {
+    const roles = req.body.roles.toLowerCase();
     if (!req.body.roles || req.body.roles.trim().length < 1) {
       return res.status(400).json({
         status: 400,
         message: 'roles must be included in the body',
-      })
-    }
-    next()
-  },
-  checkRoles: (req, res, next) => {
-    if (req.body.roles.toLowerCase() !== 'admin' && req.body.roles.toLowerCase() !== 'user') {
+      });
+    } if (roles !== 'admin' && roles !== 'user') {
       return res.status(400).json({
         status: '400',
         message: 'Roles must be either Admin or Users',
-      })
+      });
     }
-    next();
+    return next();
   },
   validate: (req, res, next) => {
     const re = /\S+@\S+\.\S+/;
@@ -62,7 +59,7 @@ export default {
         message: 'Email format is wrong',
       });
     }
-    next();
+    return next();
   },
   verifySignin: (req, res, next) => {
     if (!req.body.email || req.body.email.trim().length < 1) {
@@ -76,7 +73,7 @@ export default {
         message: 'password must be included in the body',
       });
     }
-    next();
+    return next();
   },
   isEmailExist: (req, res, next) => {
     db.query('SELECT email from users', (err, data) => {
@@ -91,7 +88,7 @@ export default {
           });
         }
       }
-      next();
+      return next();
     });
   },
   isEmailInDb: (req, res, next) => {

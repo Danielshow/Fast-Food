@@ -4,7 +4,7 @@ class UsersController {
   getAllUsers(req, res, next) {
     db.query('select * from users', (err, data) => {
       if (err) {
-        next(err);
+        return next(err);
       }
       return res.status(200).json({
         type: 'GET',
@@ -18,7 +18,7 @@ class UsersController {
   deleteAccount(req, res, next) {
     db.query('Delete from users where id=$1', [req.decoded.userid], (err) => {
       if (err) {
-        next(err);
+        return next(err);
       }
       return res.status(200).json({
         type: 'DELETE',
@@ -31,7 +31,7 @@ class UsersController {
   deleteUsers(req, res, next) {
     db.query('DELETE from users where id=$1', [req.params.id], (err) => {
       if (err) {
-        next(err);
+        return next(err);
       }
       return res.status(200).json({
         type: 'DELETE',
@@ -42,9 +42,9 @@ class UsersController {
   }
 
   promoteUsers(req, res, next) {
-    db.query('Update users SET roles=$1 where id=$2', [req.body.roles, req.params.id], (err) => {
+    db.query('Update users SET roles=$1 where id=$2', [req.body.roles.toLowerCase(), req.params.id], (err) => {
       if (err) {
-        next(err);
+        return next(err);
       }
       return res.status(200).json({
         type: 'PUT',
