@@ -83,3 +83,40 @@ describe('API endpoint to Update user roles using /users', () => {
       res.body.should.have.property('message').eql('Roles must be either Admin or Users');
     }));
 });
+
+describe('API endpoint for DELETE user /users', () => {
+  it('Should return success if an account is sucessfully deleted', () => chai.request(url)
+    .delete('/api/v1/users')
+    .set('Authorization', `Bearer ${usertoken}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      res.body.should.have.property('type').eql('DELETE');
+      res.body.should.have.property('message').eql('Account successfully deleted');
+    }));
+
+  it('Should Return error if token is not added', () => chai.request(url)
+    .delete('/api/v1/users')
+    .then((res) => {
+      expect(res).to.have.status(403);
+      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
+    }));
+
+  it('Should Return error if Incorrect token is added', () => chai.request(url)
+    .delete('/api/v1/users')
+    .set('Authorization', 'Bearer dkdkdkdk')
+    .then((res) => {
+      expect(res).to.have.status(401);
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    }));
+});
+
+describe('API endpoint for DELETE users by ID /users/:id', () => {
+  it('Should return success if admin delete a user', () => chai.request(url)
+    .delete('/api/v1/users/1')
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      res.body.should.have.property('type').eql('DELETE');
+      res.body.should.have.property('message').eql('User Deleted successfully');
+    }));
+});
