@@ -44,9 +44,9 @@ app.use('/uploads', _express2.default.static('uploads'));
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin, X-Requested-With, Content-Type, Accept, Authorization');
   if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Origin', 'PUT, POST, GET, DELETE');
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, PATCH');
     return res.status(200).json({});
   }
   next();

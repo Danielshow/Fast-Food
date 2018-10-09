@@ -61,6 +61,14 @@ margin-top: 4px;
 .form-wrapper {
   width: 80%;
   margin: 0 auto;
+  text-align: center;
+}
+
+.gifImage {
+  display: none;
+  background: inherit;
+  border-radius: 50%;
+  text-align: center;
 }
 
 @media screen and (max-width: 600px) {
@@ -154,6 +162,7 @@ width: 50%;
 
 .container3 {
   padding: 16px;
+  text-align: left;
 }
 
 @media screen and (max-width: 300px) {

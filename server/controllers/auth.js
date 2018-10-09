@@ -57,6 +57,7 @@ class AuthController {
           }, process.env.JWT_KEY);
           return res.status(200).json({
             TYPE: 'POST',
+            status:200,
             data: {
               token,
             },
