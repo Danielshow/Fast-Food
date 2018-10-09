@@ -16,15 +16,9 @@ app.use('/uploads', express.static('uploads'));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-<<<<<<< HEAD
   res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin, X-Requested-With, Content-Type, Accept, Authorization');
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, PATCH');
-=======
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Origin', 'PUT, POST, GET, DELETE');
->>>>>>> fab9d48bb52b19cfeeb8faf8ebe9b5bbb89cbd3f
     return res.status(200).json({});
   }
   next();
