@@ -63,7 +63,27 @@ const login = ((e) => {
   e.preventDefault();
   if (!validateEmail(loginEmail.value)) {
     error2.innerText = 'Enter a valid email';
+    return;
   }
+  fetch(`${url}auth/login`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: loginEmail.value,
+      password: loginPassword.value,
+    }),
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      if (typeof (Storage) !== 'undefined') {
+        localStorage.setItem('token', `${data.data.token}`);
+      }
+      window.location.replace('./profile.html');
+    }
+    error2.innerText = data.message;
+  });
 });
 
 
