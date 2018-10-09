@@ -9,6 +9,7 @@ const error2 = document.getElementById('error2');
 const loginPassword = document.getElementById('loginPassword');
 const loginEmail = document.getElementById('loginEmail');
 const loginSubmit = document.getElementById('loginSubmit');
+const gifImage = document.getElementById('gifImage');
 const url = 'http://localhost:3000/api/v1/';
 
 
@@ -35,9 +36,13 @@ const register = ((e) => {
     error.innerText = 'Name cannot be empty';
     return;
   }
+  gifImage.display = 'block';
   fetch(`${url}auth/signup`, {
-    mode: 'no-cors',
     method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       name: name.value.trim(),
       password: password.value,
@@ -45,16 +50,13 @@ const register = ((e) => {
       address: address.value,
       email: email.value,
     }),
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded, text/plain, */*; charset=utf-8',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'HEAD, GET, POST. PUT, PATCH, DELETE',
-      'Access-Control-Allow-headers': 'Origin, Content-Type, X-Auth-Token',
-    },
   }).then(response => response.json()).then((data) => {
-    console.log(data);
+    if (data.status === 200) {
+      window.location.replace('./profile.html');
+    }
+    gifImage.display = 'none';
+    error.innerText = data.message;
   });
-  // window.location.replace('./profile.html');
 });
 
 const login = ((e) => {
