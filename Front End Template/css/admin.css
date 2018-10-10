@@ -81,6 +81,11 @@ tbody:nth-child(even) {
   color: white;
 }
 
+.success {
+  background: rgb(47, 232, 31);
+  border-color: rgb(47, 232, 31);
+  color: white;
+}
 .orders {
   display: none;
   overflow-x: auto;
@@ -115,10 +120,35 @@ tbody:nth-child(even) {
 }
 
 .people {
-  width: 40%;
+  width: 90%;
   margin: 0 auto;
   min-height: 300px;
-  background: white;
+}
+
+.usertable.back {
+  background-color: #393939;
+}
+
+.usertable.back th {
+  font-size: 15px;
+  color: rgb(76, 232, 21);
+  line-height: 1.4;
+  text-transform: uppercase;
+  background-color: #393939;
+}
+
+.usertable.back td {
+  font-family: Lato-Regular;
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.4;
+  background-color: #222222;
+}
+/*  */
+.usertable.back {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 }
 
 .body {
@@ -171,7 +201,6 @@ tbody:nth-child(even) {
 #list_of_food ul:nth-child(even){
   background: grey;
 }
-
 
 @media screen and (min-width: 600px) {
   .side-nav {
