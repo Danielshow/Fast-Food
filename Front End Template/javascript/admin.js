@@ -11,8 +11,7 @@ const toAdmin = document.getElementById('to_admin');
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
 
-// on page load, get all users
-window.addEventListener('load', () => {
+const loadWindows = (() => {
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
     fetch(`${url}auth/me`, {
@@ -29,6 +28,16 @@ window.addEventListener('load', () => {
         },
       }).then(response => response.json()).then((datas) => {
         if (datas.status === 200) {
+          userTable.innerHTML = `<thead>
+                                    <tr>
+                                      <th>User ID</th>
+                                      <th>Name</th>
+                                      <th>Email</th>
+                                      <th>roles</th>
+                                      <th>Upgrade</th>
+                                      <th>Delete Account</th>
+                                    </tr>
+                                  </thead>`
           for (let i = 0; i < datas.data.length; i += 1) {
             const info = datas.data[i];
             userTable.innerHTML += `<tr>
@@ -48,8 +57,36 @@ window.addEventListener('load', () => {
   }
 });
 
+// on page load, get all users
+window.addEventListener('load', () => {
+  loadWindows();
+});
+
+const changeToAdmin = ((e) => {
+  if (e.target.className === 'success') {
+    const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    fetch(`${url}/users/${id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        roles: 'admin',
+      }),
+    }).then(response => response.json()).then((data) => {
+      if (data.status === 200) {
+        alert('User promoted to admin successfully');
+        loadWindows();
+      }
+    });
+  }
+});
+
 const clickEvent = (() => {
   people.style.display = 'block';
+  loadWindows();
   order.style.display = 'none';
   paymentMade.style.display = 'none';
   addFood.style.display = 'none';
@@ -81,4 +118,6 @@ users.addEventListener('click', clickEvent);
 orderbtn.addEventListener('click', orderEvent);
 paymentbtn.addEventListener('click', paymentEvent);
 addbtn.addEventListener('click', addEvent);
-toAdmin.addEventListener('click', changeToAdmin);
+if (document.addEventListener) {
+  document.addEventListener('click', changeToAdmin);
+}
