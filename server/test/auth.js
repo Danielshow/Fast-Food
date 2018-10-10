@@ -7,6 +7,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 const token = process.env.TOKEN1;
+const token2 = process.env.TOKEN2;
 
 const newUser = {
   email: 'danielshoit@gmail.com',
@@ -260,6 +261,60 @@ describe('API endpoint POST /auth/signup/admin', () => {
     .post('/api/v1/auth/signup/admin')
     .set('Authorization', 'Bearer jdjdj')
     .send(admin)
+    .then((res) => {
+      expect(res).to.have.status(401);
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    }));
+});
+
+describe('API endpoint GET /auth/me', () => {
+  it('Should return a particular user with all his/her credentials', () => chai.request(url)
+    .get('/api/v1/auth/me')
+    .set('Authorization', `Bearer ${token2}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body.data).to.be.an('Array');
+      res.body.should.have.property('message').eql('User returned Successfully');
+    }));
+
+  it('Should return failed if Token is not sent', () => chai.request(url)
+    .get('/api/v1/auth/me')
+    .then((res) => {
+      expect(res).to.have.status(403);
+      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
+    }));
+
+
+  it('Should send an error if an Invalid token is sent. Token must be send with the header', () => chai.request(url)
+    .get('/api/v1/auth/me')
+    .set('Authorization', 'Bearer jdjdj')
+    .then((res) => {
+      expect(res).to.have.status(401);
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    }));
+});
+
+describe('API endpoint GET /auth/logout', () => {
+  it('Should logout a particular user and set token to null', () => chai.request(url)
+    .get('/api/v1/auth/logout')
+    .set('Authorization', `Bearer ${token2}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body.data).to.be.an('Object');
+      res.body.should.have.property('message').eql('User logged out Successfully');
+    }));
+
+  it('Should return failed if Token is not sent', () => chai.request(url)
+    .get('/api/v1/auth/me')
+    .then((res) => {
+      expect(res).to.have.status(403);
+      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
+    }));
+
+
+  it('Should send an error if an Invalid token is sent. Token must be send with the header', () => chai.request(url)
+    .get('/api/v1/auth/me')
+    .set('Authorization', 'Bearer jdjdj')
     .then((res) => {
       expect(res).to.have.status(401);
       res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');

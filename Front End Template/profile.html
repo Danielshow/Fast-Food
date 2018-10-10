@@ -21,52 +21,20 @@
           <li><a href="index.html#contact_us">About Us </a></li>
           <li><a href="index.html#contact">Contact Us </a></li>
           <li><a href="index.html#gallery">Gallery </a></li>
+          <li><a href="#" id="logout"> Logout</a></li>
         </ul>
       </div>
       <div class="profile">
-        <h2>Welcome Daniel</h2>
+        <h2 id = "name"> Welcome Daniel</h2>
         <a href="order-list.html"><button type="button" name="button" class="btn">Order Food</button></a>
         <h1>Order History</h1>
-        <table id="myTable">
-          <tr>
-            <th>Order ID</th>
-            <th>Date</th>
-            <th>Food Items</th>
-            <th>Price</th>
-          </tr>
-          <tr>
-            <td>345635</td>
-            <td>4 Dec 2017</td>
-            <td>Rice</td>
-            <td>8.48</td>
-          </tr>
-          <tr>
-            <td>345635</td>
-            <td>5 Dec 2017</td>
-            <td>Beans</td>
-            <td>9.88</td>
-          </tr>
-          <tr>
-            <td>345635</td>
-            <td>4 Dec 2017</td>
-            <td>Meat</td>
-            <td>7.99</td>
-          </tr>
-
-          <tr>
-            <td>34563500</td>
-            <td>4 Dec 2017</td>
-            <td>Berbecue</td>
-            <td>14.8</td>
-          </tr>
-          <tr>
-            <td>345635</td>
-            <td>4 Dec 2017</td>
-            <td>Fried rice</td>
-            <td>340</td>
-          </tr>
-
-        </table>
+        <button class="btnorder" id='getOrder'>History</button><br/>
+        <img src="./images/gif/load (1).gif" alt="loading" class="gifImage" id="gifImage">
+        <div id="error">
+          No Food Ordered yet
+        </div>
+        <div id="orderTable">
+        </div>
       </div>
       <div class="footer">
         <div class="address">
@@ -95,7 +63,7 @@
     </div>
 
   </div>
-  <script src="../javascript/script4.js">
+  <script src="./javascript/profile.js">
 
   </script>
 </body>

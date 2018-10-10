@@ -101,6 +101,39 @@ var AuthController = function () {
         }
       });
     }
+  }, {
+    key: 'logout',
+    value: function logout(req, res, next) {
+      res.status(200).json({
+        type: 'GET',
+        status: 200,
+        data: {
+          token: null
+        },
+        message: 'User logged out Successfully'
+      });
+    }
+  }, {
+    key: 'getMe',
+    value: function getMe(req, res, next) {
+      _index2.default.query('SELECT * from users where id=$1', [req.decoded.userid], function (err, data) {
+        if (err) {
+          return next(err);
+        }
+        if (data.rows.length > 0) {
+          return res.status(200).send({
+            type: 'GET',
+            status: 200,
+            data: data.rows,
+            message: 'User returned Successfully'
+          });
+        }
+        return res.status(404).json({
+          status: 400,
+          message: 'User not found'
+        });
+      });
+    }
   }]);
 
   return AuthController;

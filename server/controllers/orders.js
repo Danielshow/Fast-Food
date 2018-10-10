@@ -72,8 +72,8 @@ class OrderController {
     const quantityList = [];
     const foodlist = [];
     for (let j = 0; j < food.length; j += 1) {
-      quantityList.push(food[j].trim());
-      foodlist.push(quantity[j].trim());
+      quantityList.push(quantity[j].trim());
+      foodlist.push(food[j].trim());
     }
     db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [foodlist.join(','), quantityList.join(','), price, userId, 'new'], (err) => {
       if (err) {
