@@ -36,7 +36,7 @@ const register = ((e) => {
     error.innerText = 'Name cannot be empty';
     return;
   }
-  gifImage.display = 'block';
+  gifImage.style.display = 'block';
   fetch(`${url}auth/signup`, {
     method: 'POST',
     headers: {

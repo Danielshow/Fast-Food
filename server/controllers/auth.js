@@ -57,7 +57,7 @@ class AuthController {
           }, process.env.JWT_KEY);
           return res.status(200).json({
             TYPE: 'POST',
-            status:200,
+            status: 200,
             data: {
               token,
             },
@@ -70,6 +70,35 @@ class AuthController {
           message: 'Invalid Credentials',
         });
       }
+    });
+  }
+
+  logout(req, res, next) {
+    res.status(200).json({
+      type: 'GET',
+      status: 200,
+      data: {
+        token: null,
+      },
+    });
+  }
+
+  getMe(req, res, next) {
+    db.query('SELECT * from users where id=$1', [req.decoded.userid], (err, data) => {
+      if (err) {
+        return next(err);
+      }
+      if (data.rows.length > 0) {
+        return res.status(200).send({
+          type: 'GET',
+          status: 200,
+          data: data.rows,
+        });
+      }
+      return res.status(404).json({
+        status: 400,
+        message: 'User not found',
+      });
     });
   }
 }
