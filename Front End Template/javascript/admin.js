@@ -7,7 +7,9 @@ const people = document.getElementById('people');
 const userTable = document.getElementById('usertable');
 const addFood = document.getElementById('add-food');
 const addbtn = document.getElementById('message');
-const toAdmin = document.getElementById('to_admin');
+const submitFood = document.getElementById('action');
+
+
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
 
@@ -41,10 +43,10 @@ const loadWindows = (() => {
           for (let i = 0; i < datas.data.length; i += 1) {
             const info = datas.data[i];
             userTable.innerHTML += `<tr>
-                                      <td>${info.id}</td>
-                                      <td>${info.name}</td>
-                                      <td>${info.email}</td>
-                                      <td>${info.roles}</td>
+                                      <td colname="ID">${info.id}</td>
+                                      <td colname="Name">${info.name}</td>
+                                      <td colname="Email">${info.email}</td>
+                                      <td colname="Roles">${info.roles}</td>
                                       <td><button type="button" name="button" class="success" id="to_admin">To Admin</button></td>
                                       <td><button type="button" name="button" class="danger">Delete</button></td>
                                     </tr>`;
@@ -84,6 +86,21 @@ const changeToAdmin = ((e) => {
   }
 });
 
+const postFood = ((e) => {
+  e.preventDefault();
+  const formData = new FormData(document.forms.myForm)
+  console.log(formData);
+  fetch(`${url}/menu`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  }).then(response => response.json()).then((data) => {
+    console.log(data);
+  })
+});
+
 const clickEvent = (() => {
   people.style.display = 'block';
   loadWindows();
@@ -118,6 +135,7 @@ users.addEventListener('click', clickEvent);
 orderbtn.addEventListener('click', orderEvent);
 paymentbtn.addEventListener('click', paymentEvent);
 addbtn.addEventListener('click', addEvent);
+submitFood.addEventListener('click', postFood);
 if (document.addEventListener) {
   document.addEventListener('click', changeToAdmin);
 }

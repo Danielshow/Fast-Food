@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <title>Admin Dashboard</title>
   <link rel="icon" href="./images/logo/logo1.png">
 </head>
+
 <body>
   <div class="header">
     <div class="logo-row">
@@ -19,7 +21,7 @@
     <nav>
       <ul>
         <li>
-          <a href="#" id = "users">
+          <a href="#" id="users">
             <span><img src="./images/icons/user.png"</span>
             <span>Users</span>
           </a>
@@ -48,9 +50,9 @@
   <div class="main-content">
     <div class="people" id="people">
       <div class="usertable back">
-          <table id= "usertable">
-            
-          </table>
+        <table id="usertable">
+
+        </table>
       </div>
     </div>
     <div class="orders" id="order">
@@ -135,19 +137,22 @@
         <span><img src="./images/icons/money.png"</span>
       </div>
       <div class="body">
-          <h3><span id = "totalprice">$56677.87</span> Naira</h3>
+        <h3><span id = "totalprice">$56677.87</span> Naira</h3>
       </div>
     </div>
     <div class="add-food" id="add-food">
-      <label for="">Food Name:</label><br>
-      <input type="text" placeholder="Enter food Name" id="textInp"><br>
+      <form action="" method="post" enctype="multipart/form-data" id="myForm">
+        <label for="">Food Name:</label><br>
+        <input type="text" placeholder="Enter food Name" name="food" id="textInp"><br>
 
-      <label for="">Price:</label><br>
-      <input type="text" placeholder="Enter the price" id="priceInp"><br>
+        <label for="">Price:</label><br>
+        <input type="text" placeholder="Enter the price" name="price" id="priceInp"><br>
 
-      <input type="submit" name="" value="Submit" id="action">
-
-      <div id ="list_of_food">
+        <label for=""> Food Image</label>
+        <input type="file" name="foodImage" value="" id="foodImage"> <br>
+        <input type="submit" name="" value="Submit" id="action">
+      </form>
+      <div id="list_of_food">
         <table id="myTable2">
           <tr>
             <th>Food</th>
@@ -160,7 +165,7 @@
     </div>
   </div>
   <script src="./javascript/admin.js">
-
   </script>
 </body>
+
 </html>
