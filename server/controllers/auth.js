@@ -80,6 +80,7 @@ class AuthController {
       data: {
         token: null,
       },
+      message: 'User logged out Successfully',
     });
   }
 
@@ -93,6 +94,7 @@ class AuthController {
           type: 'GET',
           status: 200,
           data: data.rows,
+          message: 'User returned Successfully',
         });
       }
       return res.status(404).json({

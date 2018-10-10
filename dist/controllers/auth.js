@@ -109,7 +109,8 @@ var AuthController = function () {
         status: 200,
         data: {
           token: null
-        }
+        },
+        message: 'User logged out Successfully'
       });
     }
   }, {
@@ -123,7 +124,8 @@ var AuthController = function () {
           return res.status(200).send({
             type: 'GET',
             status: 200,
-            data: data.rows
+            data: data.rows,
+            message: 'User returned Successfully'
           });
         }
         return res.status(404).json({
