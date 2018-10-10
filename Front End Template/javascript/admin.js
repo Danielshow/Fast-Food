@@ -5,6 +5,7 @@ const paymentbtn = document.getElementById('payment-click');
 const orderbtn = document.getElementById('order_click');
 const people = document.getElementById('people');
 const userTable = document.getElementById('usertable');
+const menuTable = document.getElementById('myTable2');
 const addFood = document.getElementById('add-food');
 const addbtn = document.getElementById('message');
 const submitFood = document.getElementById('action');
@@ -39,7 +40,7 @@ const loadWindows = (() => {
                                       <th>Upgrade</th>
                                       <th>Delete Account</th>
                                     </tr>
-                                  </thead>`
+                                  </thead>`;
           for (let i = 0; i < datas.data.length; i += 1) {
             const info = datas.data[i];
             userTable.innerHTML += `<tr>
@@ -59,9 +60,39 @@ const loadWindows = (() => {
   }
 });
 
+const loadAvailableFoods = (() => {
+  fetch(`${url}menu`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      menuTable.innerHTML = `<thead>
+                              <tr>
+                                  <th> ID </th>
+                                  <th> Food </th>
+                                  <th> Price </th>
+                                  <th> Butoon </th>
+                                  <th> button </th>
+                              </tr>
+                            </thead>`;
+      for (let i = 0; i < data.data.length; i += 1) {
+        const info = data.data[i];
+        menuTable.innerHTML += `<tr>
+                                  <td colname="ID">${info.id}</td>
+                                  <td colname="Food">${info.food}</td>
+                                  <td colname="price">${info.price}</td>
+                                  <td><button type="button" name="button" class="success"> Edit </button></td>
+                                  <td><button type="button" name="button" class="danger"> Delete</button></td>
+                               </tr>`;
+      }
+    }
+  });
+});
 // on page load, get all users
 window.addEventListener('load', () => {
   loadWindows();
+  loadAvailableFoods();
 });
 
 const changeToAdmin = ((e) => {
@@ -88,8 +119,7 @@ const changeToAdmin = ((e) => {
 
 const postFood = ((e) => {
   e.preventDefault();
-  const formData = new FormData(document.forms.myForm)
-  console.log(formData);
+  const formData = new FormData(document.forms.myForm);
   fetch(`${url}/menu`, {
     method: 'POST',
     headers: {
@@ -97,8 +127,10 @@ const postFood = ((e) => {
     },
     body: formData,
   }).then(response => response.json()).then((data) => {
-    console.log(data);
-  })
+    if (data.status === 200) {
+      loadAvailableFoods();
+    }
+  });
 });
 
 const clickEvent = (() => {

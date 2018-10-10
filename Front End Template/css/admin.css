@@ -38,6 +38,7 @@ body {
   height: 100vh;
   z-index: 3;
   padding-top: 70px;
+
 }
 
 .side-nav ul li span:nth-child(2) {
@@ -87,10 +88,11 @@ body {
 .main-content {
   position: absolute;
   width: 85%;
-  min-height: 80%;
+  max-height: 90%;
   top: 70px;
   left: 85px;
   padding: 0;
+  overflow:auto;
 }
 
 #message img {
@@ -143,6 +145,14 @@ body {
   box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 }
 
+#list_of_food table {
+  width: 80%;
+  border-collapse: collapse;
+  border-spacing: 2;
+  text-align: left;
+  border-radius: 5px;
+}
+
 @media only screen and (min-width: 240px) and (max-width: 568px) {
   .userTable.back {
     width: 100%;
@@ -150,15 +160,15 @@ body {
   .main-content {
     width: 70%;
   }
-  table thead {
+  .usertable table thead {
     display: none;
   }
-  table tr {
+  .usertable table tr {
     display: block;
     margin-top: 5px;
     padding-bottom: 5px;
   }
-  table td {
+  .usertable table td {
     display: block;
     text-align: right;
     font-size: 13px;
@@ -166,14 +176,14 @@ body {
     margin-bottom: 1px;
     min-height: 14px
   }
-  table td::before {
+  .usertable table td::before {
     content: attr(colname);
     float: left;
   }
 }
 
 @media only screen and (min-width: 569px) and (max-width: 800px) {
-  table {
+  usertable table {
     width: 100%;
   }
   .people {
@@ -186,7 +196,7 @@ body {
 }
 
 .add-food input[type="text"] {
-  width: 50%;
+  width: 80%;
   border-radius: 5px;
   border: 1px solid #222222;
   height: 40px;
@@ -223,21 +233,6 @@ body {
 
 .add-food #list_of_food {
   margin-top: 30px;
-}
-
-#list_of_food ul {
-  list-style-type: none;
-}
-
-#list_of_food li {
-  display: inline;
-  width: 30%;
-  margin-right: 20%;
-  ;
-}
-
-#list_of_food ul:nth-child(even) {
-  background: grey;
 }
 
 @media screen and (min-width: 600px) {
