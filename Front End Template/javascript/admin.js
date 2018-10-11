@@ -28,16 +28,34 @@ const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
 });
+
+const confirmTrue = (() => {
+  dialogoverlay.style.display = 'none';
+  dialogbox.style.display = 'none';
+});
 /* eslint-disable class-methods-use-this */
 class MyAlert {
   alert(body) {
     dialogoverlay.style.display = 'block';
     dialogbox.style.display = 'block';
     dialoghead.innerText = 'Attention';
-    dialogbody.innerText = body;
+    dialogbody.innerHTML = '<img src="./images/icons/success.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML += body;
     dialogfooter.innerHTML = '<button class = \'close\' id = \'closebutton\'> Close </button>';
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModal);
+  }
+
+  confirm(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Attention';
+    dialogbody.innerText = body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> YES </button> <button class = \'open\' id = \'closebutton\'> NO </button>';
+    const closebutton = document.getElementById('closebutton');
+    const confirm = document.getElementById('confirm');
+    closebutton.addEventListener('click', closeModal);
+    confirm.addEventListener('click', confirmTrue);
   }
 }
 
@@ -129,6 +147,7 @@ const loadAvailableFoods = (() => {
 
 const changeToAdmin = ((e) => {
   const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+  const confirm = customAlert.confirm('Are you sure you want to change this user to Admin');
   fetch(`${url}/users/${id}`, {
     method: 'PUT',
     headers: {
