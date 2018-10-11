@@ -116,7 +116,7 @@ var FoodListController = function () {
         }
         return res.status(200).json({
           TYPE: 'DELETE',
-          status: '200',
+          status: 200,
           message: 'Food deleted'
         });
       });

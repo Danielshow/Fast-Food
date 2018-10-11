@@ -9,6 +9,12 @@ const menuTable = document.getElementById('myTable2');
 const addFood = document.getElementById('add-food');
 const addbtn = document.getElementById('message');
 const submitFood = document.getElementById('action');
+const loadingGif = document.getElementById('loadingGif');
+const usererror = document.getElementById('usererror');
+const loadingGif2 = document.getElementById('loadingGif2');
+const foodError = document.getElementById('foodError');
+const food = document.getElementById('textInp');
+const price = document.getElementById('priceInp');
 
 
 const url = 'http://localhost:3000/api/v1/';
@@ -17,6 +23,7 @@ let token = null;
 const loadWindows = (() => {
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
+    loadingGif.style.display = 'block';
     fetch(`${url}auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,6 +38,7 @@ const loadWindows = (() => {
         },
       }).then(response => response.json()).then((datas) => {
         if (datas.status === 200) {
+          loadingGif.style.display = 'none';
           userTable.innerHTML = `<thead>
                                     <tr>
                                       <th>User ID</th>
@@ -53,6 +61,8 @@ const loadWindows = (() => {
                                     </tr>`;
           }
         }
+      }).catch((err) => {
+        usererror.innerHTML = 'Cannot fetch user now, Kindly reload';
       });
     });
   } else {
@@ -61,12 +71,14 @@ const loadWindows = (() => {
 });
 
 const loadAvailableFoods = (() => {
+  loadingGif2.style.display = 'block';
   fetch(`${url}menu`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
+      loadingGif2.style.display = 'none';
       menuTable.innerHTML = `<thead>
                               <tr>
                                   <th> ID </th>
@@ -82,10 +94,65 @@ const loadAvailableFoods = (() => {
                                   <td colname="ID">${info.id}</td>
                                   <td colname="Food">${info.food}</td>
                                   <td colname="price">${info.price}</td>
-                                  <td><button type="button" name="button" class="success"> Edit </button></td>
-                                  <td><button type="button" name="button" class="danger"> Delete</button></td>
+                                  <td><button type="button" name="button" class="edit"> Edit </button></td>
+                                  <td><button type="button" name="button" class="delete"> Delete</button></td>
                                </tr>`;
       }
+    }
+  }).catch((err) => {
+    foodError.innerHTML = 'Cannot Fetch User, Please Reload';
+  });
+});
+
+const changeToAdmin = ((e) => {
+  const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+  fetch(`${url}/users/${id}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      roles: 'admin',
+    }),
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      alert('User promoted to admin successfully');
+      loadWindows();
+    }
+  });
+});
+
+const deleteFoodFromMenu = ((e) => {
+  const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+  fetch(`${url}/menu/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      alert('Food Deleted successfully');
+      loadAvailableFoods();
+    }
+  });
+});
+
+const deleteFoodFromMenu = ((e) => {
+  const formData = new FormData;
+  const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+
+  fetch(`${url}/menu/${id}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData;
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      alert('Food Updated successfully');
+      loadAvailableFoods();
     }
   });
 });
@@ -95,30 +162,27 @@ window.addEventListener('load', () => {
   loadAvailableFoods();
 });
 
-const changeToAdmin = ((e) => {
+const adminFunction = ((e) => {
   if (e.target.className === 'success') {
-    const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
-    fetch(`${url}/users/${id}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        roles: 'admin',
-      }),
-    }).then(response => response.json()).then((data) => {
-      if (data.status === 200) {
-        alert('User promoted to admin successfully');
-        loadWindows();
-      }
-    });
+    changeToAdmin(e);
+  }
+  if (e.target.className === 'delete') {
+    deleteFoodFromMenu(e);
+  }
+  if (e.target.className === 'edit') {
+    editFoodFromMenu(e);
   }
 });
 
 const postFood = ((e) => {
   e.preventDefault();
+  if (food.value.trim().length < 1) {
+    foodError.innerText = 'Food cannot be empty';
+    return;
+  } if (price.value.trim().length < 1) {
+    foodError.innerText = 'Price cannot be empty';
+    return;
+  }
   const formData = new FormData(document.forms.myForm);
   fetch(`${url}/menu`, {
     method: 'POST',
@@ -128,6 +192,8 @@ const postFood = ((e) => {
     body: formData,
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
+      food.value = '';
+      price.value = '';
       loadAvailableFoods();
     }
   });
@@ -169,5 +235,5 @@ paymentbtn.addEventListener('click', paymentEvent);
 addbtn.addEventListener('click', addEvent);
 submitFood.addEventListener('click', postFood);
 if (document.addEventListener) {
-  document.addEventListener('click', changeToAdmin);
+  document.addEventListener('click', adminFunction);
 }

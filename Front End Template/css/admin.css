@@ -61,13 +61,13 @@ body {
   text-decoration: none;
 }
 
-.danger {
+.danger, .delete {
   background: red;
   border-color: red;
   color: white;
 }
 
-.success {
+.success, .edit{
   background: rgb(47, 232, 31);
   border-color: rgb(47, 232, 31);
   color: white;
@@ -145,12 +145,24 @@ body {
   box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 }
 
-#list_of_food table {
+#loadingGif, #loadingGif2 {
+  display: none;
+}
+
+#foodError {
+  color: red;
+  font-style: italic;
+}
+#list_of_food {
   width: 80%;
-  border-collapse: collapse;
-  border-spacing: 2;
   text-align: left;
   border-radius: 5px;
+}
+
+#list_of_food table{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 5;
 }
 
 @media only screen and (min-width: 240px) and (max-width: 568px) {
