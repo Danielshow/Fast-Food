@@ -15,10 +15,33 @@ const loadingGif2 = document.getElementById('loadingGif2');
 const foodError = document.getElementById('foodError');
 const food = document.getElementById('textInp');
 const price = document.getElementById('priceInp');
-
+const dialoghead = document.getElementById('dialoghead');
+const dialogbody = document.getElementById('dialogbody');
+const dialogfooter = document.getElementById('dialogfooter');
+const dialogoverlay = document.getElementById('dialogoverlay');
+const dialogbox = document.getElementById('dialogbox');
 
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
+
+const closeModal = (() => {
+  dialogoverlay.style.display = 'none';
+  dialogbox.style.display = 'none';
+});
+/* eslint-disable class-methods-use-this */
+class MyAlert {
+  alert(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Attention';
+    dialogbody.innerText = body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'closebutton\'> Close </button>';
+    const closebutton = document.getElementById('closebutton');
+    closebutton.addEventListener('click', closeModal);
+  }
+}
+
+const customAlert = new MyAlert();
 
 const loadWindows = (() => {
   if (localStorage.getItem('token')) {
@@ -118,7 +141,7 @@ const changeToAdmin = ((e) => {
     }),
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      alert('User promoted to admin successfully');
+      customAlert.alert('User promoted to admin successfully');
       loadWindows();
     }
   });
@@ -133,14 +156,14 @@ const deleteFoodFromMenu = ((e) => {
     },
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      alert('Food Deleted successfully');
+      customAlert.alert('Food Deleted successfully');
       loadAvailableFoods();
     }
   });
 });
 
-const deleteFoodFromMenu = ((e) => {
-  const formData = new FormData;
+const editFoodFromMenu = ((e) => {
+  const formData = new FormData();
   const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
 
   fetch(`${url}/menu/${id}`, {
@@ -148,7 +171,7 @@ const deleteFoodFromMenu = ((e) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    body: formData;
+    body: formData,
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
       alert('Food Updated successfully');
