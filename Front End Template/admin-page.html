@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,16 @@
   <title>Admin Dashboard</title>
   <link rel="icon" href="./images/logo/logo1.png">
 </head>
+
 <body>
+  <div id="dialogoverlay"></div>
+  <div id="dialogbox">
+    <div>
+      <div id="dialoghead">Top</div>
+      <div id="dialogbody">Body</div>
+      <div id="dialogfooter"><button id="closebutton"></button></div>
+    </div>
+  </div>
   <div class="header">
     <div class="logo-row">
       <a href="index.html"><img src="./images/logo/logo1.png" alt="Fast Food Fast Logo" class="logo"></a>
@@ -19,7 +29,7 @@
     <nav>
       <ul>
         <li>
-          <a href="#" id = "users">
+          <a href="#" id="users">
             <span><img src="./images/icons/user.png"</span>
             <span>Users</span>
           </a>
@@ -47,88 +57,17 @@
   </div>
   <div class="main-content">
     <div class="people" id="people">
-        <div class="head">
-          <h3>Users</h3>
-          <span><img src="./images/icons/user.png"</span>
-        </div>
-        <div class="body">
-            <h3><span id="userlist">3</span> Users </h3>
-        </div>
+      <div class="usertable back">
+        <img src="./images/gif/load (4).gif" alt="loading" id ="loadingGif">
+        <div id="usererror"></div>
+        <table id="usertable">
+
+        </table>
+      </div>
     </div>
-    <div class="orders" id="order">
-      <table id="myTable">
-        <tr>
-          <th>Order ID</th>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Process Status</th>
-          <th>Amount</th>
-          <th>Decline</th>
-        </tr>
-        <tr>
-          <td>1000090990</td>
-          <td>Beans</td>
-          <td>21-Dec-2018</td>
-          <td>
-            <select class="" name="">
-              <option value="">Pending</option>
-              <option value="">Completed</option>
-              <option value="">Canceled</option>
-            </select>
-          </td>
-          <td>4.78</td>
-          <td>
-            <button type="button" name="button" class="danger">X</button>
-          </td>
-        </tr>
-        <tr>
-          <td>1000090990</td>
-          <td>Rice</td>
-          <td>23-Dec-2014</td>
-          <td>
-            <select class="" name="">
-              <option value="">Pending</option>
-              <option value="">Completed</option>
-              <option value="">Canceled</option>
-            </select>
-          </td>
-          <td>800</td>
-          <td>
-            <button type="button" name="button" class="danger">X</button>
-          </td>
-        </tr>
-        <tr>
-          <td>1078090990</td>
-          <td>Beans</td>
-          <td>23-Dec-2017</td>
-          <td>
-            <select class="" name="">
-              <option value="">Pending</option>
-              <option value="">Completed</option>
-              <option value="">Canceled</option>
-            </select>
-          </td>
-          <td>2000</td>
-          <td>
-            <button type="button" name="button" class="danger">X</button>
-          </td>
-        </tr>
-        <tr>
-          <td>10000934430</td>
-          <td>Plantain</td>
-          <td>21-Jan-2022</td>
-          <td>
-            <select class="" name="">
-              <option value="">Pending</option>
-              <option value="">Completed</option>
-              <option value="">Canceled</option>
-            </select>
-          </td>
-          <td>56.90</td>
-          <td>
-            <button type="button" name="button" class="danger">X</button>
-          </td>
-        </tr>
+    <div class="orders usertable back" id="order">
+      <table id="orderTable">
+  
       </table>
     </div>
     <div class="payment_made" id="payment_made">
@@ -137,32 +76,32 @@
         <span><img src="./images/icons/money.png"</span>
       </div>
       <div class="body">
-          <h3><span id = "totalprice">$56677.87</span> Naira</h3>
+        <h3><span id = "totalprice">$56677.87</span> Naira</h3>
       </div>
     </div>
     <div class="add-food" id="add-food">
-      <label for="">Food Name:</label><br>
-      <input type="text" placeholder="Enter food Name" id="textInp"><br>
+      <form action="" method="post" enctype="multipart/form-data" id="myForm">
+        <label for="">Food Name:</label><br>
+        <input type="text" placeholder="Enter food Name" name="food" id="textInp"><br>
 
-      <label for="">Price:</label><br>
-      <input type="text" placeholder="Enter the price" id="priceInp"><br>
+        <label for="">Price:</label><br>
+        <input type="text" placeholder="Enter the price" name="price" id="priceInp"><br>
 
-      <input type="submit" name="" value="Submit" id="action">
-
-      <div id ="list_of_food">
+        <label for=""> Food Image</label>
+        <input type="file" name="foodImage" value="" id="foodImage"> <br>
+        <input type="submit" name="" value="Submit" id="action">
+        <img src="./images/gif/load (4).gif" alt="loading" id ="loadingGif2">
+      </form>
+      <div id="foodError"></div>
+      <div id="list_of_food" class="usertable back">
         <table id="myTable2">
-          <tr>
-            <th>Food</th>
-            <th>Price</th>
-            <th>Cancel</th>
-          </tr>
 
         </table>
       </div>
     </div>
   </div>
   <script src="./javascript/admin.js">
-
   </script>
 </body>
+
 </html>

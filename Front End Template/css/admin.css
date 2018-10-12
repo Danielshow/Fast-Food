@@ -9,6 +9,57 @@ body {
   box-sizing: border-box;
 }
 
+#icons {
+  width: 80px;
+  height: 80px;
+}
+
+#dialogoverlay {
+  display: none;
+  opacity: .8;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: grey;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+#dialogbox {
+  display: none;
+  position: fixed;
+  background: #fff;
+  border-radius: 7px;
+  width: 450px;
+  min-height: 200px;;
+  z-index: 10;
+  top: 28%;
+  left: 35%;
+  box-shadow: 2px 2px 7px 4px black;
+}
+
+#dialoghead {
+  background: #666;
+  font-size: 19px;
+  padding: 10px;
+  color: #ccc;
+  border-radius: 7px 7px 0 0;
+}
+
+ #dialogbody {
+   text-align: center;
+  background: #FFF;
+  font-size: 19px;
+  padding: 35px;
+}
+ #dialogfooter {
+  background: #666;
+  padding: 10px;
+  color: #ccc;
+  text-align: right;
+}
+
 .header {
   position: absolute;
   min-height: 55px;
@@ -38,6 +89,7 @@ body {
   height: 100vh;
   z-index: 3;
   padding-top: 70px;
+
 }
 
 .side-nav ul li span:nth-child(2) {
@@ -60,24 +112,15 @@ body {
   text-decoration: none;
 }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-}
-
-th, td {
-  text-align: left;
-  padding: 10px;
-}
-
-tbody:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.danger {
+.danger, .delete, .open, .cancel {
   background: red;
   border-color: red;
+  color: white;
+}
+
+.success, .edit, .close, .complete, .processing{
+  background: rgb(47, 232, 31);
+  border-color: rgb(47, 232, 31);
   color: white;
 }
 
@@ -95,14 +138,15 @@ tbody:nth-child(even) {
 
 .main-content {
   position: absolute;
-  width: 70%;
-  min-height: 80%;
+  width: 85%;
+  max-height: 90%;
   top: 70px;
   left: 85px;
   padding: 0;
+  overflow:auto;
 }
 
-#message img{
+#message img {
   height: 30px;
   width: 30px;
 }
@@ -115,38 +159,134 @@ tbody:nth-child(even) {
 }
 
 .people {
-  width: 40%;
+  width: 90%;
   margin: 0 auto;
-  min-height: 300px;
-  background: white;
+}
+
+.usertable.back table {
+  background-color: #393939;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.usertable.back th {
+  font-size: 15px;
+  color: rgb(76, 232, 21);
+  line-height: 1.4;
+  text-transform: uppercase;
+  background-color: #393939;
+  padding: 10px;
+}
+
+.usertable.back td {
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.4;
+  background-color: #222222;
+  padding: 10px;
+}
+
+.usertable.back {
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+#loadingGif, #loadingGif2 {
+  display: none;
+}
+
+#foodError {
+  color: red;
+  font-style: italic;
+}
+#list_of_food {
+  width: 80%;
+  text-align: left;
+  border-radius: 5px;
+}
+
+#list_of_food table{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 5;
+}
+
+@media only screen and (min-width: 240px) and (max-width: 568px) {
+  .userTable.back {
+    width: 100%;
+  }
+  .main-content {
+    width: 70%;
+  }
+  .usertable table thead {
+    display: none;
+  }
+  .usertable table tr {
+    display: block;
+    margin-top: 5px;
+    padding-bottom: 5px;
+  }
+  .usertable table td {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-bottom: 1px;
+    min-height: 14px
+  }
+  .usertable table td::before {
+    content: attr(colname);
+    float: left;
+  }
+}
+
+@media only screen and (min-width: 569px) and (max-width: 800px) {
+  .usertable table {
+    width: 100%;
+  }
+  .people {
+    width: 100%;
+  }
 }
 
 .body {
   text-align: center;
 }
 
-.add-food input[type="text"]{
-  width: 50%;
+.add-food input[type="text"] {
+  width: 80%;
   border-radius: 5px;
-  border: 1px solid grey;
-  box-shadow: 2px 2px 4px black;
-  height: 30px;\
+  border: 1px solid #222222;
+  height: 40px;
   margin-bottom: 10px;
   padding-left: 5px;
   outline: none;
+  background-color: #222222;
+  color: #fff;
 }
 
-.add-food{
+.add-food label {
+  text-align: center;
+  font-family: Helvetica;
+}
+
+.add-food {
   margin-top: 10px;
   display: none;
   width: 100%;
 }
-.add-food label{
+
+.add-food label {
   font-size: 18px;
   font-family: centaur;
 }
 
-.add-food input[type="submit"]{
+.add-food input[type="submit"] {
   height: 30px;
   border-radius: 4px;
   background: #fff;
@@ -154,25 +294,26 @@ tbody:nth-child(even) {
   margin-top: 10px;
 }
 
-.add-food #list_of_food{
+.add-food #list_of_food {
   margin-top: 30px;
 }
-
-#list_of_food ul{
-  list-style-type: none;
+#myEditForm {
+  font-size: 15px;
+}
+#myEditForm input[type='text'] {
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid grey;
+  margin-bottom: 3px;
 }
 
-#list_of_food li{
-  display: inline;
-  width: 30%;
-  margin-right: 20%;;
+.erroredit {
+  color: red;
 }
 
-#list_of_food ul:nth-child(even){
-  background: grey;
+#order {
+  width: 95%;
 }
-
-
 @media screen and (min-width: 600px) {
   .side-nav {
     width: 80px;
@@ -191,8 +332,7 @@ tbody:nth-child(even) {
   .side-nav ul li span:nth-child(2) {
     display: inline;
   }
-
-  .main-content{
+  .main-content {
     left: 15%;
   }
 }
