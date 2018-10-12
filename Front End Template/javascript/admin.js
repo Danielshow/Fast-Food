@@ -79,6 +79,32 @@ const confirmTrueDeleteUser = (() => {
   });
 });
 
+const confirmTrueEditFood = (() => {
+  const textInpEdit = document.getElementById('textInputEdit');
+  const priceInpEdit = document.getElementById('priceInpEdit');
+  const erroredit = document.getElementById('erroredit');
+  if (textInpEdit.value.trim().length < 1) {
+    erroredit.innerText = 'Food cannot be empty';
+    return;
+  } if (priceInpEdit.value.trim().length < 1) {
+    erroredit.innerText = 'Price cannot be empty';
+    return;
+  }
+  const formData = new FormData(document.forms.myEditForm);
+  fetch(`${url}/menu/${id}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      customAlert.alert('Food Updated successfully');
+      loadAvailableFoods();
+    }
+  });
+})
+
 const confirmAction = ((body) => {
   dialogoverlay.style.display = 'block';
   dialogbox.style.display = 'block';
@@ -119,6 +145,30 @@ class MyAlert {
     const confirm = document.getElementById('confirm');
     confirm.addEventListener('click', confirmTrueDeleteUser);
   }
+
+  editFood() {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Update Food';
+    dialogbody.innerHTML = `
+    <form action="" method="post" enctype="multipart/form-data" id="myEditForm">
+      <label for="">Food Name:</label><br>
+      <input type="text" placeholder="Enter food Name" name="food" id="textInputEdit"><br>
+
+      <label for="">Price:</label><br>
+      <input type="text" placeholder="Enter the price" name="price" id="priceInpEdit"><br>
+
+      <label for=""> Food Image</label>
+      <input type="file" name="foodImage" value="" id="foodImageEdit"> <br>
+      <div class='erroredit' id="erroredit"></div>
+    </form>
+    `
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> YES </button> <button class = \'open\' id = \'closebutton\'> NO </button>';
+    const closebutton = document.getElementById('closebutton');
+    closebutton.addEventListener('click', closeModal);
+    const confirm = document.getElementById('confirm');
+    confirm.addEventListener('click', confirmTrueEditFood);
+  }
 }
 
 const customAlert = new MyAlert();
@@ -158,6 +208,40 @@ const loadAvailableUsers = (() => {
   });
 });
 
+const loadAvailableOrders = (() => {
+  fetch(`${url}orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((datas) => {
+    if (datas.status === 200) {
+      loadingGif.style.display = 'none';
+      userTable.innerHTML = `<thead>
+                                <tr>
+                                  <th>Order ID</th>
+                                  <th>Food</th>
+                                  <th>Quantity</th>
+                                  <th>Amount</th>
+                                  <th>Process Status</th>
+                                  <th>Decline</th>
+                                </tr>
+                              </thead>`;
+      for (let i = 0; i < datas.data.length; i += 1) {
+        const info = datas.data[i];
+        userTable.innerHTML += `<tr>
+                                  <td colname="Order ID">${info.id}</td>
+                                  <td colname="Food">${info.food}</td>
+                                  <td colname="Quantity">${info.quantity}</td>
+                                  <td colname="Amount">${info.pice}</td>
+                                  <td><button type="button" name="button" class="success" id="to_admin">To Admin</button></td>
+                                  <td><button type="button" name="button" class="danger">Delete</button></td>
+                                </tr>`;
+      }
+    }
+  }).catch((err) => {
+    usererror.innerHTML = 'Cannot fetch user now, Kindly reload';
+  });
+})
 const loadWindows = (() => {
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
@@ -191,8 +275,8 @@ const loadAvailableFoods = (() => {
                                   <th> ID </th>
                                   <th> Food </th>
                                   <th> Price </th>
-                                  <th> Butoon </th>
-                                  <th> button </th>
+                                  <th> Edit </th>
+                                  <th> Delete </th>
                               </tr>
                             </thead>`;
       for (let i = 0; i < data.data.length; i += 1) {
@@ -211,23 +295,6 @@ const loadAvailableFoods = (() => {
   });
 });
 
-const editFoodFromMenu = ((e) => {
-  const formData = new FormData();
-  const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
-
-  fetch(`${url}/menu/${id}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  }).then(response => response.json()).then((data) => {
-    if (data.status === 200) {
-      alert('Food Updated successfully');
-      loadAvailableFoods();
-    }
-  });
-});
 // on page load, get all users
 window.addEventListener('load', () => {
   loadWindows();
@@ -244,7 +311,8 @@ const adminFunction = ((e) => {
     customAlert.confirmDelete('Are you sure you want to delete this food');
   }
   if (e.target.className === 'edit') {
-    editFoodFromMenu(e);
+    id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    customAlert.editFood();
   }
   if (e.target.className === 'danger') {
     id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
@@ -286,6 +354,7 @@ const clickEvent = (() => {
 });
 
 const orderEvent = (() => {
+  loadAvailableOrders();
   order.style.display = 'block';
   people.style.display = 'none';
   paymentMade.style.display = 'none';

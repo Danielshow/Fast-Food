@@ -34,7 +34,7 @@ body {
   width: 450px;
   min-height: 200px;;
   z-index: 10;
-  top: 30%;
+  top: 28%;
   left: 35%;
   box-shadow: 2px 2px 7px 4px black;
 }
@@ -299,7 +299,23 @@ body {
 .add-food #list_of_food {
   margin-top: 30px;
 }
+#myEditForm {
+  font-size: 15px;
+}
+#myEditForm input[type='text'] {
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid grey;
+  margin-bottom: 3px;
+}
 
+.erroredit {
+  color: red;
+}
+
+#order {
+  width: 80%;
+}
 @media screen and (min-width: 600px) {
   .side-nav {
     width: 80px;
