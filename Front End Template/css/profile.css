@@ -7,17 +7,29 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .container {
-  position: absolute;
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 105vh;
+  position: relative;
+  min-height: 100vh;
   background-image: linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url('../images/local_dishes/food 4.jpg');
   background-position: center center;
   background-size: cover;
   font-family: 'Mukta', sans-serif;
   background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.header1, .footer {
+  flex-shrink: 0;
+}
+
+.main {
+  flex-grow: 1;
 }
 
 /* Logo Styling */
@@ -42,7 +54,7 @@ body {
 
 .hero h3 {
   font-size: 18px;
-  margin-top: 25px;
+  /* margin-top: 25px; */
   font-family: 'Lobster', cursive;
 }
 
@@ -144,11 +156,8 @@ tbody:nth-child(even) {
 }
 .footer {
   width: 100%;
-  min-height: 25vh;
   background: rgb(40, 43, 46);
   color: white;
-  overflow: hidden;
-  margin-top: 10px;
   text-align: center;
 }
 
@@ -186,6 +195,7 @@ tbody:nth-child(even) {
   border-radius: 50%;
   text-align: center;
 }
+
 @media screen and (max-width: 600px) {
   .socials {
     width: 100%;
@@ -228,5 +238,17 @@ tbody:nth-child(even) {
 
   .profile {
     text-align: center;
+  }
+
+  .hero {
+    position: absolute;
+    top: 8%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .hero {
+    position: absolute;
+    top: 8%;
   }
 }

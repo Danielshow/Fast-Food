@@ -1,25 +1,94 @@
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Mukta');
 
-.container2 {
-  background-image:linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url("../images/bg/food 3.jpg");
+#dialogoverlay {
+  display: none;
+  opacity: .8;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: grey;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  z-index: 10;
+}
+
+#dialogbox {
+  display: none;
+  position: fixed;
+  background: #fff;
+  border-radius: 7px;
+  width: 450px;
+  min-height: 200px;
+  z-index: 10;
+  top: 28%;
+  left: 35%;
+  box-shadow: 2px 2px 7px 4px black;
+}
+
+#dialoghead {
+  background: #666;
+  font-size: 19px;
+  padding: 10px;
+  color: #ccc;
+  border-radius: 7px 7px 0 0;
+}
+
+#dialogbody {
+  text-align: center;
+  background: #FFF;
+  font-size: 19px;
+  padding: 35px;
+}
+
+#dialogfooter {
+  background: #666;
+  padding: 10px;
+  color: #ccc;
+  text-align: right;
+}
+
+#icons {
+  width: 80px;
+  height: 80px;
+}
+
+.close {
+  background: rgb(47, 232, 31);
+  border-color: rgb(47, 232, 31);
+  color: white;
+}
+
+.container2 {
+  background-image: linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url("../images/bg/food 3.jpg");
+  width: 100%;
+  min-height: 100vh;
   background-size: cover;
   background-position: center center;
   overflow-x: hidden;
   position: absolute;
   background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+.header, .footer {
+  flex-shrink: 0;
+}
+
+.main-content {
+  flex-grow: 1;
 }
 
 .container2 .logo-row {
   text-align: left;
   padding-left: 10px;
-  }
+}
 
 .container2 .logo {
-    height: 100px;
-    width: 100px;
+  height: 100px;
+  width: 100px;
 }
+
 /* login */
 
 .loginpage {
@@ -27,7 +96,7 @@
   text-align: center;
   width: 50%;
   position: absolute;
-  left: 38%;
+  left: 50%;
   top: 40px;
 }
 
@@ -38,6 +107,7 @@
   border: none;
   border-bottom: 2px solid rgb(224, 108, 65);
   outline: none;
+  border-radius: 0;
 }
 
 .loginpage input[type="password"] {
@@ -50,17 +120,19 @@
   border-bottom: 2px solid rgb(224, 108, 65);
   outline: none;
   background-color: inherit;
+  border-radius: 0;
 }
 
 .footer {
-text-align: center;
-position: relative;
-margin-top: 4px;
+  text-align: center;
+  position: relative;
+  margin-top: 4px;
 }
 
 .form-wrapper {
-  width: 80%;
-  margin: 0 auto;
+  width: 30%;
+  float: right;
+  margin-right: 20px;
   text-align: center;
 }
 
@@ -74,44 +146,55 @@ margin-top: 4px;
 @media screen and (max-width: 600px) {
   .container2 .logo-row {
     text-align: Center;
-    }
+  }
+  .loginpage {
+    width: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
+    padding: 0 10px 0 10px;
+    margin: 0;
+  }
+  .socials {
+    width: 100%;
+  }
+  .list {
+    width: 100%;
+  }
+  .list ul {
+    padding: 0;
+    text-align: center;
+  }
+  .loginpage input[type="email"] {
+    max-width: 100%;
+  }
+  .loginpage input[type="password"] {
+    max-width: 100%;
+  }
+  .footer {
+    position: relative;
+    top: 0;
+  }
+  .form-wrapper {
+    width: 90%;
+    margin: 0px auto;
+    float: none;
+  }
 
-    .loginpage {
-      width: 100%;
-      position: relative;
-      left: 0;
-      top: 0;
-      padding: 0 10px 0 10px;
-      margin: 0;
-    }
-
-    .socials {
-      width: 100%;
-    }
-
-    .list {
-      width: 100%;
-    }
-
-    .list ul {
-      padding: 0;
-      text-align: center;
-    }
-
-    .loginpage input[type="email"] {
-      max-width: 100%;
-    }
-
-    .loginpage input[type="password"] {
-      max-width: 100%;
-    }
-
-    .footer {
-      position: relative;
-      top: 0;
-    }
+  .about {
+    display: none;
+  }
 }
 
+.about{
+  width: 60%;
+  position: absolute;
+  left: 5%;
+  top: 30%;
+  font-size: 30px;
+  color: rgb(224, 108, 65);
+  text-shadow: 4px 5px 6px black;
+}
 #error, #error2 {
   color: red;
   margin-top: 0;
@@ -139,11 +222,12 @@ margin-top: 4px;
 }
 
 /* Set a style for all buttons */
+
 .container3 button {
   background-color: rgb(224, 108, 65);
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 5px 10px;
+  margin-bottom: 4px;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -152,17 +236,22 @@ margin-top: 4px;
 }
 
 .container3 button:hover {
-  opacity:1;
+  opacity: 1;
 }
 
 .signupbtn {
-float: left;
-width: 50%;
+  float: left;
+  width: 50%;
 }
 
 .container3 {
-  padding: 16px;
   text-align: left;
+}
+
+.herop {
+  font-family: Helvetica;
+  font-weight: bold;
+  margin-top: 1px;
 }
 
 @media screen and (max-width: 300px) {

@@ -88,7 +88,8 @@ var AuthController = function () {
               TYPE: 'POST',
               status: 200,
               data: {
-                token: token
+                token: token,
+                roles: data.rows[0].roles
               },
               message: 'Login Successful'
             });
