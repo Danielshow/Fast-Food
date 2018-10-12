@@ -6,6 +6,7 @@ const orderbtn = document.getElementById('order_click');
 const people = document.getElementById('people');
 const userTable = document.getElementById('usertable');
 const menuTable = document.getElementById('myTable2');
+const orderTable = document.getElementById('orderTable');
 const addFood = document.getElementById('add-food');
 const addbtn = document.getElementById('message');
 const submitFood = document.getElementById('action');
@@ -20,7 +21,7 @@ const dialogbody = document.getElementById('dialogbody');
 const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
-
+let status = null;
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
 let id = null;
@@ -86,7 +87,8 @@ const confirmTrueEditFood = (() => {
   if (textInpEdit.value.trim().length < 1) {
     erroredit.innerText = 'Food cannot be empty';
     return;
-  } if (priceInpEdit.value.trim().length < 1) {
+  }
+  if (priceInpEdit.value.trim().length < 1) {
     erroredit.innerText = 'Price cannot be empty';
     return;
   }
@@ -101,6 +103,25 @@ const confirmTrueEditFood = (() => {
     if (data.status === 200) {
       customAlert.alert('Food Updated successfully');
       loadAvailableFoods();
+    }
+  });
+});
+
+const confirmStatusChange = (() => {
+  fetch(`${url}/orders/${id}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      status,
+    }),
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      customAlert.alert('Food status changed');
+      loadAvailableOrders();
     }
   });
 })
@@ -162,12 +183,18 @@ class MyAlert {
       <input type="file" name="foodImage" value="" id="foodImageEdit"> <br>
       <div class='erroredit' id="erroredit"></div>
     </form>
-    `
+    `;
     dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> YES </button> <button class = \'open\' id = \'closebutton\'> NO </button>';
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModal);
     const confirm = document.getElementById('confirm');
     confirm.addEventListener('click', confirmTrueEditFood);
+  }
+
+  confirmOrderStatus(body) {
+    confirmAction(body);
+    const confirm = document.getElementById('confirm');
+    confirm.addEventListener('click', confirmStatusChange);
   }
 }
 
@@ -214,34 +241,38 @@ const loadAvailableOrders = (() => {
       Authorization: `Bearer ${token}`,
     },
   }).then(response => response.json()).then((datas) => {
-    if (datas.status === 200) {
+    if (datas.status === 200 && datas.data.length > 0) {
       loadingGif.style.display = 'none';
-      userTable.innerHTML = `<thead>
+      orderTable.innerHTML = `<thead>
                                 <tr>
                                   <th>Order ID</th>
                                   <th>Food</th>
                                   <th>Quantity</th>
                                   <th>Amount</th>
-                                  <th>Process Status</th>
+                                  <th>UserId</th>
+                                  <th>Status</th>
+                                  <th>Button</th>
                                   <th>Decline</th>
                                 </tr>
                               </thead>`;
       for (let i = 0; i < datas.data.length; i += 1) {
         const info = datas.data[i];
-        userTable.innerHTML += `<tr>
+        orderTable.innerHTML += `<tr>
                                   <td colname="Order ID">${info.id}</td>
                                   <td colname="Food">${info.food}</td>
                                   <td colname="Quantity">${info.quantity}</td>
-                                  <td colname="Amount">${info.pice}</td>
-                                  <td><button type="button" name="button" class="success" id="to_admin">To Admin</button></td>
-                                  <td><button type="button" name="button" class="danger">Delete</button></td>
+                                  <td colname="Amount">${info.price}</td>
+                                  <td colname="User ID">${info.user_id}</td>
+                                  <td colname="Status">${info.status}</td>
+                                  <td><button type="button" name="button" class="processing">processing</button><button type="button" name="button" class="complete">complete</button></td>
+                                  <td><button type="button" name="button" class="cancel">Cancel</button></td>
                                 </tr>`;
       }
     }
   }).catch((err) => {
-    usererror.innerHTML = 'Cannot fetch user now, Kindly reload';
+    // usererror.innerHTML = 'Cannot fetch user now, Kindly reload';
   });
-})
+});
 const loadWindows = (() => {
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
@@ -318,6 +349,23 @@ const adminFunction = ((e) => {
     id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
     customAlert.confirmDeleteUser('Are you sure you want to delete this account');
   }
+  if (e.target.className === 'cancel') {
+    id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    status = 'cancelled';
+    customAlert.confirmOrderStatus('Change order status as cancelled');
+  }
+
+  if (e.target.className === 'processing') {
+    id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    status = 'processing';
+    customAlert.confirmOrderStatus('change order status as processing');
+  }
+
+  if (e.target.className === 'complete') {
+    id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    status = 'complete';
+    customAlert.confirmOrderStatus('change order status as completed');
+  }
 });
 
 const postFood = ((e) => {
@@ -325,7 +373,8 @@ const postFood = ((e) => {
   if (food.value.trim().length < 1) {
     foodError.innerText = 'Food cannot be empty';
     return;
-  } if (price.value.trim().length < 1) {
+  }
+  if (price.value.trim().length < 1) {
     foodError.innerText = 'Price cannot be empty';
     return;
   }

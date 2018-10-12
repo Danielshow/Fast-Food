@@ -60,8 +60,6 @@ body {
   text-align: right;
 }
 
-
-
 .header {
   position: absolute;
   min-height: 55px;
@@ -114,13 +112,13 @@ body {
   text-decoration: none;
 }
 
-.danger, .delete, .open {
+.danger, .delete, .open, .cancel {
   background: red;
   border-color: red;
   color: white;
 }
 
-.success, .edit, .close{
+.success, .edit, .close, .complete, .processing{
   background: rgb(47, 232, 31);
   border-color: rgb(47, 232, 31);
   color: white;
@@ -248,7 +246,7 @@ body {
 }
 
 @media only screen and (min-width: 569px) and (max-width: 800px) {
-  usertable table {
+  .usertable table {
     width: 100%;
   }
   .people {
@@ -314,7 +312,7 @@ body {
 }
 
 #order {
-  width: 80%;
+  width: 95%;
 }
 @media screen and (min-width: 600px) {
   .side-nav {

@@ -96,7 +96,7 @@ class OrderController {
 
   updateOrderStatus(req, res, next) {
     if (!req.body.status || req.body.status.trim().length < 1) {
-      res.status(206).json({
+      return res.status(206).json({
         TYPE: 'PUT',
         status: 206,
         message: 'Status Not sent',
