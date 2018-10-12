@@ -124,7 +124,7 @@ const confirmStatusChange = (() => {
       loadAvailableOrders();
     }
   });
-})
+});
 
 const confirmAction = ((body) => {
   dialogoverlay.style.display = 'block';
