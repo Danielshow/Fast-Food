@@ -23,15 +23,15 @@ const dialogbox = document.getElementById('dialogbox');
 
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
-let changeToAdminID = null;
+let id = null;
 
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
 });
 
-const confirmTrue = (() => {
-  fetch(`${url}/users/${changeToAdminID}`, {
+const confirmTrueAdmin = (() => {
+  fetch(`${url}/users/${id}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -50,6 +50,45 @@ const confirmTrue = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
 });
+
+const confirmTrueDelete = (() => {
+  fetch(`${url}/menu/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      customAlert.alert('Food Deleted successfully');
+      loadAvailableFoods();
+    }
+  });
+});
+
+const confirmTrueDeleteUser = (() => {
+  fetch(`${url}/users/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      customAlert.alert('Account Deleted successfully');
+      loadAvailableUsers();
+    }
+  });
+});
+
+const confirmAction = ((body) => {
+  dialogoverlay.style.display = 'block';
+  dialogbox.style.display = 'block';
+  dialoghead.innerText = 'Attention';
+  dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="success" id="icons"><br>';
+  dialogbody.innerHTML += body;
+  dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> YES </button> <button class = \'open\' id = \'closebutton\'> NO </button>';
+  const closebutton = document.getElementById('closebutton');
+  closebutton.addEventListener('click', closeModal);
+});
 /* eslint-disable class-methods-use-this */
 class MyAlert {
   alert(body) {
@@ -63,21 +102,61 @@ class MyAlert {
     closebutton.addEventListener('click', closeModal);
   }
 
-  confirm(body) {
-    dialogoverlay.style.display = 'block';
-    dialogbox.style.display = 'block';
-    dialoghead.innerText = 'Attention';
-    dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="success" id="icons"><br>';
-    dialogbody.innerHTML += body;
-    dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> YES </button> <button class = \'open\' id = \'closebutton\'> NO </button>';
-    const closebutton = document.getElementById('closebutton');
+  confirmAdmin(body) {
+    confirmAction(body);
     const confirm = document.getElementById('confirm');
-    closebutton.addEventListener('click', closeModal);
-    confirm.addEventListener('click', confirmTrue);
+    confirm.addEventListener('click', confirmTrueAdmin);
+  }
+
+  confirmDelete(body) {
+    confirmAction(body);
+    const confirm = document.getElementById('confirm');
+    confirm.addEventListener('click', confirmTrueDelete);
+  }
+
+  confirmDeleteUser(body) {
+    confirmAction(body);
+    const confirm = document.getElementById('confirm');
+    confirm.addEventListener('click', confirmTrueDeleteUser);
   }
 }
 
 const customAlert = new MyAlert();
+
+const loadAvailableUsers = (() => {
+  fetch(`${url}users`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((datas) => {
+    if (datas.status === 200) {
+      loadingGif.style.display = 'none';
+      userTable.innerHTML = `<thead>
+                                <tr>
+                                  <th>User ID</th>
+                                  <th>Name</th>
+                                  <th>Email</th>
+                                  <th>roles</th>
+                                  <th>Upgrade</th>
+                                  <th>Delete Account</th>
+                                </tr>
+                              </thead>`;
+      for (let i = 0; i < datas.data.length; i += 1) {
+        const info = datas.data[i];
+        userTable.innerHTML += `<tr>
+                                  <td colname="ID">${info.id}</td>
+                                  <td colname="Name">${info.name}</td>
+                                  <td colname="Email">${info.email}</td>
+                                  <td colname="Roles">${info.roles}</td>
+                                  <td><button type="button" name="button" class="success" id="to_admin">To Admin</button></td>
+                                  <td><button type="button" name="button" class="danger">Delete</button></td>
+                                </tr>`;
+      }
+    }
+  }).catch((err) => {
+    usererror.innerHTML = 'Cannot fetch user now, Kindly reload';
+  });
+});
 
 const loadWindows = (() => {
   if (localStorage.getItem('token')) {
@@ -91,38 +170,7 @@ const loadWindows = (() => {
       if (data.status !== 200 || data.data[0].roles !== 'admin') {
         window.location.replace('./login.html');
       }
-      fetch(`${url}users`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then(response => response.json()).then((datas) => {
-        if (datas.status === 200) {
-          loadingGif.style.display = 'none';
-          userTable.innerHTML = `<thead>
-                                    <tr>
-                                      <th>User ID</th>
-                                      <th>Name</th>
-                                      <th>Email</th>
-                                      <th>roles</th>
-                                      <th>Upgrade</th>
-                                      <th>Delete Account</th>
-                                    </tr>
-                                  </thead>`;
-          for (let i = 0; i < datas.data.length; i += 1) {
-            const info = datas.data[i];
-            userTable.innerHTML += `<tr>
-                                      <td colname="ID">${info.id}</td>
-                                      <td colname="Name">${info.name}</td>
-                                      <td colname="Email">${info.email}</td>
-                                      <td colname="Roles">${info.roles}</td>
-                                      <td><button type="button" name="button" class="success" id="to_admin">To Admin</button></td>
-                                      <td><button type="button" name="button" class="danger">Delete</button></td>
-                                    </tr>`;
-          }
-        }
-      }).catch((err) => {
-        usererror.innerHTML = 'Cannot fetch user now, Kindly reload';
-      });
+      loadAvailableUsers();
     });
   } else {
     window.location.replace('./login.html');
@@ -163,25 +211,6 @@ const loadAvailableFoods = (() => {
   });
 });
 
-const changeToAdmin = (() => {
-
-});
-
-const deleteFoodFromMenu = ((e) => {
-  const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
-  fetch(`${url}/menu/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(response => response.json()).then((data) => {
-    if (data.status === 200) {
-      customAlert.alert('Food Deleted successfully');
-      loadAvailableFoods();
-    }
-  });
-});
-
 const editFoodFromMenu = ((e) => {
   const formData = new FormData();
   const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
@@ -207,14 +236,19 @@ window.addEventListener('load', () => {
 
 const adminFunction = ((e) => {
   if (e.target.className === 'success') {
-    changeToAdminID = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
-    customAlert.confirm('Are you sure you want to change this user to Admin');
+    id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    customAlert.confirmAdmin('Are you sure you want to change this user to Admin');
   }
   if (e.target.className === 'delete') {
-    deleteFoodFromMenu(e);
+    id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    customAlert.confirmDelete('Are you sure you want to delete this food');
   }
   if (e.target.className === 'edit') {
     editFoodFromMenu(e);
+  }
+  if (e.target.className === 'danger') {
+    id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    customAlert.confirmDeleteUser('Are you sure you want to delete this account');
   }
 });
 
