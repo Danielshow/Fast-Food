@@ -23,8 +23,30 @@ const dialogbox = document.getElementById('dialogbox');
 
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
+let changeToAdminID = null;
 
 const closeModal = (() => {
+  dialogoverlay.style.display = 'none';
+  dialogbox.style.display = 'none';
+});
+
+const confirmTrue = (() => {
+  fetch(`${url}/users/${changeToAdminID}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      roles: 'admin',
+    }),
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      customAlert.alert('User promoted to admin successfully');
+      loadWindows();
+    }
+  });
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
 });
@@ -34,10 +56,24 @@ class MyAlert {
     dialogoverlay.style.display = 'block';
     dialogbox.style.display = 'block';
     dialoghead.innerText = 'Attention';
-    dialogbody.innerText = body;
+    dialogbody.innerHTML = '<img src="./images/icons/success.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML += body;
     dialogfooter.innerHTML = '<button class = \'close\' id = \'closebutton\'> Close </button>';
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModal);
+  }
+
+  confirm(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Attention';
+    dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML += body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> YES </button> <button class = \'open\' id = \'closebutton\'> NO </button>';
+    const closebutton = document.getElementById('closebutton');
+    const confirm = document.getElementById('confirm');
+    closebutton.addEventListener('click', closeModal);
+    confirm.addEventListener('click', confirmTrue);
   }
 }
 
@@ -127,24 +163,8 @@ const loadAvailableFoods = (() => {
   });
 });
 
-const changeToAdmin = ((e) => {
-  const id = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
-  fetch(`${url}/users/${id}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      roles: 'admin',
-    }),
-  }).then(response => response.json()).then((data) => {
-    if (data.status === 200) {
-      customAlert.alert('User promoted to admin successfully');
-      loadWindows();
-    }
-  });
+const changeToAdmin = (() => {
+
 });
 
 const deleteFoodFromMenu = ((e) => {
@@ -187,7 +207,8 @@ window.addEventListener('load', () => {
 
 const adminFunction = ((e) => {
   if (e.target.className === 'success') {
-    changeToAdmin(e);
+    changeToAdminID = Number(e.target.parentNode.parentNode.childNodes[1].innerText);
+    customAlert.confirm('Are you sure you want to change this user to Admin');
   }
   if (e.target.className === 'delete') {
     deleteFoodFromMenu(e);

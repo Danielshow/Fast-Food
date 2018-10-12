@@ -9,6 +9,11 @@ body {
   box-sizing: border-box;
 }
 
+#icons {
+  width: 80px;
+  height: 80px;
+}
+
 #dialogoverlay {
   display: none;
   opacity: .8;
@@ -27,7 +32,7 @@ body {
   background: #fff;
   border-radius: 7px;
   width: 450px;
-  height: 200px;;
+  min-height: 200px;;
   z-index: 10;
   top: 30%;
   left: 35%;
@@ -43,6 +48,7 @@ body {
 }
 
  #dialogbody {
+   text-align: center;
   background: #FFF;
   font-size: 19px;
   padding: 35px;
@@ -108,7 +114,7 @@ body {
   text-decoration: none;
 }
 
-.danger, .delete {
+.danger, .delete, .open {
   background: red;
   border-color: red;
   color: white;
