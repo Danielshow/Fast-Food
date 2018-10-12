@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/admin.css">
+  <title>Admin Dashboard</title>
+  <link rel="icon" href="./images/logo/logo1.png">
+</head>
+
+<body>
+  <div id="dialogoverlay"></div>
+  <div id="dialogbox">
+    <div>
+      <div id="dialoghead">Top</div>
+      <div id="dialogbody">Body</div>
+      <div id="dialogfooter"><button id="closebutton"></button></div>
+    </div>
+  </div>
+  <div class="header">
+    <div class="logo-row">
+      <a href="index.html"><img src="./images/logo/logo1.png" alt="Fast Food Fast Logo" class="logo"></a>
+    </div>
+    <h2>ADMIN PAGE</h2>
+  </div>
+  <div class="side-nav">
+    <nav>
+      <ul>
+        <li>
+          <a href="#" id="users">
+            <span><img src="./images/icons/user.png"</span>
+            <span>Users</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id="message">
+            <span><img src="./images/icons/add-3.png"</span>
+            <span>Add Food</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id="payment-click">
+            <span><img src="./images/icons/money.png"</span>
+            <span>Payment</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id='order_click'>
+            <span><img src="./images/icons/checkout.png"</span>
+            <span>Ordered Items</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="main-content">
+    <div class="people" id="people">
+      <div class="usertable back">
+        <img src="./images/gif/load (4).gif" alt="loading" id ="loadingGif">
+        <div id="usererror"></div>
+        <table id="usertable">
+
+        </table>
+      </div>
+    </div>
+    <div class="orders usertable back" id="order">
+      <table id="orderTable">
+
+      </table>
+    </div>
+    <div class="payment_made" id="payment_made">
+      <div class="head">
+        <h3>Payment</h3>
+        <span><img src="./images/icons/money.png"</span>
+      </div>
+      <div class="body">
+        <h3><span id = "totalprice">$56677.87</span> Naira</h3>
+      </div>
+    </div>
+    <div class="add-food" id="add-food">
+      <form action="" method="post" enctype="multipart/form-data" id="myForm">
+        <label for="">Food Name:</label><br>
+        <input type="text" placeholder="Enter food Name" name="food" id="textInp"><br>
+
+        <label for="">Price:</label><br>
+        <input type="text" placeholder="Enter the price" name="price" id="priceInp"><br>
+
+        <label for=""> Food Image</label>
+        <input type="file" name="foodImage" value="" id="foodImage"> <br>
+        <input type="submit" name="" value="Submit" id="action">
+        <img src="./images/gif/load (4).gif" alt="loading" id ="loadingGif2">
+      </form>
+      <div id="foodError"></div>
+      <div id="list_of_food" class="usertable back">
+        <table id="myTable2">
+
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="./javascript/admin.js">
+  </script>
+</body>
+
+</html>

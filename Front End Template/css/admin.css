@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css?family=Mukta');
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Mukta', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#icons {
+  width: 80px;
+  height: 80px;
+}
+
+#dialogoverlay {
+  display: none;
+  opacity: .8;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: grey;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+#dialogbox {
+  display: none;
+  position: fixed;
+  background: #fff;
+  border-radius: 7px;
+  width: 450px;
+  min-height: 200px;;
+  z-index: 10;
+  top: 28%;
+  left: 35%;
+  box-shadow: 2px 2px 7px 4px black;
+}
+
+#dialoghead {
+  background: #666;
+  font-size: 19px;
+  padding: 10px;
+  color: #ccc;
+  border-radius: 7px 7px 0 0;
+}
+
+ #dialogbody {
+   text-align: center;
+  background: #FFF;
+  font-size: 19px;
+  padding: 35px;
+}
+ #dialogfooter {
+  background: #666;
+  padding: 10px;
+  color: #ccc;
+  text-align: right;
+}
+
+.header {
+  position: absolute;
+  min-height: 55px;
+  width: 100%;
+  background-color: #999;
+  z-index: 4;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  opacity: 2;
+  float: right;
+  padding-right: 3px;
+}
+
+.header h2 {
+  float: right;
+  padding-right: 25px;
+}
+
+.side-nav {
+  position: absolute;
+  width: 60px;
+  background-color: #666;
+  text-align: center;
+  height: 100vh;
+  z-index: 3;
+  padding-top: 70px;
+
+}
+
+.side-nav ul li span:nth-child(2) {
+  display: none;
+}
+
+.side-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-nav ul li {
+  padding: 20px 10px;
+  border-bottom: 1px solid #333;
+}
+
+.side-nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.danger, .delete, .open, .cancel {
+  background: red;
+  border-color: red;
+  color: white;
+}
+
+.success, .edit, .close, .complete, .processing{
+  background: rgb(47, 232, 31);
+  border-color: rgb(47, 232, 31);
+  color: white;
+}
+
+.orders {
+  display: none;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.payment_made {
+  width: 40%;
+  margin: 0 auto;
+  display: none;
+}
+
+.main-content {
+  position: absolute;
+  width: 85%;
+  max-height: 90%;
+  top: 70px;
+  left: 85px;
+  padding: 0;
+  overflow:auto;
+}
+
+#message img {
+  height: 30px;
+  width: 30px;
+}
+
+.head {
+  background: rgb(101, 124, 106);
+  border: 1px solid black;
+  text-align: center;
+  padding: 0;
+}
+
+.people {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.usertable.back table {
+  background-color: #393939;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.usertable.back th {
+  font-size: 15px;
+  color: rgb(76, 232, 21);
+  line-height: 1.4;
+  text-transform: uppercase;
+  background-color: #393939;
+  padding: 10px;
+}
+
+.usertable.back td {
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.4;
+  background-color: #222222;
+  padding: 10px;
+}
+
+.usertable.back {
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+#loadingGif, #loadingGif2 {
+  display: none;
+}
+
+#foodError {
+  color: red;
+  font-style: italic;
+}
+#list_of_food {
+  width: 80%;
+  text-align: left;
+  border-radius: 5px;
+}
+
+#list_of_food table{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 5;
+}
+
+@media only screen and (min-width: 240px) and (max-width: 568px) {
+  .userTable.back {
+    width: 100%;
+  }
+  .main-content {
+    width: 70%;
+  }
+  .usertable table thead {
+    display: none;
+  }
+  .usertable table tr {
+    display: block;
+    margin-top: 5px;
+    padding-bottom: 5px;
+  }
+  .usertable table td {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-bottom: 1px;
+    min-height: 14px
+  }
+  .usertable table td::before {
+    content: attr(colname);
+    float: left;
+  }
+}
+
+@media only screen and (min-width: 569px) and (max-width: 800px) {
+  .usertable table {
+    width: 100%;
+  }
+  .people {
+    width: 100%;
+  }
+}
+
+.body {
+  text-align: center;
+}
+
+.add-food input[type="text"] {
+  width: 80%;
+  border-radius: 5px;
+  border: 1px solid #222222;
+  height: 40px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  outline: none;
+  background-color: #222222;
+  color: #fff;
+}
+
+.add-food label {
+  text-align: center;
+  font-family: Helvetica;
+}
+
+.add-food {
+  margin-top: 10px;
+  display: none;
+  width: 100%;
+}
+
+.add-food label {
+  font-size: 18px;
+  font-family: centaur;
+}
+
+.add-food input[type="submit"] {
+  height: 30px;
+  border-radius: 4px;
+  background: #fff;
+  outline: none;
+  margin-top: 10px;
+}
+
+.add-food #list_of_food {
+  margin-top: 30px;
+}
+#myEditForm {
+  font-size: 15px;
+}
+#myEditForm input[type='text'] {
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid grey;
+  margin-bottom: 3px;
+}
+
+.erroredit {
+  color: red;
+}
+
+#order {
+  width: 95%;
+}
+@media screen and (min-width: 600px) {
+  .side-nav {
+    width: 80px;
+    text-align: center;
+  }
+  .side-nav ul li span:nth-child(2) {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .side-nav {
+    width: 150px;
+    text-align: left;
+  }
+  .side-nav ul li span:nth-child(2) {
+    display: inline;
+  }
+  .main-content {
+    left: 15%;
+  }
+}

@@ -20,6 +20,7 @@ var should = _chai2.default.should();
 _chai2.default.use(_chaiHttp2.default);
 
 var token = process.env.TOKEN1;
+var token2 = process.env.TOKEN2;
 
 var newUser = {
   email: 'danielshoit@gmail.com',
@@ -61,10 +62,10 @@ describe('API endpoint for POST auth/signup', function () {
   it('Should register user given a valid credentials, and a user supply their email, name, password and address', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(newUser).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name');
-      res.body.request.should.have.property('email').eql('danielshoit@gmail.com');
-      res.body.request.should.have.property('address').eql('Ikorodu');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('name');
+      res.body.data.should.have.property('email').eql('danielshoit@gmail.com');
+      res.body.data.should.have.property('address').eql('Ikorodu');
       res.body.should.have.property('message').eql('Registered Successfully');
     });
   });
@@ -143,6 +144,32 @@ describe('API endpoint for POST auth/signup', function () {
       res.body.should.have.property('message').eql('body must contain password and confirmpassword');
     });
   });
+
+  it('Password should contain letters or numbers and any other characters', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: '......',
+      confirmpassword: '......'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Password must contain Letters or numbers');
+    });
+  });
+
+  it('Password should not contain spaces', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send({
+      email: 'admin@foodfast.com',
+      address: 'Home address',
+      name: 'opeyemi',
+      password: 'zjj zz',
+      confirmpassword: 'ajj zz'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('password must not contain spaces');
+    });
+  });
 });
 
 // signin
@@ -152,7 +179,8 @@ describe('API endpoint for POST auth/login', function () {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Object');
       res.body.should.have.property('message').eql('Login Successful');
-      res.body.should.have.property('token');
+      res.body.should.have.property('data');
+      res.body.data.should.have.property('token');
     });
   });
 
@@ -204,9 +232,9 @@ describe('API endpoint POST /auth/signup/admin', function () {
   it('Should create admin account with administrative priviledges given valid credentials', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/auth/signup/admin').set('Authorization', 'Bearer ' + token).send(admin).then(function (res) {
       expect(res).to.have.status(200);
-      expect(res.body.request).to.be.an('Object');
-      res.body.request.should.have.property('name').equal('opeyemi');
-      res.body.request.should.have.property('address').eql('Ikorodu');
+      expect(res.body.data).to.be.an('Object');
+      res.body.data.should.have.property('name').equal('opeyemi');
+      res.body.data.should.have.property('address').eql('Ikorodu');
       res.body.should.have.property('message').eql('Registered Successfully');
     });
   });
@@ -220,6 +248,54 @@ describe('API endpoint POST /auth/signup/admin', function () {
 
   it('Should send an error if an Invalid token is sent. Token must be send with the header', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/auth/signup/admin').set('Authorization', 'Bearer jdjdj').send(admin).then(function (res) {
+      expect(res).to.have.status(401);
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    });
+  });
+});
+
+describe('API endpoint GET /auth/me', function () {
+  it('Should return a particular user with all his/her credentials', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/auth/me').set('Authorization', 'Bearer ' + token2).then(function (res) {
+      expect(res).to.have.status(200);
+      expect(res.body.data).to.be.an('Array');
+      res.body.should.have.property('message').eql('User returned Successfully');
+    });
+  });
+
+  it('Should return failed if Token is not sent', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/auth/me').then(function (res) {
+      expect(res).to.have.status(403);
+      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
+    });
+  });
+
+  it('Should send an error if an Invalid token is sent. Token must be send with the header', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/auth/me').set('Authorization', 'Bearer jdjdj').then(function (res) {
+      expect(res).to.have.status(401);
+      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    });
+  });
+});
+
+describe('API endpoint GET /auth/logout', function () {
+  it('Should logout a particular user and set token to null', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/auth/logout').set('Authorization', 'Bearer ' + token2).then(function (res) {
+      expect(res).to.have.status(200);
+      expect(res.body.data).to.be.an('Object');
+      res.body.should.have.property('message').eql('User logged out Successfully');
+    });
+  });
+
+  it('Should return failed if Token is not sent', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/auth/me').then(function (res) {
+      expect(res).to.have.status(403);
+      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
+    });
+  });
+
+  it('Should send an error if an Invalid token is sent. Token must be send with the header', function () {
+    return _chai2.default.request(_index2.default).get('/api/v1/auth/me').set('Authorization', 'Bearer jdjdj').then(function (res) {
       expect(res).to.have.status(401);
       res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
     });

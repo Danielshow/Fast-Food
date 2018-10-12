@@ -41,6 +41,17 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 app.use('/uploads', _express2.default.static('uploads'));
+app.use(_express2.default.static('Front End Template'));
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, PATCH');
+    return res.status(200).json({});
+  }
+  next();
+});
 
 app.use(function (err, req, res, next) {
   res.status(500).json({
@@ -53,7 +64,7 @@ app.use('/api/v1', _menu2.default);
 app.use('/api/v1', _auth2.default);
 app.use('/api/v1', _users2.default);
 
-app.get('/', function (req, res) {
+app.get('/api/v1', function (req, res) {
   res.status(200).send({
     product: 'Welcome to Food Fast API',
     message: '/api/v1 before every route'

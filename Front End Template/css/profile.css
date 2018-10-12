@@ -7,17 +7,29 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .container {
-  position: absolute;
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 105vh;
+  position: relative;
+  min-height: 100vh;
   background-image: linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url('../images/local_dishes/food 4.jpg');
   background-position: center center;
   background-size: cover;
   font-family: 'Mukta', sans-serif;
   background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.header1, .footer {
+  flex-shrink: 0;
+}
+
+.main {
+  flex-grow: 1;
 }
 
 /* Logo Styling */
@@ -42,7 +54,7 @@ body {
 
 .hero h3 {
   font-size: 18px;
-  margin-top: 25px;
+  /* margin-top: 25px; */
   font-family: 'Lobster', cursive;
 }
 
@@ -92,18 +104,18 @@ table {
     width: 100%;
 }
 
-th, td {
+tbody, th, td {
     text-align: left;
     padding: 10px;
     border-radius: 4px;
     font-family: 'Mukta', sans-serif;
 }
 
-tr:nth-child(even) {
+tbody:nth-child(even) {
     background-color: #f2f2f2
 }
 
-.profile h2 {
+.profile {
   text-align: center;
 }
 
@@ -123,13 +135,29 @@ tr:nth-child(even) {
   background: white;
 }
 
+#error {
+  display: none;
+  color: red;
+}
+.btnorder {
+  width: 150px;
+  padding: 3px;
+  font-size: 20px;
+  font-family: centaur;
+  background:white;
+  border: 2px solid white;
+  border-radius: 3px;
+  outline: none;
+  transition-duration: 1s;
+}
+
+.btnorder:hover {
+  background: rgb(224, 108, 65);
+}
 .footer {
   width: 100%;
-  min-height: 25vh;
   background: rgb(40, 43, 46);
   color: white;
-  overflow: hidden;
-  margin-top: 10px;
   text-align: center;
 }
 
@@ -159,6 +187,13 @@ tr:nth-child(even) {
 .socials img {
   height: 30px;
   width: 30px;
+}
+
+.gifImage {
+  display: none;
+  background: inherit;
+  border-radius: 50%;
+  text-align: center;
 }
 
 @media screen and (max-width: 600px) {
@@ -203,5 +238,17 @@ tr:nth-child(even) {
 
   .profile {
     text-align: center;
+  }
+
+  .hero {
+    position: absolute;
+    top: 8%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .hero {
+    position: absolute;
+    top: 8%;
   }
 }

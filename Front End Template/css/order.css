@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: row;
 }
-
+.container {
+  background-image: linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url("../images/local_dishes/food 5.jpg");
+}
 .orders {
   width: 25%;
   border: 1px solid black;
@@ -61,12 +63,14 @@ input[type="text"]:focus {
 
 button {
   outline: none;
-  background: rgba(187, 129, 15, 0.49);
+  background: rgb(233, 120, 37);
   color: white;
   font-size: 16px;
   padding: 2px;
+  margin-left: 4px;
   min-width: 80px;
-  height: 30px;
+  height: 33px;
+   border: 1px solid white;
 }
 
 .col h4 {
@@ -74,8 +78,8 @@ button {
 }
 
 #price {
-  border: 1px solid black;
-  background: rgba(187, 129, 15);
+  border: 1px solid #fff;
+  background: rgb(233, 120, 37);
   padding: 3px;
   float: left;
 }
