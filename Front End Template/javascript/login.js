@@ -11,7 +11,32 @@ const loginEmail = document.getElementById('loginEmail');
 const loginSubmit = document.getElementById('loginSubmit');
 const gifImage = document.getElementById('gifImage');
 const url = 'http://localhost:3000/api/v1/';
+const dialoghead = document.getElementById('dialoghead');
+const dialogbody = document.getElementById('dialogbody');
+const dialogfooter = document.getElementById('dialogfooter');
+const dialogoverlay = document.getElementById('dialogoverlay');
+const dialogbox = document.getElementById('dialogbox');
 
+const closeModal = (() => {
+  dialogoverlay.style.display = 'none';
+  dialogbox.style.display = 'none';
+});
+
+/* eslint-disable class-methods-use-this */
+class MyAlert {
+  alert(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Success';
+    dialogbody.innerHTML = '<img src="./images/icons/success.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML += body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'closebutton\'> Close </button>';
+    const closebutton = document.getElementById('closebutton');
+    closebutton.addEventListener('click', closeModal);
+  }
+}
+
+const customAlert = new MyAlert();
 
 const validateEmail = ((emailInput) => {
   const re = /\S+@\S+\.\S+/;
@@ -52,9 +77,17 @@ const register = ((e) => {
     }),
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      window.location.replace('./profile.html');
+      gifImage.style.display = 'none';
+      customAlert.alert('Thank You for registering, Proceed to Login');
+      name.value = '';
+      password.value = '';
+      confirmPassword.value = '';
+      address.value = '';
+      email.value = '';
+      error.innerText = '';
+      return;
     }
-    gifImage.display = 'none';
+    gifImage.style.display = 'none';
     error.innerText = data.message;
   });
 });
@@ -76,9 +109,13 @@ const login = ((e) => {
       password: loginPassword.value,
     }),
   }).then(response => response.json()).then((data) => {
+    console.log(data);
     if (data.status === 200) {
       if (typeof (Storage) !== 'undefined') {
         localStorage.setItem('token', `${data.data.token}`);
+      } if (data.data.roles === 'admin') {
+        window.location.replace('./admin-page.html');
+        return;
       }
       window.location.replace('./profile.html');
     }
@@ -86,6 +123,7 @@ const login = ((e) => {
   });
 });
 
+/* eslint-disable class-methods-use-this */
 
 submit.addEventListener('click', register);
 loginSubmit.addEventListener('click', login);
