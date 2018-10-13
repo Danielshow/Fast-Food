@@ -8,6 +8,7 @@ const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
 const placeOrder = document.getElementById('placeOrder');
 const url = 'http://localhost:3000/api/v1/';
+let token = {};
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
@@ -41,17 +42,24 @@ const completeOrder = (() => {
   fetch(`${url}orders`, {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer djdjdj',
+      Authorization: `Bearer ${token}`,
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      food,
-      price,
-      quantity,
+      food: food.join(),
+      price: price.join(),
+      quantity: quantity.join(),
     }),
   }).then(response => response.json()).then((data) => {
-    console.log(data);
+    if (data.status === 200) {
+      customAlert.successAlert('Order successful');
+      foodItems.innerHTML = '';
+      return;
+    }
+    customAlert.alert('Network Fail, Please try again');
+  }).catch((err) => {
+    customAlert.alert('Network fail, Please try again');
   });
 });
 
@@ -84,9 +92,40 @@ class MyAlert {
     const confirmbutton = document.getElementById('confirmbutton');
     confirmbutton.addEventListener('click', completeOrder);
   }
+
+  successAlert(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Success';
+    dialogbody.innerHTML = '<img src="./images/icons/success.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML = '';
+    dialogbody.innerHTML += body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'closebutton\'> Close </button>';
+    const closebutton = document.getElementById('closebutton');
+    closebutton.addEventListener('click', closeModal);
+  }
 }
 
 const customAlert = new MyAlert();
+
+const loadWindowsAndCheckAuth = (() => {
+  if (localStorage.getItem('token')) {
+    token = localStorage.getItem('token');
+    fetch(`${url}auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(response => response.json()).then((data) => {
+      if (data.status !== 200) {
+        window.location.replace('./login.html');
+      }
+    }).catch((err) => {
+      window.location.replace('./login.html');
+    });
+  } else {
+    window.replace('./login.html');
+  }
+});
 
 let foodObject = [];
 const getFoodsFromClick = ((e) => {
@@ -143,6 +182,7 @@ const searchFunction = (() => {
   }
 });
 
+window.addEventListener('load', loadWindowsAndCheckAuth);
 input.addEventListener('keyup', searchFunction);
 placeOrder.addEventListener('click', orderFoodClick);
 if (document.addEventListener) {
