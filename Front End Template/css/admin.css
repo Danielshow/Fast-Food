@@ -32,11 +32,19 @@ body {
   background: #fff;
   border-radius: 7px;
   width: 450px;
-  min-height: 200px;;
+  min-height: 200px;
   z-index: 10;
   top: 28%;
   left: 35%;
   box-shadow: 2px 2px 7px 4px black;
+  animation-name: dialogbox;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes dialogbox {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 #dialoghead {
@@ -47,12 +55,22 @@ body {
   border-radius: 7px 7px 0 0;
 }
 
- #dialogbody {
-   text-align: center;
+#dialogbody {
+  text-align: center;
   background: #FFF;
   font-size: 19px;
   padding: 35px;
+  animation-name: dialogbody;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
+
+@keyframes dialogbody {
+  0% {background-color: #fff}
+  50% {background-color: pink}
+  100% {background-color: #fff}
+}
+
  #dialogfooter {
   background: #666;
   padding: 10px;
@@ -181,6 +199,7 @@ body {
 }
 
 .usertable.back table {
+  margin-top: 15px;
   background-color: #393939;
   width: 100%;
   border-collapse: collapse;
