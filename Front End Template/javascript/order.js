@@ -1,13 +1,45 @@
 const input = document.getElementById('myInput');
 const foodItems = document.getElementById('foodItems');
-const deleteOrder = document.getElementById('delete');
 const orderFood = document.getElementById('orderfood');
+const dialoghead = document.getElementById('dialoghead');
+const dialogbody = document.getElementById('dialogbody');
+const dialogfooter = document.getElementById('dialogfooter');
+const dialogoverlay = document.getElementById('dialogoverlay');
+const dialogbox = document.getElementById('dialogbox');
 
+const closeModal = (() => {
+  dialogoverlay.style.display = 'none';
+  dialogbox.style.display = 'none';
+});
 
+/* eslint-disable class-methods-use-this */
+class MyAlert {
+  alert(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Success';
+    dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML += body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'closebutton\'> Close </button>';
+    const closebutton = document.getElementById('closebutton');
+    closebutton.addEventListener('click', closeModal);
+  }
+}
+
+const customAlert = new MyAlert();
+
+let obj = [];
 const getFoodsFromClick = ((e) => {
   if (e.target.parentNode && e.target.parentNode.nodeName === 'H4') {
     const [food, price] = e.target.parentNode.innerText.split('\n');
-    foodItems.innerHTML += `<li> ${food} ${price} <a href="#" id="delete"> Delete </a> <br></li>`;
+    obj.push(food);
+    const enw = new Set(obj);
+    if (obj.length === enw.size) {
+      foodItems.innerHTML += `<li> ${food} ${price} <button href="#" id="delete"> Delete </button> <br></li>`;
+    } else {
+      customAlert.alert('This food is already in your cart');
+      obj = [...enw];
+    }
   } else if (e.target.parentNode && e.target.parentNode.nodeName === 'LI') {
     let foodList = orderFood.getElementsByTagName('li');
     foodList = Array.from(foodList).filter(x => x !== e.target.parentNode);
