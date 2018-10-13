@@ -7,10 +7,11 @@ const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
 const placeOrder = document.getElementById('placeOrder');
-
+const url = 'http://localhost:3000/api/v1/';
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
+  dialogbody.innerHTML = '';
 });
 
 const closeModalClear = (() => {
@@ -19,12 +20,47 @@ const closeModalClear = (() => {
   dialogbody.innerHTML = '';
 });
 
+const completeOrder = (() => {
+  const listOfFood = Array.from(dialogbody.getElementsByTagName('li'));
+  const listOfQuantity = Array.from(document.getElementsByClassName('dialogTextbox'));
+  const quantity = [];
+  const price = [];
+  const food = [];
+  for (let i = 0; i < listOfFood.length; i += 1) {
+    const [x, y] = listOfFood[i].innerText.split('$');
+    food.push(x.trim());
+    price.push(y.trim());
+    const { value } = listOfQuantity[i];
+    if (isNaN(value) || value.trim().length < 1) {
+      document.getElementById('error').innerText = 'Quantity must be a number';
+      return;
+    }
+    document.getElementById('error').innerText = '';
+    quantity.push(value);
+  }
+  fetch(`${url}orders`, {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer djdjdj',
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      food,
+      price,
+      quantity,
+    }),
+  }).then(response => response.json()).then((data) => {
+    console.log(data);
+  });
+});
+
 /* eslint-disable class-methods-use-this */
 class MyAlert {
   alert(body) {
     dialogoverlay.style.display = 'block';
     dialogbox.style.display = 'block';
-    dialoghead.innerText = 'Success';
+    dialoghead.innerText = 'Warning';
     dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="success" id="icons"><br>';
     dialogbody.innerHTML = '';
     dialogbody.innerHTML += body;
@@ -37,13 +73,16 @@ class MyAlert {
     dialogoverlay.style.display = 'block';
     dialogbox.style.display = 'block';
     dialogbox.style.top = '1%';
-    dialoghead.innerText = 'Place Order';
+    dialoghead.innerText = 'Place Order (Add the quantity in the whitebox)';
     for (let i = 0; i < body.length; i += 1) {
-      dialogbody.innerHTML += `<li>${body[i]}</li>`;
+      dialogbody.innerHTML += `<li>${body[i]} <input type="text" id="dialogTextbox" class="dialogTextbox" value = "1"></li>`;
     }
+    dialogbody.innerHTML += '<div class = "error" id ="error"></div>';
     dialogfooter.innerHTML = '<button class = \'open\' id = \'confirmbutton\'> Order </button> <button class = \'close\' id = \'closebutton\'> Close </button>';
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModalClear);
+    const confirmbutton = document.getElementById('confirmbutton');
+    confirmbutton.addEventListener('click', completeOrder);
   }
 }
 
@@ -55,6 +94,11 @@ const getFoodsFromClick = ((e) => {
     const [food, price] = e.target.parentNode.innerText.split('\n');
     foodObject.push(food.trim());
     const uniqueFood = new Set(foodObject);
+    const orderquantity = foodItems.getElementsByTagName('li');
+    if (orderquantity.length > 3) {
+      customAlert.alert('You can only order four food at a time');
+      return;
+    }
     if (foodObject.length === uniqueFood.size) {
       foodItems.innerHTML += `<li> ${food} ${price} <button href="#" id="delete"> Delete </button> <br></li>`;
     } else {
