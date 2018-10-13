@@ -26,17 +26,6 @@
   top: 28%;
   left: 35%;
   box-shadow: 2px 2px 7px 4px black;
-  animation-name: dialogbox;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes dialogbox {
-  0% {opacity: 0;}
-  20% {opacity: 0.3;}
-  50% {opacity: 0.5;}
-  70% {opacity: 0.7;}
-  100% {opacity: 1;}
 }
 
 #dialoghead {
@@ -49,18 +38,10 @@
 
 #dialogbody {
   text-align: center;
-  background: #FFF;
+  background: rgb(224, 108, 65);
   font-size: 19px;
   padding: 35px;
-  animation-name: dialogbody;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-}
 
-@keyframes dialogbody {
-  0% {background-color: #fff}
-  50% {background-color: pink}
-  100% {background-color: rgb(224, 108, 65)}
 }
 
 #dialogfooter {
