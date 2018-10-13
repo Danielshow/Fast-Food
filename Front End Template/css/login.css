@@ -47,6 +47,23 @@
   text-align: right;
 }
 
+@media screen and (max-width: 600px) {
+  #dialogbox {
+    width: 70%;
+    min-height: 200px;
+    z-index: 10;
+    left: 15%;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  #dialogbox {
+    width: 60%;
+    min-height: 200px;
+    z-index: 10;
+    left: 20%;
+  }
+}
 #icons {
   width: 80px;
   height: 80px;
@@ -190,8 +207,9 @@
   width: 60%;
   position: absolute;
   left: 5%;
-  top: 30%;
+  top: 25%;
   font-size: 30px;
+  line-height: 1;
   color: rgb(224, 108, 65);
   text-shadow: 4px 5px 6px black;
 }
