@@ -7,8 +7,8 @@ const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
 const placeOrder = document.getElementById('placeOrder');
-const url = 'http://localhost:3000/api/v1/';
-let token = {};
+const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
+let token = null;
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
@@ -53,11 +53,11 @@ const completeOrder = (() => {
     }),
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      customAlert.successAlert('Order successful')
+      customAlert.successAlert('Order successful');
       foodItems.innerHTML = '';
       return;
     }
-    customAlert.alert('Network Fail, Please try again')
+    customAlert.alert('Network Fail, Please try again');
   });
 });
 
