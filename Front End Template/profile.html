@@ -11,6 +11,14 @@
 </head>
 
 <body>
+  <div id="dialogoverlay"></div>
+  <div id="dialogbox">
+    <div>
+      <div id="dialoghead"></div>
+      <div id="dialogbody"></div>
+      <div id="dialogfooter"><button id="closebutton"></button></div>
+    </div>
+  </div>
   <div class="container">
     <header class='header1'>
       <div class="logo-row">
@@ -23,7 +31,6 @@
         <ul>
           <li><a href="index.html"> Home </a> </li>
           <li><a href="index.html#contact_us">About Us </a></li>
-          <li><a href="index.html#contact">Contact Us </a></li>
           <li><a href="index.html#gallery">Gallery </a></li>
           <li><a href="#" id="logout"> Logout</a></li>
         </ul>
@@ -50,10 +57,11 @@
       <div class="list">
         <ul>
           <li><a href="#contact_us">About us</a></li>
-          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#" id='logout'>Logout</a></li>
           <li><a href="order-list.html">Order Page</a></li>
           <li><a href="#">Home</a></li>
         </ul>
+        <p><a href="#" id="delete"> Delete Account</p>
       </div>
       <div class="socials">
         <a href="#"><img src="./images/icons/facebook.png" alt="Facebook"></a>

@@ -5,9 +5,53 @@ const orderTable = document.getElementById('orderTable');
 const gifImage = document.getElementById('gifImage');
 const error = document.getElementById('error');
 const logout = document.getElementById('logout');
+const deleteUser = document.getElementById('delete');
+const dialoghead = document.getElementById('dialoghead');
+const dialogbody = document.getElementById('dialogbody');
+const dialogfooter = document.getElementById('dialogfooter');
+const dialogoverlay = document.getElementById('dialogoverlay');
+const dialogbox = document.getElementById('dialogbox');
 let id = null;
 let token = null;
 
+const closeModal = (() => {
+  dialogoverlay.style.display = 'none';
+  dialogbox.style.display = 'none';
+  dialogbody.innerHTML = '';
+});
+
+const confirmDelete = (() => {
+  fetch(`${url}users`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      if (typeof (Storage) !== 'undefined') {
+        localStorage.setItem('token', 'null');
+      }
+      window.location.replace('./login.html');
+    }
+  });
+})
+/* eslint-disable class-methods-use-this */
+class MyAlert {
+  alert(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'Warning';
+    dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML += body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> confirm </button><button class = \'close\' id = \'closebutton\'> Close </button>';
+    const closebutton = document.getElementById('closebutton');
+    closebutton.addEventListener('click', closeModal);
+    const confirmbutton = document.getElementById('confirm');
+    confirmbutton.addEventListener('click', confirmDelete)
+  }
+}
+
+const customAlert = new MyAlert()
 window.addEventListener('load', () => {
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
@@ -39,23 +83,25 @@ const getUserOrder = () => {
     if (data.status === 200) {
       gifImage.style.display = 'none';
       orderTable.innerHTML = `<table id="myTable">
-                                <tr class="orderrow">
-                                  <th>Order ID</th>
-                                  <th>Food</th>
-                                  <th>Quantity</th>
-                                  <th>Price</th>
-                                  <th>Status</th>
-                                </tr>
+                                <thead>
+                                  <tr class="orderrow">
+                                    <th>Order ID</th>
+                                    <th>Food</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                  </tr>
+                                </thead>
                               </table>`;
       const table = document.getElementById('myTable');
       for (let i = 0; i < data.data.length; i += 1) {
         const info = data.data[i];
         const tr = `<tr class="orderrow">
-                <td>${info.id}</td>
-                <td>${info.food}</td>
-                <td>${info.quantity}</td>
-                <td>${info.price}</td>
-                <td>${info.status}</td>
+                <td colname="Id">${info.id}</td>
+                <td colname="Food">${info.food}</td>
+                <td colname="Quantity">${info.quantity}</td>
+                <td colname="Price">${info.price}</td>
+                <td colname="Status">${info.status}</td>
               </tr>`;
         table.innerHTML += tr;
       }
@@ -84,5 +130,10 @@ const logoutUser = ((e) => {
   });
 });
 
+const deleteUserAccount = (() => {
+  customAlert.alert('Are you sure you want to delete this Account');
+});
+
+deleteUser.addEventListener('click', deleteUserAccount);
 getOrder.addEventListener('click', getUserOrder);
 logout.addEventListener('click', logoutUser);
