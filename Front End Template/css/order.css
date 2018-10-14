@@ -205,7 +205,13 @@ button {
   color: orange;
 }
 
+.food_image {
+  transition-duration: 2s;
+}
 
+.food_image:hover {
+  opacity: 0.5;
+}
 
 @media screen and (max-width: 320px) {
   .row {
