@@ -75,7 +75,6 @@ const logoutUser = ((e) => {
       Authorization: `Bearer ${token}`,
     },
   }).then(response => response.json()).then((data) => {
-    console.log(data);
     if (data.status === 200) {
       if (typeof (Storage) !== 'undefined') {
         localStorage.setItem('token', `${data.data.token}`);
