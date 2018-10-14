@@ -10,7 +10,11 @@ const placeOrder = document.getElementById('placeOrder');
 const toast = document.getElementById('toast');
 const logout = document.getElementById('logout');
 const url = 'http://localhost:3000/api/v1/';
+<<<<<<< HEAD
 let token = null;
+=======
+let token = {};
+>>>>>>> 4f15b86a519ad69b5d9bc8f1784b15747abff82f
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
@@ -57,6 +61,7 @@ const completeOrder = (() => {
     }),
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
+<<<<<<< HEAD
       customAlert.successAlert('Order successful');
       foodItems.innerHTML = '';
       return;
@@ -64,6 +69,13 @@ const completeOrder = (() => {
     customAlert.alert('Network Fail, Please try again');
   }).catch((err) => {
     customAlert.alert('Network fail, Please try again');
+=======
+      customAlert.successAlert('Order successful')
+      foodItems.innerHTML = '';
+      return;
+    }
+    customAlert.alert('Network Fail, Please try again')
+>>>>>>> 4f15b86a519ad69b5d9bc8f1784b15747abff82f
   });
 });
 
@@ -108,15 +120,19 @@ class MyAlert {
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModal);
   }
+<<<<<<< HEAD
 
   addToast(body) {
     toast.style.display = 'block';
     toast.innerHTML = body;
   }
+=======
+>>>>>>> 4f15b86a519ad69b5d9bc8f1784b15747abff82f
 }
 
 const customAlert = new MyAlert();
 
+<<<<<<< HEAD
 const logoutUser = ((e) => {
   e.preventDefault();
   fetch(`${url}auth/logout`, {
@@ -134,6 +150,8 @@ const logoutUser = ((e) => {
   });
 });
 
+=======
+>>>>>>> 4f15b86a519ad69b5d9bc8f1784b15747abff82f
 const loadWindowsAndCheckAuth = (() => {
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
@@ -145,8 +163,11 @@ const loadWindowsAndCheckAuth = (() => {
       if (data.status !== 200) {
         window.location.replace('./login.html');
       }
+<<<<<<< HEAD
     }).catch((err) => {
       window.location.replace('./login.html');
+=======
+>>>>>>> 4f15b86a519ad69b5d9bc8f1784b15747abff82f
     });
   } else {
     window.replace('./login.html');
@@ -216,7 +237,10 @@ const searchFunction = (() => {
   }
 });
 
+<<<<<<< HEAD
 logout.addEventListener('click', logoutUser);
+=======
+>>>>>>> 4f15b86a519ad69b5d9bc8f1784b15747abff82f
 window.addEventListener('load', loadWindowsAndCheckAuth);
 input.addEventListener('keyup', searchFunction);
 placeOrder.addEventListener('click', orderFoodClick);
