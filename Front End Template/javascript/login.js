@@ -98,6 +98,10 @@ const login = ((e) => {
     error2.innerText = 'Enter a valid email';
     return;
   }
+  if (loginPassword.value.trim().length < 6) {
+    error2.innerText = 'Password length must be greater or equal to 6';
+    return;
+  }
   fetch(`${url}auth/login`, {
     method: 'POST',
     headers: {
@@ -109,7 +113,6 @@ const login = ((e) => {
       password: loginPassword.value,
     }),
   }).then(response => response.json()).then((data) => {
-    console.log(data);
     if (data.status === 200) {
       if (typeof (Storage) !== 'undefined') {
         localStorage.setItem('token', `${data.data.token}`);
@@ -118,6 +121,7 @@ const login = ((e) => {
         return;
       }
       window.location.replace('./profile.html');
+      return;
     }
     error2.innerText = data.message;
   });
