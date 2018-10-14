@@ -2,6 +2,111 @@
   display: flex;
   flex-direction: row;
 }
+
+#dialogoverlay {
+  display: none;
+  opacity: .8;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: grey;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+#toast {
+  display: none;
+  position: fixed;
+  width: 30%;
+  left: 35%;
+  z-index: 10;
+  min-height: 30px;
+  background: rgb(224, 108, 65) ;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 3px 3px black;
+  text-align: center;
+  padding: 15px;
+  box-sizing: border-box;
+  font-weight: bold;
+
+}
+
+#dialogbox {
+  display: none;
+  position: fixed;
+  background: #fff;
+  border-radius: 7px;
+  width: 450px;
+  min-height: 200px;
+  z-index: 10;
+  top: 28%;
+  left: 35%;
+  box-shadow: 2px 2px 7px 4px black;
+}
+
+#dialoghead {
+  background: #666;
+  font-size: 19px;
+  padding: 10px;
+  color: #ccc;
+  border-radius: 7px 7px 0 0;
+}
+
+#dialogbody {
+  text-align: center;
+  background: rgb(224, 108, 65);
+  font-size: 19px;
+  padding: 35px;
+
+}
+
+#dialogfooter {
+  background: #666;
+  padding: 10px;
+  color: #ccc;
+  text-align: right;
+}
+
+#dialogTextbox {
+  width: 35px;
+}
+
+@media screen and (max-width: 600px) {
+  #dialogbox {
+    width: 70%;
+    min-height: 200px;
+    z-index: 10;
+    left: 15%;
+  }
+
+  #toast {
+    width: 80%;
+    left: 10%;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  #dialogbox {
+    width: 60%;
+    min-height: 200px;
+    z-index: 10;
+    left: 20%;
+  }
+
+  #toast {
+    width: 60%;
+    left: 20%;
+  }
+}
+
+#icons {
+  width: 80px;
+  height: 80px;
+}
+
 .container {
   background-image: linear-gradient(rgba(232, 226, 219, 0.7), rgba(232, 226, 219, 0.7)), url("../images/local_dishes/food 5.jpg");
 }
@@ -24,7 +129,9 @@
   margin-left: 3%;
 }
 
-
+li {
+  list-style-type: none;
+}
 input[type="text"] {
   width: 100%;
   height: 30px;
@@ -61,6 +168,10 @@ input[type="text"]:focus {
   float: left;
 }
 
+.error {
+  color: red;
+}
+
 button {
   outline: none;
   background: rgb(233, 120, 37);
@@ -70,7 +181,8 @@ button {
   margin-left: 4px;
   min-width: 80px;
   height: 33px;
-   border: 1px solid white;
+  cursor: pointer;
+  border: 1px solid white;
 }
 
 .col h4 {
@@ -93,7 +205,13 @@ button {
   color: orange;
 }
 
+.food_image {
+  transition-duration: 2s;
+}
 
+.food_image:hover {
+  opacity: 0.5;
+}
 
 @media screen and (max-width: 320px) {
   .row {
