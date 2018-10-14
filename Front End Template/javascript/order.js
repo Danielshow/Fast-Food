@@ -87,7 +87,7 @@ class MyAlert {
     dialogbox.style.top = '1%';
     dialoghead.innerText = 'Place Order (Add the quantity in the whitebox)';
     for (let i = 0; i < body.length; i += 1) {
-      dialogbody.innerHTML += `<li>${body[i]} <input type="text" id="dialogTextbox" class="dialogTextbox" value = "1"></li>`;
+      dialogbody.innerHTML += `<li class = "foodlinks"> ${body[i]} <input type="text" id="dialogTextbox" class="dialogTextbox" value = "1"></li>`;
     }
     dialogbody.innerHTML += '<div class = "error" id ="error"></div>';
     dialogfooter.innerHTML = '<button class = \'open\' id = \'confirmbutton\'> Order </button> <button class = \'close\' id = \'closebutton\'> Close </button>';
@@ -155,8 +155,9 @@ const loadWindowsAndCheckAuth = (() => {
 
 let foodObject = [];
 const getFoodsFromClick = ((e) => {
-  if (e.target.parentNode && e.target.parentNode.nodeName === 'H4') {
-    const [food, price] = e.target.parentNode.innerText.split('\n');
+  const target = e.target.parentNode;
+  if (target && target.nodeName === 'H4') {
+    const [food, price] = target.innerText.split('\n');
     foodObject.push(food.trim());
     const uniqueFood = new Set(foodObject);
     const orderquantity = foodItems.getElementsByTagName('li');
@@ -174,14 +175,14 @@ const getFoodsFromClick = ((e) => {
       customAlert.alert('This food is already in your cart');
       foodObject = [...uniqueFood];
     }
-  } else if (e.target.parentNode && e.target.parentNode.nodeName === 'LI' && e.target.parentNode.className !== 'links') {
+  } else if (target && target.nodeName === 'LI' && target.className !== 'links' && target.className !== 'foodlinks') {
     let foodList = orderFood.getElementsByTagName('li');
     // remove food from list
-    const foodToRemove = e.target.parentNode.innerText.split('$')[0].trim();
+    const foodToRemove = target.innerText.split('$')[0].trim();
     const newFood = foodObject.filter(x => x !== foodToRemove);
     foodObject = newFood;
-    foodList = Array.from(foodList).filter(x => x !== e.target.parentNode);
-    customAlert.addToast(`${e.target.parentNode.innerText.split('$')[0].trim()} has been removed from cart`);
+    foodList = Array.from(foodList).filter(x => x !== target);
+    customAlert.addToast(`${target.innerText.split('$')[0].trim()} has been removed from cart`);
     setTimeout(() => {
       toast.style.display = 'none';
     }, 3000);
@@ -196,6 +197,10 @@ const orderFoodClick = (() => {
   const allFoods = [];
   let foods = foodItems.getElementsByTagName('li');
   foods = Array.from(foods);
+  if (foods.length < 1) {
+    customAlert.alert('This cart is empty, Add to Cart');
+    return;
+  }
   for (let i = 0; i < foods.length; i += 1) {
     allFoods.push(foods[i].innerText.split('Delete')[0].trim());
   }
