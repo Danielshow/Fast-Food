@@ -1,4 +1,4 @@
-const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
+const url = 'http://localhost:3000/api/v1/';
 const displayName = document.getElementById('name');
 const getOrder = document.getElementById('getOrder');
 const orderTable = document.getElementById('orderTable');
@@ -75,7 +75,6 @@ const logoutUser = ((e) => {
       Authorization: `Bearer ${token}`,
     },
   }).then(response => response.json()).then((data) => {
-    console.log(data);
     if (data.status === 200) {
       if (typeof (Storage) !== 'undefined') {
         localStorage.setItem('token', `${data.data.token}`);

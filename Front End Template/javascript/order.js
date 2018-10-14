@@ -7,7 +7,9 @@ const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
 const placeOrder = document.getElementById('placeOrder');
-const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
+const toast = document.getElementById('toast');
+const logout = document.getElementById('logout');
+const url = 'http://localhost:3000/api/v1/';
 let token = null;
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
@@ -31,7 +33,9 @@ const completeOrder = (() => {
     const [x, y] = listOfFood[i].innerText.split('$');
     food.push(x.trim());
     price.push(y.trim());
-    const { value } = listOfQuantity[i];
+    const {
+      value,
+    } = listOfQuantity[i];
     if (isNaN(value) || value.trim().length < 1) {
       document.getElementById('error').innerText = 'Quantity must be a number';
       return;
@@ -58,6 +62,8 @@ const completeOrder = (() => {
       return;
     }
     customAlert.alert('Network Fail, Please try again');
+  }).catch((err) => {
+    customAlert.alert('Network fail, Please try again');
   });
 });
 
@@ -102,9 +108,31 @@ class MyAlert {
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModal);
   }
+
+  addToast(body) {
+    toast.style.display = 'block';
+    toast.innerHTML = body;
+  }
 }
 
 const customAlert = new MyAlert();
+
+const logoutUser = ((e) => {
+  e.preventDefault();
+  fetch(`${url}auth/logout`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      if (typeof (Storage) !== 'undefined') {
+        localStorage.setItem('token', `${data.data.token}`);
+      }
+      window.location.replace('./login.html');
+    }
+  });
+});
 
 const loadWindowsAndCheckAuth = (() => {
   if (localStorage.getItem('token')) {
@@ -117,6 +145,8 @@ const loadWindowsAndCheckAuth = (() => {
       if (data.status !== 200) {
         window.location.replace('./login.html');
       }
+    }).catch((err) => {
+      window.location.replace('./login.html');
     });
   } else {
     window.replace('./login.html');
@@ -135,18 +165,26 @@ const getFoodsFromClick = ((e) => {
       return;
     }
     if (foodObject.length === uniqueFood.size) {
-      foodItems.innerHTML += `<li> ${food} ${price} <button href="#" id="delete"> Delete </button> <br></li>`;
-    } else {
+      foodItems.innerHTML += `<li class = 'list_food'> ${food} ${price} <button href="#" id="delete"> Delete </button> <br></li>`;
+      customAlert.addToast(`${food} has been added to cart`);
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    } else if (foodObject.length !== uniqueFood.size) {
       customAlert.alert('This food is already in your cart');
       foodObject = [...uniqueFood];
     }
-  } else if (e.target.parentNode && e.target.parentNode.nodeName === 'LI') {
+  } else if (e.target.parentNode && e.target.parentNode.nodeName === 'LI' && e.target.parentNode.className !== 'links') {
     let foodList = orderFood.getElementsByTagName('li');
     // remove food from list
     const foodToRemove = e.target.parentNode.innerText.split('$')[0].trim();
     const newFood = foodObject.filter(x => x !== foodToRemove);
     foodObject = newFood;
     foodList = Array.from(foodList).filter(x => x !== e.target.parentNode);
+    customAlert.addToast(`${e.target.parentNode.innerText.split('$')[0].trim()} has been removed from cart`);
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
     foodItems.innerHTML = '';
     for (let i = 0; i < foodList.length; i += 1) {
       foodItems.innerHTML += `<li> ${foodList[i].innerHTML} </li>`;
@@ -178,6 +216,7 @@ const searchFunction = (() => {
   }
 });
 
+logout.addEventListener('click', logoutUser);
 window.addEventListener('load', loadWindowsAndCheckAuth);
 input.addEventListener('keyup', searchFunction);
 placeOrder.addEventListener('click', orderFoodClick);
