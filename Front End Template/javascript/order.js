@@ -9,7 +9,7 @@ const dialogbox = document.getElementById('dialogbox');
 const placeOrder = document.getElementById('placeOrder');
 const toast = document.getElementById('toast');
 const logout = document.getElementById('logout');
-const url = 'http://localhost:3000/api/v1/';
+const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
 let token = null;
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
