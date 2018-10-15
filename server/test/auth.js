@@ -96,7 +96,7 @@ describe('API endpoint for POST auth/signup', () => {
   it('Should Return error if email exists in the database. Email must be unique', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send({
-      email: 'admin@foodfast.com',
+      email: 'admin2@foodfast.com',
       address: 'Home address',
       name: 'opeyemi',
       password: 'daniel',
