@@ -54,7 +54,9 @@ class AuthController {
           const token = jwt.sign({
             email: data.rows[0].email,
             userid: data.rows[0].id,
-          }, process.env.JWT_KEY);
+          }, process.env.JWT_KEY, {
+            expiresIn: 86400,
+          });
           return res.status(200).json({
             TYPE: 'POST',
             status: 200,
