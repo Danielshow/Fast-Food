@@ -241,12 +241,12 @@
 .container3 input[type=text], input[type=email], input[type=password] {
   width: 100%;
   padding: 5px;
-  margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
   background: #f1f1f1;
-  font-size: 16px;
+  font-size: 14px;
   border-radius: 5px;
+  margin: 0;
 }
 
 .container3 input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
@@ -289,7 +289,7 @@
 .herop {
   font-family: Helvetica;
   font-weight: bold;
-  margin-top: 1px;
+  margin-top: -20px;
 }
 
 @media screen and (max-width: 300px) {

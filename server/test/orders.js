@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 const orderStatus = {
   status: 'processing',
 };
-
+// admin token
 const token = process.env.TOKEN1;
 const dantoken = process.env.TOKEN2;
 // for post food
@@ -125,7 +125,7 @@ describe('API endpoint to GET total price of food ordered', () => {
 
 describe('API endpoint to GET a particular order', () => {
   it('Should return order specific to a particular user with valid credentials', () => chai.request(url)
-    .get('/api/v1/users/3/orders')
+    .get('/api/v1/users/2/orders')
     .set('Authorization', `Bearer ${dantoken}`)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -134,7 +134,7 @@ describe('API endpoint to GET a particular order', () => {
 
 
   it('Should return error when a user with valid credentials try to access another person resource', () => chai.request(url)
-    .get('/api/v1/users/2/orders')
+    .get('/api/v1/users/3/orders')
     .set('Authorization', `Bearer ${dantoken}`)
     .then((res) => {
       expect(res).to.have.status(403);
