@@ -21,6 +21,7 @@ const dialogbody = document.getElementById('dialogbody');
 const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
+const logout = document.getElementById('logout');
 let status = null;
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
@@ -394,6 +395,21 @@ const postFood = ((e) => {
   });
 });
 
+const logoutAdmin = (() => {
+  fetch(`${url}auth/logout`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      if (typeof (Storage) !== 'undefined') {
+        localStorage.setItem('token', `${data.data.token}`);
+      }
+      window.location.replace('./login.html');
+    }
+  });
+});
 const clickEvent = (() => {
   people.style.display = 'block';
   loadWindows();
@@ -425,6 +441,7 @@ const addEvent = (() => {
 });
 
 // Click Event
+logout.addEventListener('click', logoutAdmin)
 users.addEventListener('click', clickEvent);
 orderbtn.addEventListener('click', orderEvent);
 paymentbtn.addEventListener('click', paymentEvent);
