@@ -101,9 +101,9 @@ export default {
           return next();
         }
       }
-      return res.status(400).json({
-        status: 400,
-        message: 'Email does not exist',
+      return res.status(403).json({
+        status: 403,
+        message: 'Incorrect email or password',
       });
     });
   },
