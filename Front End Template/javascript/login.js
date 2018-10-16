@@ -16,6 +16,7 @@ const dialogbody = document.getElementById('dialogbody');
 const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
+const loadingOverlay = document.getElementById('loadingOverlay');
 
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
@@ -61,7 +62,7 @@ const register = ((e) => {
     error.innerText = 'Name cannot be empty';
     return;
   }
-  gifImage.style.display = 'block';
+  loadingOverlay.style.display = 'flex';
   fetch(`${url}auth/signup`, {
     method: 'POST',
     headers: {
@@ -77,7 +78,7 @@ const register = ((e) => {
     }),
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      gifImage.style.display = 'none';
+      loadingOverlay.style.display = 'none';
       customAlert.alert('Thank You for registering, Proceed to Login');
       name.value = '';
       password.value = '';
@@ -87,7 +88,7 @@ const register = ((e) => {
       error.innerText = '';
       return;
     }
-    gifImage.style.display = 'none';
+    loadingOverlay.style.display = 'none';
     error.innerText = data.message;
   });
 });
