@@ -9,8 +9,10 @@ const dialogbox = document.getElementById('dialogbox');
 const placeOrder = document.getElementById('placeOrder');
 const toast = document.getElementById('toast');
 const logout = document.getElementById('logout');
+const loadingOverlay = document.getElementById('loadingOverlay');
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
+let foodObject = [];
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
@@ -24,6 +26,7 @@ const closeModalClear = (() => {
 });
 
 const completeOrder = (() => {
+  const confirmbutton = document.getElementById('confirmbutton');
   const listOfFood = Array.from(dialogbody.getElementsByTagName('li'));
   const listOfQuantity = Array.from(document.getElementsByClassName('dialogTextbox'));
   const quantity = [];
@@ -43,6 +46,8 @@ const completeOrder = (() => {
     document.getElementById('error').innerText = '';
     quantity.push(value);
   }
+  loadingOverlay.style.display = 'flex';
+  confirmbutton.disabled = true;
   fetch(`${url}orders`, {
     method: 'POST',
     headers: {
@@ -57,12 +62,19 @@ const completeOrder = (() => {
     }),
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
+      foodObject = [];
+      confirmbutton.disabled = false;
+      loadingOverlay.style.display = 'none';
       customAlert.successAlert('Order successful');
       foodItems.innerHTML = '';
       return;
     }
+    confirmbutton.disabled = false;
+    loadingOverlay.style.display = 'none';
     customAlert.alert('Network Fail, Please try again');
   }).catch((err) => {
+    confirmbutton.disabled = false;
+    loadingOverlay.style.display = 'none';
     customAlert.alert('Network fail, Please try again');
   });
 });
@@ -153,7 +165,6 @@ const loadWindowsAndCheckAuth = (() => {
   }
 });
 
-let foodObject = [];
 const getFoodsFromClick = ((e) => {
   const target = e.target.parentNode;
   if (target && target.nodeName === 'H4') {
