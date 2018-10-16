@@ -215,9 +215,9 @@ describe('API endpoint for POST auth/login', () => {
       password: 'daniele',
     })
     .then((res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(403);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('message').eql('Email does not exist');
+      res.body.should.have.property('message').eql('Incorrect email or password');
     }));
 
 
@@ -230,42 +230,10 @@ describe('API endpoint for POST auth/login', () => {
     .then((res) => {
       expect(res).to.have.status(403);
       expect(res.body).to.be.an('Object');
-      res.body.should.have.property('message').eql('Invalid Credentials');
+      res.body.should.have.property('message').eql('Incorrect email or password');
     }));
 });
 // admin login
-
-describe('API endpoint POST /auth/signup/admin', () => {
-  it('Should create admin account with administrative priviledges given valid credentials', () => chai.request(url)
-    .post('/api/v1/auth/signup/admin')
-    .set('Authorization', `Bearer ${token}`)
-    .send(admin)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body.data).to.be.an('Object');
-      res.body.data.should.have.property('name').equal('opeyemi');
-      res.body.data.should.have.property('address').eql('Ikorodu');
-      res.body.should.have.property('message').eql('Registered Successfully');
-    }));
-
-  it('Should send auth failed if token is not sent. Token must be send with the header', () => chai.request(url)
-    .post('/api/v1/auth/signup/admin')
-    .send(admin)
-    .then((res) => {
-      expect(res).to.have.status(403);
-      res.body.should.have.property('message').eql('Authentication fail, Please provide Token');
-    }));
-
-
-  it('Should send an error if an Invalid token is sent. Token must be send with the header', () => chai.request(url)
-    .post('/api/v1/auth/signup/admin')
-    .set('Authorization', 'Bearer jdjdj')
-    .send(admin)
-    .then((res) => {
-      expect(res).to.have.status(401);
-      res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
-    }));
-});
 
 describe('API endpoint GET /auth/me', () => {
   it('Should return a particular user with all his/her credentials', () => chai.request(url)
