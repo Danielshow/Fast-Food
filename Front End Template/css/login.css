@@ -12,6 +12,7 @@
   justify-content: center;
   color: white;
   z-index: 1;
+  font-size: 20px;
 }
 
 #loading {
@@ -262,8 +263,11 @@
   color: red;
   margin-top: 0;
 }
-
-.container3 input[type=text], input[type=email], input[type=password] {
+.container3 label {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.container3 input[type=email], .container3 input[type=password], .container3 input[type='text']{
   width: 100%;
   padding: 5px;
   display: inline-block;
