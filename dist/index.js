@@ -41,7 +41,7 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 app.use('/uploads', _express2.default.static('uploads'));
-app.use(_express2.default.static('Front End Template'));
+app.use(_express2.default.static('public'));
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
