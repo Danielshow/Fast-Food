@@ -9,17 +9,45 @@ const error2 = document.getElementById('error2');
 const loginPassword = document.getElementById('loginPassword');
 const loginEmail = document.getElementById('loginEmail');
 const loginSubmit = document.getElementById('loginSubmit');
-const gifImage = document.getElementById('gifImage');
-const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
+const url = 'http://localhost:3000/api/v1/';
 const dialoghead = document.getElementById('dialoghead');
 const dialogbody = document.getElementById('dialogbody');
 const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
-
+const loadingOverlay = document.getElementById('loadingOverlay');
+let token = null;
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
+});
+
+window.addEventListener('load', () => {
+  loadingOverlay.style.display = 'flex';
+  if (localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
+    token = localStorage.getItem('token');
+    fetch(`${url}auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(response => response.json()).then((data) => {
+      if (data.status === 200 && data.data[0].roles === 'user') {
+        loadingOverlay.style.display = 'none';
+        window.location.replace('./profile.html');
+        return;
+      }
+      if (data.status === 200 && data.data[0].roles === 'admin') {
+        loadingOverlay.style.display = 'none';
+        window.location.replace('./admin-page.html');
+        return;
+      }
+      loadingOverlay.style.display = 'none';
+    }).catch((err) => {
+      loadingOverlay.style.display = 'none';
+    });
+  } else {
+    loadingOverlay.style.display = 'none';
+  }
 });
 
 /* eslint-disable class-methods-use-this */
@@ -48,20 +76,20 @@ const register = ((e) => {
   if (!validateEmail(email.value.trim())) {
     error.innerText = 'Enter a valid email';
     return;
-  } if (password.value.length < 6) {
-    error.innerText = 'Password length must be greater than 6';
+  } if (name.value.trim().length < 1) {
+    error.innerText = 'Name cannot be empty';
+    return;
+  } if (password.value.trim().length < 6) {
+    error.innerText = 'Password length must be greater than 6 and must not contain spaces';
     return;
   } if (password.value !== confirmPassword.value) {
     error.innerText = 'Password not match';
     return;
-  } if (address.value.trim().length < 6) {
-    error.innerText = 'Incorrect address';
-    return;
-  } if (name.value.trim().length < 1) {
-    error.innerText = 'Name cannot be empty';
+  } if (address.value.trim().length < 5) {
+    error.innerText = 'Input ypur correct address';
     return;
   }
-  gifImage.style.display = 'block';
+  loadingOverlay.style.display = 'flex';
   fetch(`${url}auth/signup`, {
     method: 'POST',
     headers: {
@@ -77,7 +105,7 @@ const register = ((e) => {
     }),
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      gifImage.style.display = 'none';
+      loadingOverlay.style.display = 'none';
       customAlert.alert('Thank You for registering, Proceed to Login');
       name.value = '';
       password.value = '';
@@ -87,7 +115,7 @@ const register = ((e) => {
       error.innerText = '';
       return;
     }
-    gifImage.style.display = 'none';
+    loadingOverlay.style.display = 'none';
     error.innerText = data.message;
   });
 });

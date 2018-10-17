@@ -11,6 +11,13 @@
 </head>
 
 <body>
+  <div id = "loadingOverlay">
+    <div class="loadingText">
+      Just chill, Grab a cup of coffee
+      While we are getting things Done <br>
+      <img src="./images/gif/load (4).gif" alt="loading" id ="loading">
+    </div>
+  </div>
   <div id="dialogoverlay"></div>
   <div id="dialogbox">
     <div>
@@ -24,6 +31,10 @@
       <a href="index.html"><img src="./images/logo/logo1.png" alt="Fast Food Fast Logo" class="logo"></a>
     </div>
     <h2>ADMIN PAGE</h2>
+    <div class="navbutton">
+      <button type="button" name="button" id="logout">Logout</button>
+      <a href="./index.html"><button type="button" name="button">Homepage</button></a>
+    </div>
   </div>
   <div class="side-nav">
     <nav>
@@ -58,7 +69,6 @@
   <div class="main-content">
     <div class="people" id="people">
       <div class="usertable back">
-        <img src="./images/gif/load (4).gif" alt="loading" id ="loadingGif">
         <div id="usererror"></div>
         <table id="usertable">
 
@@ -90,7 +100,6 @@
         <label for=""> Food Image</label>
         <input type="file" name="foodImage" value="" id="foodImage"> <br>
         <input type="submit" name="" value="Submit" id="action">
-        <img src="./images/gif/load (4).gif" alt="loading" id ="loadingGif2">
       </form>
       <div id="foodError"></div>
       <div id="list_of_food" class="usertable back">

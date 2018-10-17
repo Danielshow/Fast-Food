@@ -1,4 +1,4 @@
-const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
+const url = 'http://localhost:3000/api/v1/';
 const displayName = document.getElementById('name');
 const getOrder = document.getElementById('getOrder');
 const orderTable = document.getElementById('orderTable');
@@ -11,6 +11,7 @@ const dialogbody = document.getElementById('dialogbody');
 const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
+const loadingOverlay = document.getElementById('loadingOverlay');
 let id = null;
 let token = null;
 
@@ -34,24 +35,35 @@ const confirmDelete = (() => {
       window.location.replace('./login.html');
     }
   });
-})
+});
 /* eslint-disable class-methods-use-this */
 class MyAlert {
   alert(body) {
     dialogoverlay.style.display = 'block';
     dialogbox.style.display = 'block';
     dialoghead.innerText = 'Warning';
-    dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="success" id="icons"><br>';
+    dialogbody.innerHTML = '<img src="./images/icons/warning.png" alt="warning" class="icons"><br>';
     dialogbody.innerHTML += body;
     dialogfooter.innerHTML = '<button class = \'close\' id = \'confirm\'> confirm </button><button class = \'close\' id = \'closebutton\'> Close </button>';
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModal);
     const confirmbutton = document.getElementById('confirm');
-    confirmbutton.addEventListener('click', confirmDelete)
+    confirmbutton.addEventListener('click', confirmDelete);
+  }
+
+  alertOne(body) {
+    dialogoverlay.style.display = 'block';
+    dialogbox.style.display = 'block';
+    dialoghead.innerText = 'OOOOPS';
+    dialogbody.innerHTML = '<br>';
+    dialogbody.innerHTML += body;
+    dialogfooter.innerHTML = '<button class = \'close\' id = \'closebutton\'> Close </button>';
+    const closebutton = document.getElementById('closebutton');
+    closebutton.addEventListener('click', closeModal);
   }
 }
 
-const customAlert = new MyAlert()
+const customAlert = new MyAlert();
 window.addEventListener('load', () => {
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
@@ -74,14 +86,14 @@ window.addEventListener('load', () => {
 
 
 const getUserOrder = () => {
-  gifImage.style.display = 'block';
+  loadingOverlay.style.display = 'flex';
   fetch(`${url}/users/${id}/orders`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      gifImage.style.display = 'none';
+      loadingOverlay.style.display = 'none';
       orderTable.innerHTML = `<table id="myTable">
                                 <thead>
                                   <tr class="orderrow">
@@ -107,9 +119,12 @@ const getUserOrder = () => {
       }
     }
     if (data.status === 404) {
-      gifImage.style.display = 'none';
+      loadingOverlay.style.display = 'none';
       error.style.display = 'block';
     }
+  }).catch((err) => {
+    loadingOverlay.style.display = 'none';
+    customAlert.alertOne('Network Fail, Cannot Fetch your History')
   });
 };
 

@@ -21,8 +21,10 @@ const dialogbody = document.getElementById('dialogbody');
 const dialogfooter = document.getElementById('dialogfooter');
 const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
+const logout = document.getElementById('logout');
+const loadingOverlay = document.getElementById('loadingOverlay')
 let status = null;
-const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
+const url = 'http://localhost:3000/api/v1/';
 let token = null;
 let id = null;
 
@@ -207,7 +209,7 @@ const loadAvailableUsers = (() => {
     },
   }).then(response => response.json()).then((datas) => {
     if (datas.status === 200) {
-      loadingGif.style.display = 'none';
+      loadingOverlay.style.display = 'none';
       userTable.innerHTML = `<thead>
                                 <tr>
                                   <th>User ID</th>
@@ -242,7 +244,7 @@ const loadAvailableOrders = (() => {
     },
   }).then(response => response.json()).then((datas) => {
     if (datas.status === 200 && datas.data.length > 0) {
-      loadingGif.style.display = 'none';
+      loadingOverlay.style.display = 'none';
       orderTable.innerHTML = `<thead>
                                 <tr>
                                   <th>Order ID</th>
@@ -274,9 +276,9 @@ const loadAvailableOrders = (() => {
   });
 });
 const loadWindows = (() => {
+  loadingOverlay.style.display = 'flex';
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
-    loadingGif.style.display = 'block';
     fetch(`${url}auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -293,14 +295,14 @@ const loadWindows = (() => {
 });
 
 const loadAvailableFoods = (() => {
-  loadingGif2.style.display = 'block';
+  loadingOverlay.style.display = 'flex';
   fetch(`${url}menu`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }).then(response => response.json()).then((data) => {
     if (data.status === 200) {
-      loadingGif2.style.display = 'none';
+      loadingOverlay.style.display = 'none';
       menuTable.innerHTML = `<thead>
                               <tr>
                                   <th> ID </th>
@@ -322,6 +324,7 @@ const loadAvailableFoods = (() => {
       }
     }
   }).catch((err) => {
+    loadingOverlay.style.display = 'none';
     foodError.innerHTML = 'Cannot Fetch User, Please Reload';
   });
 });
@@ -379,6 +382,7 @@ const postFood = ((e) => {
     return;
   }
   const formData = new FormData(document.forms.myForm);
+  loadingOverlay.style.display = 'block';
   fetch(`${url}/menu`, {
     method: 'POST',
     headers: {
@@ -386,6 +390,7 @@ const postFood = ((e) => {
     },
     body: formData,
   }).then(response => response.json()).then((data) => {
+    loadingOverlay.style.display = 'none';
     if (data.status === 200) {
       food.value = '';
       price.value = '';
@@ -394,6 +399,21 @@ const postFood = ((e) => {
   });
 });
 
+const logoutAdmin = (() => {
+  fetch(`${url}auth/logout`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((data) => {
+    if (data.status === 200) {
+      if (typeof (Storage) !== 'undefined') {
+        localStorage.setItem('token', `${data.data.token}`);
+      }
+      window.location.replace('./login.html');
+    }
+  });
+});
 const clickEvent = (() => {
   people.style.display = 'block';
   loadWindows();
@@ -425,6 +445,7 @@ const addEvent = (() => {
 });
 
 // Click Event
+logout.addEventListener('click', logoutAdmin)
 users.addEventListener('click', clickEvent);
 orderbtn.addEventListener('click', orderEvent);
 paymentbtn.addEventListener('click', paymentEvent);

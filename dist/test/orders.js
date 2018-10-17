@@ -23,7 +23,7 @@ _chai2.default.use(_chaiHttp2.default);
 var orderStatus = {
   status: 'processing'
 };
-
+// admin token
 var token = process.env.TOKEN1;
 var dantoken = process.env.TOKEN2;
 // for post food
@@ -126,14 +126,14 @@ describe('API endpoint to GET total price of food ordered', function () {
 
 describe('API endpoint to GET a particular order', function () {
   it('Should return order specific to a particular user with valid credentials', function () {
-    return _chai2.default.request(_index2.default).get('/api/v1/users/3/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
+    return _chai2.default.request(_index2.default).get('/api/v1/users/2/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
     });
   });
 
   it('Should return error when a user with valid credentials try to access another person resource', function () {
-    return _chai2.default.request(_index2.default).get('/api/v1/users/2/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
+    return _chai2.default.request(_index2.default).get('/api/v1/users/3/orders').set('Authorization', 'Bearer ' + dantoken).then(function (res) {
       expect(res).to.have.status(403);
       expect(res.body).to.be.an('object');
       res.body.should.have.property('message').eql('Auth Fail, You are not authorize to view this resource');
