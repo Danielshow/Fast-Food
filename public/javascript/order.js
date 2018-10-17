@@ -10,7 +10,7 @@ const placeOrder = document.getElementById('placeOrder');
 const toast = document.getElementById('toast');
 const logout = document.getElementById('logout');
 const loadingOverlay = document.getElementById('loadingOverlay');
-const url = 'http://localhost:3000/api/v1/';
+const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
 let token = null;
 let foodObject = [];
 const closeModal = (() => {

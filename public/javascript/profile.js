@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/api/v1/';
+const url = 'https://evening-island-29552.herokuapp.com/api/v1/';
 const displayName = document.getElementById('name');
 const getOrder = document.getElementById('getOrder');
 const orderTable = document.getElementById('orderTable');
