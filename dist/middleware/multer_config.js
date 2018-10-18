@@ -15,11 +15,11 @@ var storage = _multer2.default.diskStorage({
     cb(null, './uploads');
   },
   filename: function filename(req, file, cb) {
-    cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+    cb(null, new Date().toISOString().replace(/:/g, '-'));
   }
 });
 var fileFilter = function fileFilter(req, file, cb) {
-  if (file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
     cb(null, true);
   } else {
     cb(new Error('Only image files are allowed'), false);

@@ -10,6 +10,8 @@ const placeOrder = document.getElementById('placeOrder');
 const toast = document.getElementById('toast');
 const logout = document.getElementById('logout');
 const loadingOverlay = document.getElementById('loadingOverlay');
+const loadingText = document.getElementById('loadingText');
+const foodrows = document.getElementById('foodrows');
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
 let foodObject = [];
@@ -33,7 +35,7 @@ const completeOrder = (() => {
   const price = [];
   const food = [];
   for (let i = 0; i < listOfFood.length; i += 1) {
-    const [x, y] = listOfFood[i].innerText.split('$');
+    const [x, y] = listOfFood[i].innerText.split('₦');
     food.push(x.trim());
     price.push(y.trim());
     const {
@@ -46,6 +48,10 @@ const completeOrder = (() => {
     document.getElementById('error').innerText = '';
     quantity.push(value);
   }
+  loadingText.innerHTML = `Chill while we place your orders <br>
+        One cannot sleep well, love well, if one has not dined well
+        <br>
+       <img src="./images/gif/load (4).gif" alt="loading" id ="loading">`
   loadingOverlay.style.display = 'flex';
   confirmbutton.disabled = true;
   fetch(`${url}orders`, {
@@ -147,6 +153,11 @@ const logoutUser = ((e) => {
 });
 
 const loadWindowsAndCheckAuth = (() => {
+  loadingText.innerHTML = `Chill While we display the available meal <br>
+  Ask not what you can do for your country. Ask what's for Lunch......
+  <br>
+ <img src="./images/gif/load (4).gif" alt="loading" id ="loading">`
+ loadingOverlay.style.display = 'flex';
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
     fetch(`${url}auth/me`, {
@@ -157,11 +168,28 @@ const loadWindowsAndCheckAuth = (() => {
       if (data.status !== 200) {
         window.location.replace('./login.html');
       }
+      fetch(`${url}menu`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then(response => response.json()).then((fooddata) => {
+        if (fooddata.status === 200) {
+          let food = null;
+          for (let i = 0; i < fooddata.data.length; i += 1) {
+            food = fooddata.data[i];
+            foodrows.innerHTML += `<div class="col">
+              <img src=${food.image} alt=${food.food} class="food_image">
+              <h4> ${food.food} <br><span id="price">₦${food.price}</span><button type="button" name="button" id="but"><img src="./images/icons/cart.png" alt=""></button></h4>
+            </div>`
+          }
+          loadingOverlay.style.display = 'none';
+        }
+      });
     }).catch((err) => {
       window.location.replace('./login.html');
     });
   } else {
-    window.replace('./login.html');
+    window.location.replace('./login.html');
   }
 });
 
@@ -189,11 +217,11 @@ const getFoodsFromClick = ((e) => {
   } else if (target && target.nodeName === 'LI' && target.className !== 'links' && target.className !== 'foodlinks') {
     let foodList = orderFood.getElementsByTagName('li');
     // remove food from list
-    const foodToRemove = target.innerText.split('$')[0].trim();
+    const foodToRemove = target.innerText.split('₦')[0].trim();
     const newFood = foodObject.filter(x => x !== foodToRemove);
     foodObject = newFood;
     foodList = Array.from(foodList).filter(x => x !== target);
-    customAlert.addToast(`${target.innerText.split('$')[0].trim()} has been removed from cart`);
+    customAlert.addToast(`${target.innerText.split('₦')[0].trim()} has been removed from cart`);
     setTimeout(() => {
       toast.style.display = 'none';
     }, 3000);

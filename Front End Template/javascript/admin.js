@@ -10,9 +10,7 @@ const orderTable = document.getElementById('orderTable');
 const addFood = document.getElementById('add-food');
 const addbtn = document.getElementById('message');
 const submitFood = document.getElementById('action');
-const loadingGif = document.getElementById('loadingGif');
 const usererror = document.getElementById('usererror');
-const loadingGif2 = document.getElementById('loadingGif2');
 const foodError = document.getElementById('foodError');
 const food = document.getElementById('textInp');
 const price = document.getElementById('priceInp');
@@ -23,6 +21,7 @@ const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
 const logout = document.getElementById('logout');
 const loadingOverlay = document.getElementById('loadingOverlay')
+const foodImage = document.getElementById('foodImage');
 let status = null;
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
@@ -394,6 +393,7 @@ const postFood = ((e) => {
     if (data.status === 200) {
       food.value = '';
       price.value = '';
+      foodImage.value = '';
       loadAvailableFoods();
     }
   });
