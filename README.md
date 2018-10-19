@@ -5,7 +5,7 @@
 Web Application for ordering varieties of Food
 
 fast food fast is a food delivery service app for a restaurant
-This file consist of the UI template hosted on GH-pages and API hosted on heroku
+This file consist of the UI template hosted on GH-pages and API hosted on Heroku
 
 ## Prerequisites
 1. [Node js](https://nodejs.org/en/)

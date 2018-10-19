@@ -1,3 +1,5 @@
+import cloudinary from './cloudinary';
+
 export default {
   verifyBody: (req, res, next) => {
     if (!req.body.food || req.body.food.trim().length < 1) {
@@ -60,11 +62,12 @@ export default {
     }
     next();
   },
-  imagePicker: (req) => {
+  isFileAvailable: (req, res, next) => {
     if (!req.file) {
-      // set default image
-      return `${req.protocol}://${req.headers.host}/uploads\\default.jpg`;
+      req.imagepath = 'https://res.cloudinary.com/fast-food/image/upload/v1539909326/l0cvazx1fh1x8cjeu9ag.jpg';
+      return next();
     }
-    return `${req.protocol}://${req.headers.host}/${req.file.path}`;
+    return next();
+    // return `${req.protocol}://${req.headers.host}/${req.file.path}`;
   },
 };
