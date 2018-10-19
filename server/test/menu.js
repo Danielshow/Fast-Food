@@ -39,6 +39,7 @@ describe('API endpoint POST /menu', () => {
       expect(res.body.data).to.be.an('Object');
       res.body.data.should.have.property('food').eql('rice');
       res.body.data.should.have.property('price').eql(3000);
+      res.body.data.should.have.property('image');
     }));
 
   it('Should return error given food field is empty', () => chai.request(url)
