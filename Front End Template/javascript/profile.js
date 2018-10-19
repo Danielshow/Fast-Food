@@ -74,6 +74,8 @@ window.addEventListener('load', () => {
     }).then(response => response.json()).then((data) => {
       if (data.status !== 200) {
         window.location.replace('./login.html');
+      }  if (data.data[0].roles === 'admin') {
+        window.location.replace('./admin-page.html');
       }
       const { name } = data.data[0];
       id = data.data[0].id;
