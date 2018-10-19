@@ -71,26 +71,32 @@ var FoodListController = function () {
     key: 'postFood',
     value: function postFood(req, res, next) {
       // const imagePath = body.imagePicker(req);
-      if (req.file) {
-        _cloudinary2.default.uploader.upload(req.file.path, function (result) {
-          // result.secure_url;
-          _index2.default.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, result.secure_url], function (err) {
-            if (err) {
-              return next(err);
-            }
-            return res.status(200).json({
-              TYPE: 'POST',
-              status: 200,
-              data: {
-                food: req.body.food.trim(),
-                price: Number(req.body.price),
-                image: result.secure_url
-              },
-              message: 'Food Added Successfully'
-            });
+      var image = null;
+      if (!req.file) {
+        image = req.imagepath;
+      } else {
+        image = req.file.path;
+      }
+      console.log(image);
+      _cloudinary2.default.uploader.upload(image, function (result) {
+        console.log(result);
+        // result.secure_url;
+        _index2.default.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, result.secure_url], function (err) {
+          if (err) {
+            return next(err);
+          }
+          return res.status(200).json({
+            TYPE: 'POST',
+            status: 200,
+            data: {
+              food: req.body.food.trim(),
+              price: Number(req.body.price),
+              image: result.secure_url
+            },
+            message: 'Food Added Successfully'
           });
         });
-      }
+      });
     }
   }, {
     key: 'updateFood',
