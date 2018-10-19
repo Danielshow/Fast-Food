@@ -67,22 +67,29 @@ class FoodListController {
 
   updateFood(req, res, next) {
     const { id } = req.params;
-    const imagePath = body.imagePicker(req);
-    db.query('UPDATE foodlist SET food=$1,price=$2,image=$3 WHERE id=$4', [req.body.food, req.body.price, imagePath, id], (err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.status(200).json({
-        TYPE: 'PUT',
-        status: 200,
-        data: {
-          food: req.body.food.trim(),
-          price: Number(req.body.price),
-          image: imagePath,
-        },
-        message: 'Food Updated',
+    let image = null;
+    if (!req.file) {
+      image = req.imagepath;
+    } else {
+      image = req.file.path;
+    }
+    cloudinary.uploader.upload(image, (result) => {
+      db.query('UPDATE foodlist SET food=$1,price=$2,image=$3 WHERE id=$4', [req.body.food, req.body.price, result.secure_url, id], (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.status(200).json({
+          TYPE: 'PUT',
+          status: 200,
+          data: {
+            food: req.body.food.trim(),
+            price: Number(req.body.price),
+            image: result.secure_url,
+          },
+          message: 'Food Updated',
+        });
       });
-    });
+    })
   }
 
   deleteFood(req, res, next) {
