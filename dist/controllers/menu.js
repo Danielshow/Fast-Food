@@ -14,6 +14,10 @@ var _index = require('../db/index');
 
 var _index2 = _interopRequireDefault(_index);
 
+var _cloudinary = require('../middleware/cloudinary');
+
+var _cloudinary2 = _interopRequireDefault(_cloudinary);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66,22 +70,27 @@ var FoodListController = function () {
   }, {
     key: 'postFood',
     value: function postFood(req, res, next) {
-      var imagePath = _shared2.default.imagePicker(req);
-      _index2.default.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, imagePath], function (err) {
-        if (err) {
-          return next(err);
-        }
-        return res.status(200).json({
-          TYPE: 'POST',
-          status: 200,
-          data: {
-            food: req.body.food.trim(),
-            price: Number(req.body.price),
-            image: imagePath
-          },
-          message: 'Food Added Successfully'
+      // const imagePath = body.imagePicker(req);
+      if (req.file) {
+        _cloudinary2.default.uploader.upload(req.file.path, function (result) {
+          // result.secure_url;
+          _index2.default.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, result.secure_url], function (err) {
+            if (err) {
+              return next(err);
+            }
+            return res.status(200).json({
+              TYPE: 'POST',
+              status: 200,
+              data: {
+                food: req.body.food.trim(),
+                price: Number(req.body.price),
+                image: result.secure_url
+              },
+              message: 'Food Added Successfully'
+            });
+          });
         });
-      });
+      }
     }
   }, {
     key: 'updateFood',

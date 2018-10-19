@@ -3,6 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _cloudinary = require('./cloudinary');
+
+var _cloudinary2 = _interopRequireDefault(_cloudinary);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 exports.default = {
   verifyBody: function verifyBody(req, res, next) {
     if (!req.body.food || req.body.food.trim().length < 1) {
@@ -65,11 +72,14 @@ exports.default = {
     }
     next();
   },
-  imagePicker: function imagePicker(req) {
+  isFileAvailable: function isFileAvailable(req, res, next) {
     if (!req.file) {
-      // set default image
-      return req.protocol + '://' + req.headers.host + '/uploads\\default.jpg';
+      return res.status(206).json({
+        status: 206,
+        message: 'Image file must be included'
+      });
     }
-    return req.protocol + '://' + req.headers.host + '/' + req.file.path;
+    return next();
+    // return `${req.protocol}://${req.headers.host}/${req.file.path}`;
   }
 };

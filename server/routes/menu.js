@@ -14,7 +14,7 @@ router.get('/menu', checkAuth.verifyToken, FoodlistController.getAllFood);
 // get foodlist by ID
 router.get('/menu/:id', checkAuth.verifyToken, [checkID.isValidID], FoodlistController.getFood);
 // post new food to foodlist by admin
-router.post('/menu', checkAuth.verifyAdminToken, upload.single('foodImage'), [body.verifyBody, read.isFoodAvailable], FoodlistController.postFood);
+router.post('/menu', checkAuth.verifyAdminToken, upload.single('foodImage'), [body.verifyBody, body.isFileAvailable, read.isFoodAvailable], FoodlistController.postFood);
 // Admin can update food from foodList
 router.put('/menu/:id', checkAuth.verifyAdminToken, upload.single('foodImage'), [checkID.isValidID, body.verifyBody, read.isFoodAvailable], FoodlistController.updateFood);
 // Delete food from foodList

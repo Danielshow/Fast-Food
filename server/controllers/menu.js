@@ -1,5 +1,6 @@
 import body from '../middleware/shared';
 import db from '../db/index';
+import cloudinary from '../middleware/cloudinary';
 /* eslint-disable class-methods-use-this */
 class FoodListController {
   getAllFood(req, res, next) {
@@ -39,22 +40,27 @@ class FoodListController {
   }
 
   postFood(req, res, next) {
-    const imagePath = body.imagePicker(req);
-    db.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, imagePath], (err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.status(200).json({
-        TYPE: 'POST',
-        status: 200,
-        data: {
-          food: req.body.food.trim(),
-          price: Number(req.body.price),
-          image: imagePath,
-        },
-        message: 'Food Added Successfully',
+    // const imagePath = body.imagePicker(req);
+    if (req.file) {
+      cloudinary.uploader.upload(req.file.path, (result) => {
+        // result.secure_url;
+        db.query('INSERT INTO foodlist(food, price, image) VALUES($1,$2,$3)', [req.body.food, req.body.price, result.secure_url], (err) => {
+          if (err) {
+            return next(err);
+          }
+          return res.status(200).json({
+            TYPE: 'POST',
+            status: 200,
+            data: {
+              food: req.body.food.trim(),
+              price: Number(req.body.price),
+              image: result.secure_url,
+            },
+            message: 'Food Added Successfully',
+          });
+        });
       });
-    });
+    }
   }
 
   updateFood(req, res, next) {

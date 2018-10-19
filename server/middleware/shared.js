@@ -1,3 +1,4 @@
+import cloudinary from './cloudinary';
 export default {
   verifyBody: (req, res, next) => {
     if (!req.body.food || req.body.food.trim().length < 1) {
@@ -60,11 +61,14 @@ export default {
     }
     next();
   },
-  imagePicker: (req) => {
+  isFileAvailable: (req, res, next) => {
     if (!req.file) {
-      // set default image
-      return `${req.protocol}://${req.headers.host}/uploads\\default.jpg`;
+      return res.status(206).json({
+        status: 206,
+        message: 'Image file must be included',
+      });
     }
-    return `${req.protocol}://${req.headers.host}/${req.file.path}`;
+    return next();
+    // return `${req.protocol}://${req.headers.host}/${req.file.path}`;
   },
 };
