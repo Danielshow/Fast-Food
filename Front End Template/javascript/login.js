@@ -17,10 +17,29 @@ const dialogoverlay = document.getElementById('dialogoverlay');
 const dialogbox = document.getElementById('dialogbox');
 const loadingOverlay = document.getElementById('loadingOverlay');
 let token = null;
+
 const closeModal = (() => {
   dialogoverlay.style.display = 'none';
   dialogbox.style.display = 'none';
 });
+
+loginEmail.addEventListener('keyup', () => {
+  error2.innerText = '';
+});
+
+loginPassword.addEventListener('keyup', () => {
+  error2.innerText = '';
+});
+
+const clearError = () => {
+  error.innerText = '';
+}
+
+email.addEventListener('keyup', clearError)
+password.addEventListener('keyup', clearError)
+confirmPassword.addEventListener('keyup', clearError)
+name.addEventListener('keyup', clearError)
+address.addEventListener('keyup', clearError)
 
 window.addEventListener('load', () => {
   loadingOverlay.style.display = 'flex';
@@ -71,25 +90,7 @@ const validateEmail = ((emailInput) => {
   return re.test(emailInput);
 });
 
-const register = ((e) => {
-  e.preventDefault();
-  if (!validateEmail(email.value.trim())) {
-    error.innerText = 'Enter a valid email';
-    return;
-  } if (name.value.trim().length < 1) {
-    error.innerText = 'Name cannot be empty';
-    return;
-  } if (password.value.trim().length < 6) {
-    error.innerText = 'Password length must be greater than 6 and must not contain spaces';
-    return;
-  } if (password.value !== confirmPassword.value) {
-    error.innerText = 'Password not match';
-    return;
-  } if (address.value.trim().length < 5) {
-    error.innerText = 'Input ypur correct address';
-    return;
-  }
-  loadingOverlay.style.display = 'flex';
+const signUpUser = () => {
   fetch(`${url}auth/signup`, {
     method: 'POST',
     headers: {
@@ -118,18 +119,31 @@ const register = ((e) => {
     loadingOverlay.style.display = 'none';
     error.innerText = data.message;
   });
+};
+
+const register = ((e) => {
+  e.preventDefault();
+  if (!validateEmail(email.value.trim())) {
+    error.innerText = 'Enter a valid email';
+    return;
+  } if (name.value.trim().length < 1) {
+    error.innerText = 'Name cannot be empty';
+    return;
+  } if (password.value.trim().length < 6) {
+    error.innerText = 'Password length must be greater than 6 and must not contain spaces';
+    return;
+  } if (password.value !== confirmPassword.value) {
+    error.innerText = 'Password not match';
+    return;
+  } if (address.value.trim().length < 5) {
+    error.innerText = 'Input ypur correct address';
+    return;
+  }
+  loadingOverlay.style.display = 'flex';
+  signUpUser();
 });
 
-const login = ((e) => {
-  e.preventDefault();
-  if (!validateEmail(loginEmail.value)) {
-    error2.innerText = 'Enter a valid email';
-    return;
-  }
-  if (loginPassword.value.trim().length < 6) {
-    error2.innerText = 'Password length must be greater or equal to 6';
-    return;
-  }
+const loginUser = () => {
   fetch(`${url}auth/login`, {
     method: 'POST',
     headers: {
@@ -153,8 +167,20 @@ const login = ((e) => {
     }
     error2.innerText = data.message;
   });
-});
+};
 
+const login = ((e) => {
+  e.preventDefault();
+  if (!validateEmail(loginEmail.value)) {
+    error2.innerText = 'Enter a valid email';
+    return;
+  }
+  if (loginPassword.value.trim().length < 6) {
+    error2.innerText = 'Password length must be greater or equal to 6';
+    return;
+  }
+  loginUser();
+});
 /* eslint-disable class-methods-use-this */
 
 submit.addEventListener('click', register);
