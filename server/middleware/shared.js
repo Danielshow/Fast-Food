@@ -1,4 +1,7 @@
-import cloudinary from './cloudinary';
+const phonenumber = (number) => {
+  const re = /\d{11}/;
+  return re.test(number);
+}
 
 export default {
   verifyBody: (req, res, next) => {
@@ -35,6 +38,21 @@ export default {
       return res.status(400).send({
         status: 400,
         message: 'Request must contain Quantity of foods',
+      });
+    } if (!req.body.address || req.body.address.trim().length < 1) {
+      return res.status(400).send({
+        status: 400,
+        message: 'Request must contain Address of delivery',
+      });
+    } if (!req.body.phonenumber || req.body.phonenumber.trim().length < 1) {
+      return res.status(400).send({
+        status: 400,
+        message: 'Request must contain Phone number',
+      });
+    } if (!phonenumber(req.body.phonenumber.trim())) {
+      return res.status(400).send({
+        status: 400,
+        message: 'Phone number must contain 11 numbers',
       });
     }
     next();

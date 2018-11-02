@@ -60,6 +60,8 @@ class OrderController {
   }
 
   postOrder(req, res, next) {
+    const address = req.body.address.trim();
+    const phonenumber = req.body.phonenumber.trim();
     const quantity = req.body.quantity.split(',');
     const food = req.body.food.split(',');
     let price = req.body.price.split(',');
@@ -75,7 +77,7 @@ class OrderController {
       quantityList.push(quantity[j].trim());
       foodlist.push(food[j].trim());
     }
-    db.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [foodlist.join(','), quantityList.join(','), price, userId, 'new'], (err) => {
+    db.query('INSERT INTO orders(food,quantity,price,user_id,status,address,phonenumber) VALUES($1,$2,$3,$4,$5,$6,$7)', [foodlist.join(','), quantityList.join(','), price, userId, 'new', address, phonenumber], (err) => {
       if (err) {
         return next(err);
       }
@@ -88,6 +90,8 @@ class OrderController {
           price,
           status: 'new',
           userId,
+          address,
+          phonenumber,
         },
         message: 'Food Added to order list Successfully',
       });

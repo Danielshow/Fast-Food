@@ -18,6 +18,8 @@ const postFood = {
   food: 'rice',
   price: '340',
   quantity: '1',
+  address: 'Ikorodu',
+  phonenumber: '08099999999',
 };
 
 // .set('Authorization', `Bearer ${token}`)
@@ -41,6 +43,63 @@ describe('API endpoint POST /orders', () => {
     .then((res) => {
       expect(res).to.have.status(401);
       res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    }));
+
+  it('Should give errors if address is not specified with orders', () => chai.request(url)
+    .post('/api/v1/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .send({
+      food: 'rice',
+      price: '340',
+      quantity: '1',
+    })
+    .then((res) => {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Request must contain Address of delivery');
+    }));
+
+  it('Should give errors if phonenumber is not specified with orders', () => chai.request(url)
+    .post('/api/v1/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .send({
+      food: 'rice',
+      price: '340',
+      quantity: '1',
+      address: 'Ikorodu',
+    })
+    .then((res) => {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Request must contain Phone number');
+    }));
+
+  it('Should give errors if phonenumber is not a number', () => chai.request(url)
+    .post('/api/v1/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .send({
+      food: 'rice',
+      price: '340',
+      quantity: '1',
+      address: 'Ikorodu',
+      phonenumber: 'jdjdjdjndndjnd',
+    })
+    .then((res) => {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Phone number must contain 11 numbers');
+    }));
+
+  it('Should give errors if phonenumber is not a 11 numbers', () => chai.request(url)
+    .post('/api/v1/orders')
+    .set('Authorization', `Bearer ${dantoken}`)
+    .send({
+      food: 'rice',
+      price: '340',
+      quantity: '1',
+      address: 'Ikorodu',
+      phonenumber: '0809999999',
+    })
+    .then((res) => {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Phone number must contain 11 numbers');
     }));
 });
 

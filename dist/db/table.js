@@ -10,7 +10,7 @@ _index2.default.query('CREATE TABLE users(\nid serial PRIMARY KEY,\nname text NO
   if (err) {
     console.log(err);
   }
-  _index2.default.query('create table orders(\n  id serial PRIMARY KEY,\n  food text NOT NULL,\n  quantity text NOT NULL,\n  price numeric NOT NULL,\n  user_id integer References users(id) on DELETE CASCADE,\n  status status NOT NULL\n  )', function (err) {
+  _index2.default.query('create table orders(\n  id serial PRIMARY KEY,\n  food text NOT NULL,\n  quantity text NOT NULL,\n  price numeric NOT NULL,\n  user_id integer References users(id) on DELETE CASCADE,\n  status status NOT NULL,\n  address text NOT NULL,\n  phonenumber text NOT NULL\n  )', function (err) {
     if (err) {
       console.log(err);
     }

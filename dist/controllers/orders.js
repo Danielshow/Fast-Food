@@ -86,6 +86,8 @@ var OrderController = function () {
   }, {
     key: 'postOrder',
     value: function postOrder(req, res, next) {
+      var address = req.body.address.trim();
+      var phonenumber = req.body.phonenumber.trim();
       var quantity = req.body.quantity.split(',');
       var food = req.body.food.split(',');
       var price = req.body.price.split(',');
@@ -101,7 +103,7 @@ var OrderController = function () {
         quantityList.push(quantity[j].trim());
         foodlist.push(food[j].trim());
       }
-      _index2.default.query('INSERT INTO orders(food,quantity,price,user_id,status) VALUES($1,$2,$3,$4,$5)', [foodlist.join(','), quantityList.join(','), price, userId, 'new'], function (err) {
+      _index2.default.query('INSERT INTO orders(food,quantity,price,user_id,status,address,phonenumber) VALUES($1,$2,$3,$4,$5,$6,$7)', [foodlist.join(','), quantityList.join(','), price, userId, 'new', address, phonenumber], function (err) {
         if (err) {
           return next(err);
         }
@@ -113,7 +115,9 @@ var OrderController = function () {
             quantity: quantity,
             price: price,
             status: 'new',
-            userId: userId
+            userId: userId,
+            address: address,
+            phonenumber: phonenumber
           },
           message: 'Food Added to order list Successfully'
         });
