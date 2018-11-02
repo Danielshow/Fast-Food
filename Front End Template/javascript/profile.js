@@ -2,7 +2,6 @@ const url = 'http://localhost:3000/api/v1/';
 const displayName = document.getElementById('name');
 const getOrder = document.getElementById('getOrder');
 const orderTable = document.getElementById('orderTable');
-const gifImage = document.getElementById('gifImage');
 const error = document.getElementById('error');
 const logout = document.getElementById('logout');
 const deleteUser = document.getElementById('delete');
@@ -65,6 +64,7 @@ class MyAlert {
 
 const customAlert = new MyAlert();
 window.addEventListener('load', () => {
+  loadingOverlay.style.display = 'flex';
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
     fetch(`${url}auth/me`, {
@@ -77,9 +77,13 @@ window.addEventListener('load', () => {
       }  if (data.data[0].roles === 'admin') {
         window.location.replace('./admin-page.html');
       }
+      if (data.status === 200 && data.data[0].roles === 'admin') {
+        window.location.replace('./admin-page.html');
+      }
+      loadingOverlay.style.display = 'none';
       const { name } = data.data[0];
       id = data.data[0].id;
-      displayName.innerText = `Welcome ${name}`;
+      displayName.innerText = `Welcome ${name.toUpperCase()}, How can we help you??`;
     });
   } else {
     window.location.replace('./login.html');
@@ -126,7 +130,7 @@ const getUserOrder = () => {
     }
   }).catch((err) => {
     loadingOverlay.style.display = 'none';
-    customAlert.alertOne('Network Fail, Cannot Fetch your History')
+    customAlert.alertOne('Network Fail, Cannot Fetch your History');
   });
 };
 

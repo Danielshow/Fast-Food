@@ -12,6 +12,7 @@ const logout = document.getElementById('logout');
 const loadingOverlay = document.getElementById('loadingOverlay');
 const loadingText = document.getElementById('loadingText');
 const foodrows = document.getElementById('foodrows');
+const confirmbutton = document.getElementById('confirmbutton');
 const url = 'http://localhost:3000/api/v1/';
 let token = null;
 let foodObject = [];
@@ -28,7 +29,7 @@ const closeModalClear = (() => {
 });
 
 const completeOrder = (() => {
-  const confirmbutton = document.getElementById('confirmbutton');
+  // const confirmbutton = document.getElementById('confirmbutton');
   const listOfFood = Array.from(dialogbody.getElementsByTagName('li'));
   const listOfQuantity = Array.from(document.getElementsByClassName('dialogTextbox'));
   const quantity = [];
@@ -51,9 +52,13 @@ const completeOrder = (() => {
   loadingText.innerHTML = `Chill while we place your orders <br>
         One cannot sleep well, love well, if one has not dined well
         <br>
-       <img src="./images/gif/load (4).gif" alt="loading" id ="loading">`
+       <img src="./images/gif/load (4).gif" alt="loading" id ="loading">`;
   loadingOverlay.style.display = 'flex';
   confirmbutton.disabled = true;
+  placeOrderFood(food, price, quantity);
+});
+
+const placeOrderFood = (food, price, quantity) => {
   fetch(`${url}orders`, {
     method: 'POST',
     headers: {
@@ -83,8 +88,7 @@ const completeOrder = (() => {
     loadingOverlay.style.display = 'none';
     customAlert.alert('Network fail, Please try again');
   });
-});
-
+};
 /* eslint-disable class-methods-use-this */
 class MyAlert {
   alert(body) {
@@ -111,7 +115,7 @@ class MyAlert {
     dialogfooter.innerHTML = '<button class = \'open\' id = \'confirmbutton\'> Order </button> <button class = \'close\' id = \'closebutton\'> Close </button>';
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModalClear);
-    const confirmbutton = document.getElementById('confirmbutton');
+    // const confirmbutton = document.getElementById('confirmbutton');
     confirmbutton.addEventListener('click', completeOrder);
   }
 
@@ -152,12 +156,32 @@ const logoutUser = ((e) => {
   });
 });
 
+const fetchFood = () => {
+  fetch(`${url}menu`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json()).then((fooddata) => {
+    if (fooddata.status === 200) {
+      let food = null;
+      for (let i = 0; i < fooddata.data.length; i += 1) {
+        food = fooddata.data[i];
+        foodrows.innerHTML += `<div class="col">
+          <img src=${food.image} alt=${food.food} class="food_image">
+          <h4> ${food.food} <br><span id="price">₦${food.price}</span><button type="button" name="button" id="but"><img src="./images/icons/cart.png" alt=""></button></h4>
+        </div>`;
+      }
+      loadingOverlay.style.display = 'none';
+    }
+  });
+};
+
 const loadWindowsAndCheckAuth = (() => {
   loadingText.innerHTML = `Chill While we display the available meal <br>
   Ask not what you can do for your country. Ask what's for Lunch......
   <br>
- <img src="./images/gif/load (4).gif" alt="loading" id ="loading">`
- loadingOverlay.style.display = 'flex';
+ <img src="./images/gif/load (4).gif" alt="loading" id ="loading">`;
+  loadingOverlay.style.display = 'flex';
   if (localStorage.getItem('token')) {
     token = localStorage.getItem('token');
     fetch(`${url}auth/me`, {
@@ -170,23 +194,7 @@ const loadWindowsAndCheckAuth = (() => {
       } if (data.data[0].roles === 'admin') {
         window.location.replace('./admin-page.html');
       }
-      fetch(`${url}menu`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then(response => response.json()).then((fooddata) => {
-        if (fooddata.status === 200) {
-          let food = null;
-          for (let i = 0; i < fooddata.data.length; i += 1) {
-            food = fooddata.data[i];
-            foodrows.innerHTML += `<div class="col">
-              <img src=${food.image} alt=${food.food} class="food_image">
-              <h4> ${food.food} <br><span id="price">₦${food.price}</span><button type="button" name="button" id="but"><img src="./images/icons/cart.png" alt=""></button></h4>
-            </div>`
-          }
-          loadingOverlay.style.display = 'none';
-        }
-      });
+      fetchFood();
     }).catch((err) => {
       window.location.replace('./login.html');
     });
