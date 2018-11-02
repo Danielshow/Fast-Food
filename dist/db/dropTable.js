@@ -6,25 +6,25 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_index2.default.query('DROP TABLE IF EXISTS orders', function (err) {
+_index2.default.query('DROP TABLE IF EXISTS orders CASCADE', function (err) {
   if (err) {
     console.log(err);
   }
 });
 
-_index2.default.query('DROP TABLE IF EXISTS foodlist', function (err) {
+_index2.default.query('DROP TABLE IF EXISTS foodlist CASCADE', function (err) {
   if (err) {
     console.log(err);
   }
 });
 
-_index2.default.query('DROP TABLE IF EXISTS users', function (err) {
+_index2.default.query('DROP TABLE IF EXISTS users CASCADE', function (err) {
   if (err) {
     console.log(err);
   }
 });
 
-_index2.default.query('DROP TYPE IF EXISTS status', function (err) {
+_index2.default.query('DROP TYPE IF EXISTS status CASCADE', function (err) {
   if (err) {
     console.log(err);
   }
@@ -35,7 +35,7 @@ _index2.default.query('DROP TYPE IF EXISTS status', function (err) {
   });
 });
 
-_index2.default.query('DROP TYPE IF EXISTS roles', function (err) {
+_index2.default.query('DROP TYPE IF EXISTS roles CASCADE', function (err) {
   if (err) {
     console.log(err);
   }
