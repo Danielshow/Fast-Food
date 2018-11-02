@@ -380,7 +380,7 @@ const postFood = ((e) => {
     return;
   }
   const formData = new FormData(document.forms.myForm);
-  loadingOverlay.style.display = 'block';
+  loadingOverlay.style.display = 'flex';
   fetch(`${url}/menu`, {
     method: 'POST',
     headers: {

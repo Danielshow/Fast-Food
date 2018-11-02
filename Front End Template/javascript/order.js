@@ -111,6 +111,8 @@ class MyAlert {
     for (let i = 0; i < body.length; i += 1) {
       dialogbody.innerHTML += `<li class = "foodlinks"> ${body[i]} <input type="text" id="dialogTextbox" class="dialogTextbox" value = "1"></li>`;
     }
+    dialogbody.innerHTML += '<input type=\'text\' placeholder=" Your address here...">';
+    dialogbody.innerHTML += '<input type=\'text\' placeholder=" Your phone number here...">';
     dialogbody.innerHTML += '<div class = "error" id ="error"></div>';
     dialogfooter.innerHTML = '<button class = \'open\' id = \'confirmbutton\'> Order </button> <button class = \'close\' id = \'closebutton\'> Close </button>';
     const closebutton = document.getElementById('closebutton');
