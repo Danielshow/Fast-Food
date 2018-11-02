@@ -74,6 +74,8 @@ window.addEventListener('load', () => {
     }).then(response => response.json()).then((data) => {
       if (data.status !== 200) {
         window.location.replace('./login.html');
+      }  if (data.data[0].roles === 'admin') {
+        window.location.replace('./admin-page.html');
       }
       if (data.status === 200 && data.data[0].roles === 'admin') {
         window.location.replace('./admin-page.html');
