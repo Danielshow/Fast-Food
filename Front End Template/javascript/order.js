@@ -28,6 +28,10 @@ const closeModalClear = (() => {
   dialogbody.innerHTML = '';
 });
 
+const verifyNumber = (number) => {
+  const re = /\d{11}/;
+  return re.test(number);
+};
 const completeOrder = (() => {
   // const confirmbutton = document.getElementById('confirmbutton');
   const listOfFood = Array.from(dialogbody.getElementsByTagName('li'));
@@ -49,16 +53,26 @@ const completeOrder = (() => {
     document.getElementById('error').innerText = '';
     quantity.push(value);
   }
+  const address = document.getElementById('order_address').value;
+  const phonenumber = document.getElementById('order_phonenumber').value;
+  if (address.trim().length < 6) {
+    document.getElementById('error').innerText = 'Enter a valid address';
+    return;
+  } if (!verifyNumber(phonenumber.trim())) {
+    document.getElementById('error').innerText = 'Enter a valid phone number';
+    return;
+  }
   loadingText.innerHTML = `Chill while we place your orders <br>
         One cannot sleep well, love well, if one has not dined well
         <br>
        <img src="./images/gif/load (4).gif" alt="loading" id ="loading">`;
   loadingOverlay.style.display = 'flex';
+  const confirmbutton = document.getElementById('confirmbutton');
   confirmbutton.disabled = true;
-  placeOrderFood(food, price, quantity);
+  placeOrderFood(food, price, quantity, address, phonenumber);
 });
 
-const placeOrderFood = (food, price, quantity) => {
+const placeOrderFood = (food, price, quantity, address, phonenumber) => {
   fetch(`${url}orders`, {
     method: 'POST',
     headers: {
@@ -70,8 +84,11 @@ const placeOrderFood = (food, price, quantity) => {
       food: food.join(),
       price: price.join(),
       quantity: quantity.join(),
+      address,
+      phonenumber,
     }),
   }).then(response => response.json()).then((data) => {
+    const confirmbutton = document.getElementById('confirmbutton');
     if (data.status === 200) {
       foodObject = [];
       confirmbutton.disabled = false;
@@ -111,11 +128,13 @@ class MyAlert {
     for (let i = 0; i < body.length; i += 1) {
       dialogbody.innerHTML += `<li class = "foodlinks"> ${body[i]} <input type="text" id="dialogTextbox" class="dialogTextbox" value = "1"></li>`;
     }
+    dialogbody.innerHTML += '<input type=\'text\' placeholder=" Your address here..." id="order_address">';
+    dialogbody.innerHTML += '<input type=\'text\' placeholder=" Your phone number here..." id="order_phonenumber">';
     dialogbody.innerHTML += '<div class = "error" id ="error"></div>';
     dialogfooter.innerHTML = '<button class = \'open\' id = \'confirmbutton\'> Order </button> <button class = \'close\' id = \'closebutton\'> Close </button>';
     const closebutton = document.getElementById('closebutton');
     closebutton.addEventListener('click', closeModalClear);
-    // const confirmbutton = document.getElementById('confirmbutton');
+    const confirmbutton = document.getElementById('confirmbutton');
     confirmbutton.addEventListener('click', completeOrder);
   }
 

@@ -251,6 +251,8 @@ const loadAvailableOrders = (() => {
                                   <th>Amount</th>
                                   <th>UserId</th>
                                   <th>Status</th>
+                                  <th>Address</th>
+                                  <th>Phone number</th>
                                   <th>Button</th>
                                   <th>Decline</th>
                                 </tr>
@@ -264,6 +266,8 @@ const loadAvailableOrders = (() => {
                                   <td colname="Amount">${info.price}</td>
                                   <td colname="User ID">${info.user_id}</td>
                                   <td colname="Status">${info.status}</td>
+                                  <td colname="Address">${info.address}</td>
+                                  <td colname="Phone Number">${info.phonenumber}</td>
                                   <td><button type="button" name="button" class="processing">processing</button><button type="button" name="button" class="complete">complete</button></td>
                                   <td><button type="button" name="button" class="cancel">Cancel</button></td>
                                 </tr>`;
@@ -380,7 +384,7 @@ const postFood = ((e) => {
     return;
   }
   const formData = new FormData(document.forms.myForm);
-  loadingOverlay.style.display = 'block';
+  loadingOverlay.style.display = 'flex';
   fetch(`${url}/menu`, {
     method: 'POST',
     headers: {

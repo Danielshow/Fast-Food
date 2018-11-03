@@ -30,7 +30,9 @@ var dantoken = process.env.TOKEN2;
 var postFood = {
   food: 'rice',
   price: '340',
-  quantity: '1'
+  quantity: '1',
+  address: 'Ikorodu',
+  phonenumber: '08099999999'
 };
 
 // .set('Authorization', `Bearer ${token}`)
@@ -49,6 +51,55 @@ describe('API endpoint POST /orders', function () {
     return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer jdjdj').send(postFood).then(function (res) {
       expect(res).to.have.status(401);
       res.body.should.have.property('message').eql('Authentication fail, Incorrect Token');
+    });
+  });
+
+  it('Should give errors if address is not specified with orders', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer ' + dantoken).send({
+      food: 'rice',
+      price: '340',
+      quantity: '1'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Request must contain Address of delivery');
+    });
+  });
+
+  it('Should give errors if phonenumber is not specified with orders', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer ' + dantoken).send({
+      food: 'rice',
+      price: '340',
+      quantity: '1',
+      address: 'Ikorodu'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Request must contain Phone number');
+    });
+  });
+
+  it('Should give errors if phonenumber is not a number', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer ' + dantoken).send({
+      food: 'rice',
+      price: '340',
+      quantity: '1',
+      address: 'Ikorodu',
+      phonenumber: 'jdjdjdjndndjnd'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Phone number must contain 11 numbers');
+    });
+  });
+
+  it('Should give errors if phonenumber is not a 11 numbers', function () {
+    return _chai2.default.request(_index2.default).post('/api/v1/orders').set('Authorization', 'Bearer ' + dantoken).send({
+      food: 'rice',
+      price: '340',
+      quantity: '1',
+      address: 'Ikorodu',
+      phonenumber: '0809999999'
+    }).then(function (res) {
+      expect(res).to.have.status(400);
+      res.body.should.have.property('message').eql('Phone number must contain 11 numbers');
     });
   });
 });

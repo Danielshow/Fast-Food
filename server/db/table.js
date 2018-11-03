@@ -17,7 +17,9 @@ roles roles NOT NULL
   quantity text NOT NULL,
   price numeric NOT NULL,
   user_id integer References users(id) on DELETE CASCADE,
-  status status NOT NULL
+  status status NOT NULL,
+  address text NOT NULL,
+  phonenumber text NOT NULL
   )`, (err) => {
     if (err) {
       console.log(err);

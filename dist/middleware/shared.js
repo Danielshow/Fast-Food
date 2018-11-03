@@ -3,12 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _cloudinary = require('./cloudinary');
-
-var _cloudinary2 = _interopRequireDefault(_cloudinary);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var phonenumber = function phonenumber(number) {
+  var re = /\d{11}/;
+  return re.test(number);
+};
 
 exports.default = {
   verifyBody: function verifyBody(req, res, next) {
@@ -45,6 +43,21 @@ exports.default = {
       return res.status(400).send({
         status: 400,
         message: 'Request must contain Quantity of foods'
+      });
+    }if (!req.body.address || req.body.address.trim().length < 1) {
+      return res.status(400).send({
+        status: 400,
+        message: 'Request must contain Address of delivery'
+      });
+    }if (!req.body.phonenumber || req.body.phonenumber.trim().length < 1) {
+      return res.status(400).send({
+        status: 400,
+        message: 'Request must contain Phone number'
+      });
+    }if (!phonenumber(req.body.phonenumber.trim())) {
+      return res.status(400).send({
+        status: 400,
+        message: 'Phone number must contain 11 numbers'
       });
     }
     next();
