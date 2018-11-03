@@ -89,8 +89,8 @@ If you'd like to Contribute, please fork the repository and create a new branch,
 ## Links
 
 1. [Front End Homepage](https://danielshow.github.io/Fast-Food/)
-2. [API on Heroku](https://evening-island-29552.herokuapp.com/api/v1)
-3. [Completed App](https://evening-island-29552.herokuapp.com)
+2. [API on Heroku](https://foodfaast.herokuapp.com/api/v1)
+3. [Completed App](https://https://foodfaast.herokuapp.com)
 
 ## Author
 
